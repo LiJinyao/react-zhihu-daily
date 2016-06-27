@@ -1,9 +1,11 @@
-import express from 'express';
+import Express from 'express';
 import logger from 'morgan';
 import api from './routes/api';
 
-const app = express();
-app.use(logger('dev'));
-app.use('/api', api);
+const app = new Express();
 
+app.use(logger('dev'));
+
+// load routers
+app.use('/api', api);
 app.listen(8080);
