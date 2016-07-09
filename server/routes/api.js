@@ -8,5 +8,4 @@ router.get('*', (req, res) => {
     res.send(data);
   });
 });
-// http://news-at.zhihu.com/api/4/news/latest
 export default router;
