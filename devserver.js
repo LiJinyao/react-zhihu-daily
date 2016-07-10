@@ -9,10 +9,9 @@ new WebpackDevServer(webpack(config), {
   historyApiFallback: true,
   //设置服务器的根目录
   contentBase: "./src"
-}).listen(8080, 'localhost', (err, result) => {
+}).listen(1234, 'localhost', (err, result) => {
   if(err) {
     return console.log(err);
   }
-
-  console.log('Listening at http://localhost:8080/');
+  console.log('Listening at http://localhost:1234/');
 });
