@@ -1,6 +1,4 @@
 import React from 'react';
-import _ from './app.styl'
+import style from './App.styl';
 
-export default (props) => {
-  return (<h1>Hello world</h1>);
-}
+export default (() => (<h1 className={style.title}>Hello world</h1>));
