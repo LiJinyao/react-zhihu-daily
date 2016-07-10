@@ -1,5 +1,4 @@
 import express from 'express';
-import { request } from 'http';
 import zhihuDaily from '../zhihuDailyTransmit/transmitter';
 const router = new express.Router();
 
