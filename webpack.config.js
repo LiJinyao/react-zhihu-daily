@@ -31,7 +31,7 @@ module.exports = {
   module: {
     loaders: [{
       test: /\.jsx?$/,
-      //'react-hot'放在最前面，然后处理jsx，最后babel预编译
+      //loader顺序是从后往前
       loaders: ['react-hot', 'jsx?harmony', 'babel'],
       include: path.join(__dirname, 'src')
     },

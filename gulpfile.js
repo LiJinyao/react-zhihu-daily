@@ -12,7 +12,7 @@ function babelIt(cb) {
     .pipe(sourcemaps.init())
     .pipe(babel())
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('dist/server'));
+    .pipe(gulp.dest('dist/zhihuDaily'));
 }
 
 function lintServerCode(cb) {

@@ -8,7 +8,7 @@ module.exports = {
   devtool: 'source map',
   entry: ['./src/index'],
   output: {
-  path: path.join(__dirname, 'dist'),
+  path: path.join(__dirname, 'dist/zhihuDaily/public'),
   filename: 'bundle.js',
   },
   resolve: {
