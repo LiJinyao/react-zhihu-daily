@@ -6,10 +6,14 @@ new WebpackDevServer(webpack(config), {
   publicPath: config.output.publicPath,
   //启用热替换
   hot: true,
-  historyApiFallback: true,
+  historyApiFallback: false,
   //设置服务器的根目录
-  contentBase: "./src"
-}).listen(1234, 'localhost', (err, result) => {
+  contentBase: "./src",
+  // 设置代理到api服务器
+  proxy: {
+    '/api/*': 'http://localhost:8080/api'
+}
+}).listen(1234, (err, result) => {
   if(err) {
     return console.log(err);
   }
