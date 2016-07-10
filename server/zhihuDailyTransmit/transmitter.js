@@ -15,7 +15,7 @@ function get(route = '/') {
       } else {
         reject(res.statusCode);
       }
-    }).on('error', () => reject(500));
+    }).on('error', () => reject(502));
   });
 }
 export default get;
