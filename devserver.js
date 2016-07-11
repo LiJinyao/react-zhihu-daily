@@ -11,8 +11,13 @@ new WebpackDevServer(webpack(config), {
   contentBase: "./src",
   // 设置代理到api服务器
   proxy: {
-    '/api/*': 'http://localhost:8080/api'
-}
+    '/api/*': 'http://localhost:8080/'
+  },
+  stats: {
+    colors: true,
+    // Not output chunks info.
+    chunks: false
+  }
 }).listen(1234, (err, result) => {
   if(err) {
     return console.log(err);

@@ -6,7 +6,7 @@ import http from 'http';
 function get(route = '/') {
   return new Promise((resolve, reject) => {
     http.get(`http://news-at.zhihu.com/api/4${route}`, res => {
-      console.log(`Got response: ${res.statusCode}`);
+      // console.log(`Got response: ${res.statusCode}`);
       if (res.statusCode === 200) {
         res.setEncoding('utf8');
         let buf = '';
@@ -15,7 +15,9 @@ function get(route = '/') {
       } else {
         reject(res.statusCode);
       }
+      res.resume();
     }).on('error', () => reject(502));
   });
 }
 export default get;
+
