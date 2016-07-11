@@ -63,6 +63,7 @@
   },
   "dependencies": {
     "babel-runtime": "^6.9.2",
-    "eslint-config-airbnb": "^9.0.1"
+    "eslint-config-airbnb": "^9.0.1",
+    "normalize.css": "^4.2.0"
   }
 }

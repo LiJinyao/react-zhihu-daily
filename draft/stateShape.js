@@ -24,7 +24,7 @@
           },
           //....
         ],
-        top_stories: [
+        // top_stories: [
           {
             image: "http://pic2.zhimg.com/6bd2193beb2d04e9de6da8763f02e139.jpg",
             type: 0,

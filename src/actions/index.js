@@ -1,4 +1,16 @@
 /*
+Show a story
+ */
+export const READ_STORY = 'READ_STORY';
+
+export function readStory(id) {
+  return {
+    type: READ_STORY,
+    id
+  }
+}
+
+/*
 begain to request news
  */
 export const REQUEST_NEWS = 'REQUEST_NEWS';
