@@ -1,12 +1,12 @@
 import React, { PropTypes } from 'react';
 import style from './StoriesList.styl';
-import Story from './Story';
+import StoryItem from './StoryItem';
 
 const StoriesList = ({ onStoryClick, stories }) => (
   <div>
     {
       stories.map(story => (
-        <Story
+        <StoryItem
           key={story.id}
           {...story}
           onStoryClick={onStoryClick}
@@ -21,14 +21,3 @@ StoriesList.propTypes = {
 }
 
 export default StoriesList;
-
-/*
-stories.map(story =>
-  <Story
-    key={story.id}
-    {...story}
-    onClick={() => onStoryClick(story.id)}
-  >
-  </Story>
-)
- */
