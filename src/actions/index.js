@@ -1,3 +1,4 @@
+import { zhihuAPI } from '../statics';
 /*
 Show a story
  */
@@ -55,7 +56,7 @@ export function fetchNews(date){
 
     // In this case, we return a promise to wait for.
     // This is not required by thunk middleware, but it is convenient for us.
-    return fetch(`http://localhost:1234/api/news/${date}`)
+    return fetch(`${zhihuAPI}http://news-at.zhihu.com/api/4/news/${date}`)
     .then(response => response.json())
     .then(json => dispatch(reciveNews(date, json)));
   }

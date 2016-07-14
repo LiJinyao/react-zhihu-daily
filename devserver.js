@@ -11,7 +11,7 @@ new WebpackDevServer(webpack(config), {
   contentBase: "./src",
   // 设置代理到api服务器
   proxy: {
-    '/api/*': 'http://localhost:8080/'
+    '/zhihu': 'http://localhost:8080/zhihu'
   },
   stats: {
     colors: true,
