@@ -15,9 +15,10 @@ class StoryList extends Component {
       {
         isFetching && <h1>loading</h1>
       }
-      {!isFetching && stories.length > 0 && <StoriesList
-        stories={stories}
-      />
+      {
+        !isFetching && stories.length > 0 && <StoriesList
+          stories={stories}
+        />
       }
       </div>
     );

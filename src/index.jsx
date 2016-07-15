@@ -1,13 +1,12 @@
 import React from 'react';
 import { render } from 'react-dom';
-import App from './components/app';
+import App from './components/App';
 import thunkMiddleware from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
-import { fetchNews } from './actions';
 import rootReducer from './reducers';
 import { Provider } from 'react-redux';
 import StoryList from './containers/StoryList';
-import Story from './components/story'
+import Story from './components/story';
 /*
 Use Browser History
  */
@@ -22,7 +21,7 @@ render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={App}>
-        <IndexRoute component={StoryList}/>
+        <IndexRoute component={StoryList} />
         <Route path="/news/:id" component={Story} />
       </Route>
     </Router>
