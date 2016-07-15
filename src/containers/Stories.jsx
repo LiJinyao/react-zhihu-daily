@@ -32,6 +32,8 @@ class Stories extends Component {
 
 Stories.propsTypes = {
   dispatch: PropTypes.func.isRequired,
+  stories: PropTypes.array.isRequired,
+  onStoryClick: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => {

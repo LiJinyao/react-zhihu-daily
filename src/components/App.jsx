@@ -2,12 +2,11 @@ import React from 'react';
 import style from './App.styl';
 import Header from './Header';
 import Footer from './Footer';
-import Stories from '../containers/Stories';
 
-export default (() => (
+export default ((props) => (
   <div>
     <Header></Header>
-    <Stories></Stories>
+    {props.children}
     <Footer></Footer>
   </div>
 ));

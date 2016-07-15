@@ -6,6 +6,8 @@ import { createStore, applyMiddleware } from 'redux';
 import { fetchNews } from './actions';
 import rootReducer from './reducers';
 import { Provider } from 'react-redux';
+import Stories from './containers/Stories';
+import Story from './components/story'
 /*
 Use Browser History
  */
@@ -20,6 +22,8 @@ render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={App}>
+        <IndexRoute component={Stories}/>
+        <Route path="/news/:id" component={Story} />
       </Route>
     </Router>
   </Provider>,
