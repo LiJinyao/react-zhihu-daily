@@ -3,7 +3,7 @@ import { zhihuAPI } from '../../statics'
 const StoryItem = ({title, images}) => (
   <div>
     {title}
-    <img src={zhihuAPI+images} rel="noreferrer"/>
+    <img src={zhihuAPI+images}/>
   </div>
 );
 

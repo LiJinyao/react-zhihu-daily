@@ -11,7 +11,10 @@ function news(state = {
     case RECEIVE_NEWS:
       return Object.assign({}, state, {
         isFetching: false,
-        items: action.news,
+        items: [
+          ...state.items,
+          action.news
+        ],
         lastUpdated: action.receivedAt
       });
     default:

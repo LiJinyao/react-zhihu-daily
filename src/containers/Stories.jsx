@@ -8,8 +8,8 @@ class Stories extends Component {
   }
 
   componentDidMount() {
+    // fetch news when mounted
     const { dispatch } = this.props;
-    //console.log(this.props.hasOwnProperty('dispatch'));
     dispatch(fetchNews('latest'));
   }
 
@@ -17,7 +17,10 @@ class Stories extends Component {
     const { isFetching, stories, onStoryClick } = this.props;
     return (
       <div>
-      {!isFetching && stories && <StoriesList
+      {
+        isFetching && <h1>loading</h1>
+      }
+      {!isFetching && stories.length > 0 && <StoriesList
         onStoryClick={onStoryClick}
         stories={stories}
         />
@@ -35,7 +38,7 @@ const mapStateToProps = (state) => {
   // console.log(state.news.items.stories);
   return {
     // get a day's stories.
-    stories: state.news.items.stories,
+    stories: state.news.items,
     isFetching: state.news.isFetching
   }
 }
