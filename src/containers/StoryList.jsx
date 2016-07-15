@@ -1,0 +1,43 @@
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { fetchNews } from '../actions';
+import StoriesList from '../components/content/StoriesList';
+
+class StoryList extends Component {
+  componentDidMount() {
+    // fetch news when mounted
+    this.props.dispatch(fetchNews('latest'));
+  }
+  render() {
+    const { isFetching, stories } = this.props;
+    return (
+      <div>
+      {
+        isFetching && <h1>loading</h1>
+      }
+      {!isFetching && stories.length > 0 && <StoriesList
+        stories={stories}
+      />
+      }
+      </div>
+    );
+  }
+}
+
+StoryList.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  stories: PropTypes.array.isRequired,
+  isFetching: PropTypes.bool.isRequired,
+};
+
+const mapStateToProps = state => (
+  {
+    // get a day's stories.
+    stories: state.news.items,
+    isFetching: state.news.isFetching,
+  }
+);
+
+const mapDispatchToProps = (dispatch) => ({ dispatch });
+
+export default connect(mapStateToProps, mapDispatchToProps)(StoryList);

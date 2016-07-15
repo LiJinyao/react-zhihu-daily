@@ -2,25 +2,34 @@ import { zhihuAPI } from '../statics';
 /*
 Show a story
  */
-export const READ_STORY = 'READ_STORY';
+export const REQUEST_STORY = 'REQUEST_STORY';
 
-export function readStory(id) {
+export function requestStory(id) {
   return {
-    type: READ_STORY,
-    id
-  }
+    type: REQUEST_STORY,
+    id,
+  };
+}
+
+export const RECEIVE_STORY = 'RECEIVE_STORY';
+
+export function receiveStory(story) {
+  return {
+    type: RECEIVE_STORY,
+    story,
+  };
 }
 
 /*
-begain to request news
+begin to request news
  */
 export const REQUEST_NEWS = 'REQUEST_NEWS';
 
 export function requestNews(date) {
   return {
     type: REQUEST_NEWS,
-    date
-  }
+    date,
+  };
 }
 
 /*
@@ -33,20 +42,17 @@ export function reciveNews(date, news) {
     type: RECEIVE_NEWS,
     date,
     news,
-    receivedAt: Date.now()
-  }
+    receivedAt: Date.now(),
+  };
 }
 
 // Thunk action creator
 
-export function fetchNews(date){
-
+export function fetchNews(date) {
 // Thunk middleware knows how to handle functions.
 // It passes the dispatch method as an argument to the function,
 // thus making it able to dispatch actions itself.
-
   return function (dispatch) {
-
 // First dispatch: the app state is updated to inform
 // that the API call is starting.
 
@@ -59,5 +65,14 @@ export function fetchNews(date){
     return fetch(`${zhihuAPI}http://news-at.zhihu.com/api/4/news/${date}`)
     .then(response => response.json())
     .then(json => dispatch(reciveNews(date, json)));
-  }
+  };
+}
+
+export function fetchStory(id) {
+  return dispatch => {
+    dispatch(requestStory(id));
+    return fetch(`${zhihuAPI}http://news-at.zhihu.com/api/4/news/${id}`)
+      .then(response => response.json())
+      .then(json => dispatch(receiveStory(json)));
+  };
 }

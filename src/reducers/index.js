@@ -3,7 +3,7 @@ import { REQUEST_NEWS, RECEIVE_NEWS } from '../actions';
 
 function news(state = {
   isFetching: false,
-  items: []
+  items: [],
 }, action) {
   switch (action.type) {
     case REQUEST_NEWS:
@@ -13,9 +13,9 @@ function news(state = {
         isFetching: false,
         items: [
           ...state.items,
-          action.news
+          action.news,
         ],
-        lastUpdated: action.receivedAt
+        lastUpdated: action.receivedAt,
       });
     default:
       return state;
@@ -23,7 +23,7 @@ function news(state = {
 }
 
 const rootReducer = combineReducers({
-  news
+  news,
 });
 
 export default rootReducer;
