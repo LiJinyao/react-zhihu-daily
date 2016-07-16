@@ -4,7 +4,6 @@ import { fetchStory } from '../actions/index';
 import Story from '../components/story';
 
 class StoryContainer extends Component {
-
   componentDidMount() {
     const { dispatch, storyID, stories } = this.props;
     if (!stories.has(storyID)) {
@@ -14,7 +13,6 @@ class StoryContainer extends Component {
 
   render() {
     const { isFetching, storyID, stories } = this.props;
-    console.log(stories.get(storyID));
     return (
       <div>
       {isFetching &&
