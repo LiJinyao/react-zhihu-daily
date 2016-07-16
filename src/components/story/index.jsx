@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
+import React from 'react';
 
-const Story = (props) => (
-  <div>{"Sotry"}</div>
-)
+const Story = ({ story }) => (
+  <div dangerouslySetInnerHTML={{ __html: story.body }}></div>
+);
 
 export default Story;

@@ -1,21 +1,15 @@
 import React from 'react';
 import { render } from 'react-dom';
-import App from './components/App';
 import thunkMiddleware from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
+import App from './components/App';
 import rootReducer from './reducers';
 import { Provider } from 'react-redux';
 import StoryList from './containers/StoryList';
-import Story from './components/story';
-/*
-Use Browser History
- */
+import Story from './containers/Sotry';
 import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 
 const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
-
-// store.dispatch(fetchNews('latest'))
-// .then(() => console.log(store.getState()));
 
 render(
   <Provider store={store}>

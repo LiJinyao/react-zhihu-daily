@@ -13,10 +13,11 @@ export function requestStory(id) {
 
 export const RECEIVE_STORY = 'RECEIVE_STORY';
 
-export function receiveStory(story) {
+export function receiveStory(story, id) {
   return {
     type: RECEIVE_STORY,
     story,
+    id,
   };
 }
 
@@ -38,6 +39,7 @@ news request comes through.
 export const RECEIVE_NEWS = 'RECEIVE_NEWS';
 
 export function reciveNews(date, news) {
+  console.log(news);
   return {
     type: RECEIVE_NEWS,
     date,
@@ -52,7 +54,7 @@ export function fetchNews(date) {
 // Thunk middleware knows how to handle functions.
 // It passes the dispatch method as an argument to the function,
 // thus making it able to dispatch actions itself.
-  return function (dispatch) {
+  return dispatch => {
 // First dispatch: the app state is updated to inform
 // that the API call is starting.
 
@@ -73,6 +75,6 @@ export function fetchStory(id) {
     dispatch(requestStory(id));
     return fetch(`${zhihuAPI}http://news-at.zhihu.com/api/4/news/${id}`)
       .then(response => response.json())
-      .then(json => dispatch(receiveStory(json)));
+      .then(json => dispatch(receiveStory(json, id)));
   };
 }

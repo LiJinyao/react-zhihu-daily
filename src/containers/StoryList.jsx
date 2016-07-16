@@ -39,6 +39,7 @@ const mapStateToProps = state => (
   }
 );
 
-const mapDispatchToProps = (dispatch) => ({ dispatch });
+// 没有使用mapDispatchToProps时dispatch对象会自动赋值到props上。
+// const mapDispatchToProps = (dispatch) => ({ dispatch });
 
-export default connect(mapStateToProps, mapDispatchToProps)(StoryList);
+export default connect(mapStateToProps)(StoryList);
