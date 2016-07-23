@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { zhihuAPI } from '../../statics';
-//  <link rel="stylesheet" href="">
+
 // 把文章body中img的src替换成自己服务器的连接，绕过盗链处理。
 function replaceImgSrcToProxy(htmlString, styleUrl) {
   const element = document.createElement('div');

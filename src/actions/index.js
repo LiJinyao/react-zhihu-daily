@@ -1,4 +1,5 @@
 import { zhihuAPI } from '../statics';
+import fetch from 'isomorphic-fetch';
 /*
 Show a story
  */

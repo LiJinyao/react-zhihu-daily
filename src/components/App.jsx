@@ -4,7 +4,7 @@ import Header from './Header';
 import Footer from './Footer';
 
 export default ((props) => (
-  <div>
+  <div className={style.root}>
     <Header></Header>
     {props.children}
     <Footer></Footer>
