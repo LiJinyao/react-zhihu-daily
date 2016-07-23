@@ -55,10 +55,10 @@ export function fetchNews(date) {
 // Thunk middleware knows how to handle functions.
 // It passes the dispatch method as an argument to the function,
 // thus making it able to dispatch actions itself.
-  return dispatch => {
+  return (dispatch, getState) => {
 // First dispatch: the app state is updated to inform
 // that the API call is starting.
-
+    console.log(getState());
     dispatch(requestNews(date));
     // The function called by the thunk middleware can return a value,
     // that is passed on as the return value of the dispatch method.

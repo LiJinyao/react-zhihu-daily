@@ -1,8 +1,14 @@
 import { combineReducers } from 'redux';
 import { REQUEST_NEWS, RECEIVE_NEWS, REQUEST_STORY, RECEIVE_STORY } from '../actions';
+
+/**
+ * @param  {[Set]}  cachedDays: 记录获取新闻的日期。每次下载到新闻都在这里add新闻的日期。
+ *                             避免重复下载相同日期的新闻。每次下载新闻前先通过cachedDay检查是否已经存在那天的新闻。
+ */
 function news(state = {
   isFetching: false,
   items: [],
+  cachedDays: new Set(),
 }, action) {
   switch (action.type) {
     case REQUEST_NEWS:
@@ -35,10 +41,9 @@ function stories(state = {
     case REQUEST_STORY:
       return Object.assign({}, state, { isFetching: true });
     case RECEIVE_STORY:
-    // 这里直接修改了原来的map，但是这个map就是一直用来储存下载到的故事，在没有引入immutable之前先这样
-    console.log(action);
+    // new Map(aMap) is deep copy
       return Object.assign({}, state, {
-        storyCache: state.storyCache.set(action.id, action.story),
+        storyCache: new Map(state.storyCache).set(action.id, action.story),
         isFetching: false,
       });
     default:
