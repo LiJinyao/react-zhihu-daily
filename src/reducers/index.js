@@ -21,6 +21,7 @@ function news(state = {
           action.news,
         ],
         lastUpdated: action.receivedAt,
+        cachedDays: new Set(state.cachedDays).add(action.date),
       });
     default:
       return state;

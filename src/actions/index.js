@@ -59,15 +59,18 @@ export function fetchNews(date) {
 // First dispatch: the app state is updated to inform
 // that the API call is starting.
     console.log(getState());
-    dispatch(requestNews(date));
-    // The function called by the thunk middleware can return a value,
-    // that is passed on as the return value of the dispatch method.
+    if (! getState().news.cachedDays.has(date)) {
+      dispatch(requestNews(date));
+      // The function called by the thunk middleware can return a value,
+      // that is passed on as the return value of the dispatch method.
 
-    // In this case, we return a promise to wait for.
-    // This is not required by thunk middleware, but it is convenient for us.
-    return fetch(`${zhihuAPI}http://news-at.zhihu.com/api/4/news/${date}`)
-    .then(response => response.json())
-    .then(json => dispatch(reciveNews(date, json)));
+      // In this case, we return a promise to wait for.
+      // This is not required by thunk middleware, but it is convenient for us.
+      return fetch(`${zhihuAPI}http://news-at.zhihu.com/api/4/news/${date}`)
+      .then(response => response.json())
+      .then(json => dispatch(reciveNews(date, json)));
+    }
+    return null;
   };
 }
 

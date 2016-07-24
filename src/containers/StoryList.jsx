@@ -18,6 +18,7 @@ class StoryList extends Component {
       {
         !isFetching && stories.length > 0 && <StoriesList
           stories={stories}
+          dispatch={this.props.dispatch}
         />
       }
       </div>
