@@ -9,7 +9,7 @@ class StoryList extends Component {
     this.props.dispatch(fetchNews('latest'));
   }
   render() {
-    const { isFetching, stories } = this.props;
+    const { isFetching, stories, dispatch } = this.props;
     return (
       <div>
       {
@@ -18,7 +18,7 @@ class StoryList extends Component {
       {
         !isFetching && stories.length > 0 && <StoriesList
           stories={stories}
-          dispatch={this.props.dispatch}
+          fetchNews={(date) => { dispatch(fetchNews(date)); }}
         />
       }
       </div>
