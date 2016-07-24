@@ -1,10 +1,37 @@
+dateMargin = 25px;
+navColor = #9B9B9B
+dateNavStyle()
+  display: block;
+  width: 100%;
+  font-size: 14px;
+  color: navColor
+  text-align: center;
+  &:before
+    content: "－";
+    padding: 0 8px;
+  &:after
+    content: "－";
+    padding: 0 8px;
 .storyList
-  width: 736px
-  margin: 0 auto
+  width: 736px;
+  margin: 0 auto;
 .date
-  display: block
-  width: 100%
-  margin-left: 17px
+  margin-bottom: dateMargin;
+  margin-top: dateMargin;
+  dateNavStyle()
 .nextDay
-  display: block
-  width: 100%
+  dateNavStyle()
+  transition: all 0.3s ease-in-out;
+  input
+    background-color: transparent;
+    border: none;
+    outline: none;
+    width: 100%;
+    color: navColor
+    transition: all 0.3s ease-in-out;
+  &:hover
+    color: #383838
+    text-shadow: 0 1px 2px #00000050
+    input
+      color: #383838
+      text-shadow: 0 1px 2px #00000050
