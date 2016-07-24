@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import style from './StoriesList.styl';
 import StoryItem from './StoryItem';
+import Loading from '../Loading';
 
 function parseDate(dateString) {
   const year = parseInt(dateString.substring(0, 4), 10);
@@ -31,39 +32,53 @@ function getDate(dateString) {
   return `${date.month}月${date.day}日`;
 }
 
-const StoriesList = ({ stories, fetchNews }) => (
-  <div className={style.storyList}>
-    {
-      stories.map(dailyStory => {
-        const storyList = dailyStory.stories.map(story => (
-          <StoryItem
-            key={story.id}
-            {...story}
-          />
-          )
-        );
-        // push date tag in the front
-        storyList.unshift(<div className={style.date}>{getDate(dailyStory.date)}</div>);
+const StoriesList = ({ stories, fetchNews, isFetching }) => {
 
-        // push next day in the end
-        storyList.push(<span className={style.nextDay}>
-          <input
-            type="button"
-            value={"Next Day"}
-            onClick={() => {
-              fetchNews(`before/${stories[stories.length - 1].date}`);
-            }}
-          />
-        </span>);
-        return storyList;
-      })
-    }
-  </div>
-);
+  const list = stories.map(dailyStory => {
+    const storyList = dailyStory.stories.map(story => (
+      <StoryItem
+        key={story.id}
+        {...story}
+      />
+      )
+    );
+    // push date tag in the front
+    storyList.unshift(
+      <div className={style.date} key={dailyStory.date}>{getDate(dailyStory.date)}</div>
+    );
+    return storyList;
+  });
+
+
+  if (isFetching && stories.length === 0) {
+    return (<Loading />);
+  } else if (isFetching && stories.length !== 0) {
+    list.push(
+      <Loading key="Loading" />
+    );
+  } else {
+    // push next day in the end
+    list.push(
+      <span className={style.nextDay} key="nextDay">
+        <input
+          type="button"
+          value={"Next Day"}
+          onClick={() => {
+            fetchNews(`before/${stories[stories.length - 1].date}`);
+          }}
+        />
+      </span>);
+  }
+
+  return (
+    <div className={style.storyList}>{list}</div>
+  );
+};
 
 StoriesList.propTypes = {
   stories: PropTypes.array.isRequired,
   fetchNews: PropTypes.func.isRequired,
+  isFetching: PropTypes.bool.isRequired,
 };
 
 export default StoriesList;

@@ -13,10 +13,8 @@ class StoryList extends Component {
     return (
       <div>
       {
-        isFetching && <h1>loading</h1>
-      }
-      {
-        !isFetching && stories.length > 0 && <StoriesList
+        <StoriesList
+          isFetching={isFetching}
           stories={stories}
           fetchNews={(date) => { dispatch(fetchNews(date)); }}
         />
