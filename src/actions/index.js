@@ -1,7 +1,7 @@
 import { zhihuAPI } from '../statics';
 import fetch from 'isomorphic-fetch';
 /*
-Show a story
+Show a story.
  */
 export const REQUEST_STORY = 'REQUEST_STORY';
 
@@ -23,7 +23,7 @@ export function receiveStory(story, id) {
 }
 
 /*
-begin to request news
+begin to request news.
  */
 export const REQUEST_NEWS = 'REQUEST_NEWS';
 
@@ -49,6 +49,17 @@ export function reciveNews(date, news) {
   };
 }
 
+/*
+Network error while reciving news.
+ */
+export const RECEIVE_NEWS_ERROR = 'RECEIVE_NEWS_ERROR';
+
+export function reciveNewsError(errorMessage) {
+  return {
+    type: RECEIVE_NEWS_ERROR,
+    errorMessage,
+  };
+}
 // Thunk action creator
 
 export function fetchNews(date) {
@@ -67,8 +78,17 @@ export function fetchNews(date) {
       // In this case, we return a promise to wait for.
       // This is not required by thunk middleware, but it is convenient for us.
       return fetch(`${zhihuAPI}http://news-at.zhihu.com/api/4/news/${date}`)
-      .then(response => response.json())
-      .then(json => dispatch(reciveNews(date, json)));
+      .then(response => {
+        // if (response.status >= 400) {
+        //   throw new Error('Bad response from server');
+        // }
+        if (response.ok) {
+          response.json()
+          .then(json => dispatch(reciveNews(date, json)));
+        }
+        throw new Error(response.status);
+      })
+      .catch(error => (dispatch(reciveNewsError(error.message))));
     }
     return null;
   };
@@ -78,7 +98,12 @@ export function fetchStory(id) {
   return dispatch => {
     dispatch(requestStory(id));
     return fetch(`${zhihuAPI}http://news-at.zhihu.com/api/4/news/${id}`)
-      .then(response => response.json())
-      .then(json => dispatch(receiveStory(json, id)));
+      .then(response => {
+        if (response.ok) {
+          response.json()
+          .then(json => dispatch(receiveStory(json, id)));
+        }
+        throw new Error(response.status);
+      });
   };
 }

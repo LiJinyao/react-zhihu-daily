@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { fetchNews } from '../actions';
-import StoriesList from '../components/content/StoriesList';
+import StoriesList from '../components/storylist/StoriesList';
 
 class StoryList extends Component {
   componentDidMount() {
@@ -9,11 +9,12 @@ class StoryList extends Component {
     this.props.dispatch(fetchNews('latest'));
   }
   render() {
-    const { isFetching, stories, dispatch } = this.props;
+    const { isFetching, stories, dispatch, fetchError } = this.props;
     return (
       <div>
       {
         <StoriesList
+          fetchError={fetchError}
           isFetching={isFetching}
           stories={stories}
           fetchNews={(date) => { dispatch(fetchNews(date)); }}
@@ -28,6 +29,7 @@ StoryList.propTypes = {
   dispatch: PropTypes.func.isRequired,
   stories: PropTypes.array.isRequired,
   isFetching: PropTypes.bool.isRequired,
+  fetchError: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => (
@@ -35,6 +37,7 @@ const mapStateToProps = state => (
     // get a day's stories.
     stories: state.news.items,
     isFetching: state.news.isFetching,
+    fetchError: state.news.fetchError,
   }
 );
 

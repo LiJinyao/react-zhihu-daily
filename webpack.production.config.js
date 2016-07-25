@@ -10,6 +10,7 @@ module.exports = {
   output: {
   path: path.join(__dirname, 'dist/zhihuDaily/public'),
   filename: 'bundle.js',
+  publicPath: '/',
   },
   resolve: {
     // 如果不加上jsx默认不会处理jsx文件
@@ -17,7 +18,7 @@ module.exports = {
     extensions: ['', '.js', '.jsx']
   },
   plugins: [
-  new ExtractTextPlugin('style.css', { allChunks: false }),
+  new ExtractTextPlugin('style.css', { allChunks: true }),
   new HtmlWebpackPlugin({ template: './src/index.html', inject: 'body' }),
   new webpack.DefinePlugin({
     'process.env': {

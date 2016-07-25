@@ -1,20 +1,28 @@
 import { combineReducers } from 'redux';
-import { REQUEST_NEWS, RECEIVE_NEWS, REQUEST_STORY, RECEIVE_STORY } from '../actions';
+import {
+  REQUEST_NEWS,
+  RECEIVE_NEWS,
+  REQUEST_STORY,
+  RECEIVE_STORY,
+  RECEIVE_NEWS_ERROR,
+ } from '../actions';
 
 /**
  * @param  {[Set]}  cachedDays: 记录获取新闻的日期。每次下载到新闻都在这里add新闻的日期。
  *                             避免重复下载相同日期的新闻。每次下载新闻前先通过cachedDay检查是否已经存在那天的新闻。
  */
 function news(state = {
+  fetchError: false,
   isFetching: false,
   items: [],
   cachedDays: new Set(),
 }, action) {
   switch (action.type) {
     case REQUEST_NEWS:
-      return Object.assign({}, state, { isFetching: true });
+      return Object.assign({}, state, { isFetching: true, fetchError: false });
     case RECEIVE_NEWS:
       return Object.assign({}, state, {
+        fetchError: false,
         isFetching: false,
         items: [
           ...state.items,
@@ -22,6 +30,12 @@ function news(state = {
         ],
         lastUpdated: action.receivedAt,
         cachedDays: new Set(state.cachedDays).add(action.date),
+      });
+    case RECEIVE_NEWS_ERROR:
+      return Object.assign({}, state, {
+        isFetching: false,
+        fetchError: true,
+        errorMessage: action.errorMessage,
       });
     default:
       return state;
