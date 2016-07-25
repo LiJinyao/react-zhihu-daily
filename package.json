@@ -49,6 +49,7 @@
     "isomorphic-fetch": "^2.2.1",
     "jsx-loader": "^0.13.2",
     "morgan": "^1.7.0",
+    "nib": "^1.1.0",
     "react": "^15.2.1",
     "react-dom": "^15.2.1",
     "react-hot-loader": "^1.3.0",

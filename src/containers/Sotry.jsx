@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { fetchStory } from '../actions/index';
 import Story from '../components/story';
-
+import StatusAlert, { STATUS_ALERT_LOADING } from '../components/StatusAlert';
 class StoryContainer extends Component {
   componentDidMount() {
     const { dispatch, storyID, stories } = this.props;
@@ -16,7 +16,7 @@ class StoryContainer extends Component {
     return (
       <div>
       {isFetching &&
-        'Loadding'
+        <StatusAlert status={STATUS_ALERT_LOADING} />
       }
       {stories.has(storyID) &&
         <Story story={this.props.stories.get(storyID)} />

@@ -48,5 +48,9 @@ module.exports = {
       test: /\.svg$/,
       loader: 'svg-url-loader'
     }]
+  },
+  stylus: {
+    use: [require('nib')()],
+    import: ['~nib/lib/nib/index.styl']
   }
 };

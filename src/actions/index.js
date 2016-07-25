@@ -85,8 +85,9 @@ export function fetchNews(date) {
         if (response.ok) {
           response.json()
           .then(json => dispatch(reciveNews(date, json)));
+        } else {
+          throw new Error(response.status);
         }
-        throw new Error(response.status);
       })
       .catch(error => (dispatch(reciveNewsError(error.message))));
     }
