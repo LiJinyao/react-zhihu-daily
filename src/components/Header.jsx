@@ -1,9 +1,11 @@
 import React from 'react';
 import style from './Header.styl';
-
+import { IndexLink } from 'react-router';
 const Header = () => (
   <nav className={style.header}>
-  <div className={style.logo}></div>
+    <IndexLink to="/">
+      <div className={style.logo}></div>
+    </IndexLink>
   </nav>
 );
 
