@@ -40,7 +40,6 @@ news request comes through.
 export const RECEIVE_NEWS = 'RECEIVE_NEWS';
 
 export function reciveNews(date, news) {
-  console.log(news);
   return {
     type: RECEIVE_NEWS,
     date,
@@ -69,7 +68,6 @@ export function fetchNews(date) {
   return (dispatch, getState) => {
 // First dispatch: the app state is updated to inform
 // that the API call is starting.
-    console.log(getState());
     if (! getState().news.cachedDays.has(date)) {
       dispatch(requestNews(date));
       // The function called by the thunk middleware can return a value,
@@ -103,8 +101,9 @@ export function fetchStory(id) {
         if (response.ok) {
           response.json()
           .then(json => dispatch(receiveStory(json, id)));
+        } else {
+          throw new Error(response.status);
         }
-        throw new Error(response.status);
       });
   };
 }
