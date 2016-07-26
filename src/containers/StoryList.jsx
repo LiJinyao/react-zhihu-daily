@@ -9,11 +9,12 @@ class StoryList extends Component {
     this.props.dispatch(fetchNews('latest'));
   }
   render() {
-    const { isFetching, stories, dispatch, fetchError } = this.props;
+    const { isFetching, stories, dispatch, fetchError, errorMessage } = this.props;
     return (
       <div>
       {
         <StoriesList
+          errorMessage={errorMessage}
           fetchError={fetchError}
           isFetching={isFetching}
           stories={stories}
@@ -30,6 +31,7 @@ StoryList.propTypes = {
   stories: PropTypes.array.isRequired,
   isFetching: PropTypes.bool.isRequired,
   fetchError: PropTypes.bool.isRequired,
+  errorMessage: PropTypes.string,
 };
 
 const mapStateToProps = state => (
@@ -38,6 +40,7 @@ const mapStateToProps = state => (
     stories: state.news.items,
     isFetching: state.news.isFetching,
     fetchError: state.news.fetchError,
+    errorMessage: state.news.errorMessage,
   }
 );
 

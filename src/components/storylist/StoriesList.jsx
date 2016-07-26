@@ -19,7 +19,7 @@ function getDate(dateString) {
   return `${date.month}月${date.day}日`;
 }
 
-const StoriesList = ({ stories, fetchNews, isFetching, fetchError }) => {
+const StoriesList = ({ stories, fetchNews, isFetching, fetchError, errorMessage }) => {
   let list = stories.map(dailyStory => {
     const storyList = dailyStory.stories.map(story => (
       <StoryItem
@@ -38,7 +38,7 @@ const StoriesList = ({ stories, fetchNews, isFetching, fetchError }) => {
   // featch today's stories
   // fetch error
   if (fetchError) {
-    list = (<StatusAlert status={STATUS_ALERT_ERROR} />);
+    list = (<StatusAlert status={STATUS_ALERT_ERROR} errorMessage={errorMessage} />);
   } else if (isFetching && stories.length === 0) {
     // the storylist is empty
     list = (<StatusAlert status={STATUS_ALERT_LOADING} />);
