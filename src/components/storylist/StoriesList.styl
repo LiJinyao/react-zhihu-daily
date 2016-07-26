@@ -12,13 +12,18 @@ dateNavStyle()
   &:after
     content: "－";
     padding: 0 8px;
+  @media screen and (max-width: 700px)
+    font-size: 0.8rem;
 .storyList
   width: 736px;
   margin: 0 auto;
+  @media screen and (max-width: 700px)
+    width: 100%;
 .date
-  margin-bottom: dateMargin;
-  margin-top: dateMargin;
+  margin: dateMargin 0;
   dateNavStyle()
+  @media screen and (max-width: 700px)
+    margin 10px 0;
 .nextDay
   dateNavStyle()
   transition: all 0.3s ease-in-out;

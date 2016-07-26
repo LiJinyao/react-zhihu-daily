@@ -56,10 +56,10 @@ const StoriesList = ({ stories, fetchNews, isFetching, fetchError, errorMessage 
   } else {
     // add next day button in the end
     list.push(
-      <span className={style.nextDay} key="nextDay">
+      <span className={style.nextDay} key="preDay">
         <input
           type="button"
-          value={"Next Day"}
+          value={"前一天"}
           onClick={() => {
             fetchNews(`before/${stories[stories.length - 1].date}`);
           }}

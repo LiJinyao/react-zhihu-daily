@@ -1,6 +1,9 @@
 .storyBody
   width: 640px;
   margin: 0 auto;
+  @media screen and (max-width: 700px)
+    width: 100%;
+    box-sizing: border-box;
 
 /*
 story style
@@ -9,3 +12,5 @@ story style
   .img-place-holder
     height: 300px !important;
     overflow: hidden;
+    @media screen and (max-width: 700px)
+      height: 200px !important;
