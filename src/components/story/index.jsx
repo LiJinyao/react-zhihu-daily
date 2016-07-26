@@ -24,7 +24,7 @@ const Story = ({ story }) => (
   <div
     className={style.storyBody}
     dangerouslySetInnerHTML={{
-      __html: replaceImgSrcToProxy(story.body, story.css[0], story.image ,story.title).innerHTML,
+      __html: replaceImgSrcToProxy(story.body, story.css[0], story.image, story.title).innerHTML,
     }}
   >
   </div>

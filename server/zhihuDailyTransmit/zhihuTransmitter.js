@@ -16,7 +16,7 @@ function checkHostName(urlString) {
  */
 function getRequestMethod(urlString) {
   const zhihuUrl = url.parse(urlString);
-  if (zhihuUrl.protocol === 'https') {
+  if (zhihuUrl.protocol === 'https:') {
     return https.get;
   }
   return http.get;
