@@ -22,6 +22,15 @@ export function receiveStory(story, id) {
   };
 }
 
+export const RECEIVE_STORY_ERROR = 'RECEIVE_STORY_ERROR';
+
+export function receiveStoryError(errorMessage) {
+  return {
+    type: RECEIVE_STORY_ERROR,
+    errorMessage,
+  };
+}
+
 /*
 begin to request news.
  */
@@ -104,6 +113,7 @@ export function fetchStory(id) {
         } else {
           throw new Error(response.status);
         }
-      });
+      })
+      .catch(error => (dispatch(receiveStoryError(error.message))));
   };
 }

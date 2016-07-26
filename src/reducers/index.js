@@ -5,6 +5,7 @@ import {
   REQUEST_STORY,
   RECEIVE_STORY,
   RECEIVE_NEWS_ERROR,
+  RECEIVE_STORY_ERROR,
  } from '../actions';
 
 /**
@@ -51,6 +52,7 @@ function news(state = {
 function stories(state = {
   storyCache: new Map(),
   isFetching: false,
+  fetchError: false,
 }, action) {
   switch (action.type) {
     case REQUEST_STORY:
@@ -60,6 +62,13 @@ function stories(state = {
       return Object.assign({}, state, {
         storyCache: new Map(state.storyCache).set(action.id, action.story),
         isFetching: false,
+        fetchError: false,
+      });
+    case RECEIVE_STORY_ERROR:
+      return Object.assign({}, state, {
+        isFetching: false,
+        fetchError: true,
+        errorMessage: action.errorMessage,
       });
     default:
       return state;

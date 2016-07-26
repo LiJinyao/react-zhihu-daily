@@ -72,6 +72,7 @@ StoriesList.propTypes = {
   fetchNews: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,
   fetchError: PropTypes.bool.isRequired,
+  errorMessage: PropTypes.string,
 };
 
 export default StoriesList;

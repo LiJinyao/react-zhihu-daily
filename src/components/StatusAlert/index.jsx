@@ -20,7 +20,7 @@ const StatusAlert = ({ status, errorMessage }) => {
 
 StatusAlert.propTypes = {
   status: PropTypes.string.isRequired,
-  message: PropTypes.string,
+  errorMessage: PropTypes.string,
 };
 
 export default StatusAlert;
