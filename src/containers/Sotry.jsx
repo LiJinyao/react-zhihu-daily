@@ -16,10 +16,10 @@ class StoryContainer extends Component {
     return (
       <div>
       {fetchError &&
-        <StatusAlert status={STATUS_ALERT_ERROR} errorMessage={errorMessage} />
+        <StatusAlert status={STATUS_ALERT_ERROR} errorMessage={errorMessage} expand />
       }
       {isFetching &&
-        <StatusAlert status={STATUS_ALERT_LOADING} />
+        <StatusAlert status={STATUS_ALERT_LOADING} expand />
       }
       {stories.has(storyID) &&
         <Story story={this.props.stories.get(storyID)} />

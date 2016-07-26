@@ -47,7 +47,7 @@ const StatusAlert = ({ status, errorMessage, expand }) => {
       break;
   }
   return (
-    <div className={warpClassName} style={expendStyle}>
+    <div className={warpClassName} style={expand && expendStyle}>
       <div className={style.content}>
         {child}
       </div>
