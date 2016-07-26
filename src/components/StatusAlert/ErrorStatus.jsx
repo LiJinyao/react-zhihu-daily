@@ -1,11 +1,11 @@
 import React, { PropTypes } from 'react';
-import style from './ErrorStatus.styl';
+import errorStyle from './ErrorStatus.styl';
 
-const ErrorStatus = ({ errorMessage }) => (
-  <div className={style.errorStatus}>
-    <span>{`网络错误：${errorMessage}`}</span>
-  </div>
-);
+const ErrorStatus = ({ errorMessage }) => {
+  return (
+    <span className={errorStyle.errorText}>{`网络错误：${errorMessage}`}</span>
+  );
+};
 
 ErrorStatus.propTypes = {
   errorMessage: PropTypes.string.isRequired,

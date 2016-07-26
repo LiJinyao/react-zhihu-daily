@@ -18,7 +18,7 @@ module.exports = {
     extensions: ['', '.js', '.jsx']
   },
   plugins: [
-  new ExtractTextPlugin('style.css', { allChunks: true }),
+  new ExtractTextPlugin('style.css?v[contenthash:10]', { allChunks: true }),
   new HtmlWebpackPlugin({ template: './src/index.html', inject: 'body' }),
   new webpack.DefinePlugin({
     'process.env': {

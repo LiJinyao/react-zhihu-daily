@@ -38,10 +38,15 @@ const StoriesList = ({ stories, fetchNews, isFetching, fetchError, errorMessage 
   // featch today's stories
   // fetch error
   if (fetchError) {
-    list = (<StatusAlert status={STATUS_ALERT_ERROR} errorMessage={errorMessage} />);
+    // expand alert if the story is empty.
+    list = (<StatusAlert
+      status={STATUS_ALERT_ERROR}
+      errorMessage={errorMessage}
+      expand={stories.length === 0}
+    />);
   } else if (isFetching && stories.length === 0) {
     // the storylist is empty
-    list = (<StatusAlert status={STATUS_ALERT_LOADING} />);
+    list = (<StatusAlert status={STATUS_ALERT_LOADING} expand />);
   } else if (isFetching && stories.length !== 0) {
     // fetch other day's stories.
     // the storylist is not empty.

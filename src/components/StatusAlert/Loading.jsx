@@ -1,16 +1,20 @@
-import React from 'react';
-import style from './Loading.styl';
+import React, { PropTypes } from 'react';
+import loading from './Loading.styl';
 
-const Loading = () => (
-  <div className={style.loadingWarp}>
-    <div className={style.laodingContent}>
-      <div className={style.spinner}>
+const Loading = () => {
+  return (
+    <div>
+      <div className={loading.spinner}>
       </div>
-      <span className={style.text}>
+      <span className={loading.text}>
       loading...
       </span>
     </div>
-  </div>
-);
+  );
+};
+
+Loading.propTypes = {
+  expand: PropTypes.bool,
+};
 
 export default Loading;
