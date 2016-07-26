@@ -1,7 +1,5 @@
 import Express from 'express';
 import logger from 'morgan';
-import api from './routes/api';
-import img from './routes/img';
 import zhihu from './routes/zhihu';
 import path from 'path';
 
@@ -10,10 +8,6 @@ const app = new Express();
 app.use(Express.static(path.join(__dirname, '/public')));
 app.use(logger('dev'));
 
-// load api router
-// app.use('/api', api);
-// image router
-// app.use('/img', img);
 // 统一使用zhihu做代理
 app.use('/zhihu', zhihu);
 // send all requests to index.html so browserHistory in React Router works
