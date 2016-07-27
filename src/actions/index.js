@@ -77,6 +77,7 @@ export function fetchNews(date) {
   return (dispatch, getState) => {
 // First dispatch: the app state is updated to inform
 // that the API call is starting.
+  console.log(getState());
     if (! getState().news.cachedDays.has(date)) {
       dispatch(requestNews(date));
       // The function called by the thunk middleware can return a value,

@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import style from './StoriesList.styl';
 import StoryItem from './StoryItem';
+import Slider from '../Slider/Slider';
 import StatusAlert, { STATUS_ALERT_LOADING, STATUS_ALERT_ERROR } from '../StatusAlert';
 
 function parseDate(dateString) {
@@ -68,7 +69,10 @@ const StoriesList = ({ stories, fetchNews, isFetching, fetchError, errorMessage 
   }
 
   return (
-    <div className={style.storyList}>{list}</div>
+    <div className={style.storyList}>
+      <Slider data={[1, 2, 3, 4, 5]} />
+      {list}
+    </div>
   );
 };
 

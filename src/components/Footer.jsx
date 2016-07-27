@@ -5,7 +5,7 @@ const Footer = () => (
   <div className={`${style.footerContainer} appfooter`}>
     <div className={style.footer}>
       <span className={style.intro}>
-      用 react 写的 Zhihu Daily
+      用 React 写的 Zhihu Daily
       </span>
       <br />
       <a
