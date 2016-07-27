@@ -41,4 +41,4 @@ gulp.task('buildServer', buildServer);
 gulp.task('lint', lintServerCode);
 gulp.task('lintapp', lintFrontendCode);
 gulp.task('buildFrontend', buildFrontend);
-gulp.task('build', [buildServer, buildFrontend]);
+gulp.task('build', ['buildServer', 'buildFrontend']);
