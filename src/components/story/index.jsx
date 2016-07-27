@@ -8,7 +8,7 @@ function replaceImgSrcToProxy(htmlString, styleUrl, headerImgUrl, storyTitle) {
   // 使用zhihu的样式
   const zhihuStyle = document.createElement('link');
   zhihuStyle.setAttribute('rel', 'stylesheet');
-  zhihuStyle.setAttribute('href', styleUrl);
+  zhihuStyle.setAttribute('href', `${zhihuAPI}${styleUrl}`);
   element.innerHTML = zhihuStyle.outerHTML + htmlString;
   for (const child of element.getElementsByTagName('img')) {
     const imgUrl = child.getAttribute('src');
