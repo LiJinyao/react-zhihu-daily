@@ -9,7 +9,7 @@ module.exports = {
   entry: ['./src/index'],
   output: {
   path: path.join(__dirname, 'dist/zhihuDaily/public'),
-  filename: 'bundle.js',
+  filename: 'bundle.js?v[hash:10]',
   publicPath: '/',
   },
   resolve: {

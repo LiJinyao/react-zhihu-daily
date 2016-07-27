@@ -13,7 +13,7 @@ module.exports = {
   ],
   output: {
   path: path.join(__dirname, 'dist'),
-  filename: 'bundle.js',
+  filename: 'bundle.js?v[hash:10]',
   //热加载时使用的编译输出的相对路径
   publicPath: '/'
   },
