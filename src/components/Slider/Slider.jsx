@@ -2,17 +2,8 @@ import React, { PropTypes, Component } from 'react';
 import style from './Slider.styl';
 import SliderItem from './SliderItem';
 
-// 表示当前聚焦的slide
-// transform: translateX(0);
-export const SLIDE_ACTIVE = 'SLIDE_ACTIVE';
+// direction: prev next
 
-// 表示将slide向左移动
-// transform: ranslateX(-100%);
-export const SLIDE_LEFT = 'SLIDE_LEFT';
-
-// 表示将slide向右移动
-// transform: translateX(100%);
-export const SLIDE_RIGHT = 'SLIDE_RIGHT';
 
 /**
  * Note: 切换间隔 >= 切换速度 才合理。
@@ -22,6 +13,7 @@ class Slider extends Component {
     super(props);
     this.state = {
       currIndex: props.startIndex,
+      prevIndex: null,
       sliding: false,
     };
     this.timeStyle = {
@@ -33,7 +25,6 @@ class Slider extends Component {
   }
 
   componentWillUnmount() {
-    clearTimeout(this.slidingTag);
     clearInterval(this.playFlag);
   }
 
@@ -48,19 +39,14 @@ class Slider extends Component {
 
   turn(n) {
     // 先执行动画，在修改当前index。
-
-    // 动画开始
-    this.setState({ sliding: true });
     const nextIndex = this.nextIndex(n);
-
-    // 动画结束后修改当前slide。
-    this.slidingTag = setTimeout(() => {
-      this.setState({
-        currIndex: nextIndex,
-        sliding: false,
-      });
-    // 使用设置的动画间隔时间。
-    }, this.props.slideSpeed);
+    const prevIndex = this.state.currIndex;
+    // 动画开始
+    this.setState({
+      sliding: true,
+      currIndex: nextIndex,
+      prevIndex,
+    });
   }
 
   nextIndex(indexShift) {
@@ -75,30 +61,23 @@ class Slider extends Component {
   }
 
   render() {
-    const nextIndex = this.nextIndex(1);
+    // const nextIndex = this.nextIndex(1);
+    // const previousIndex = this.nextIndex(-1);
 //  console.log(`nextIndex ${nextIndex}`);
-    const { currIndex, sliding } = this.state;
+    const { currIndex, prevIndex } = this.state;
     const items = this.props.data.map((item, i) => {
-      let slideState;
-      if (i === currIndex) {
-        if (sliding) {
-          slideState = SLIDE_LEFT;
-        } else {
-          slideState = SLIDE_ACTIVE;
-        }
-      } else if (i === nextIndex) {
-        if (sliding) {
-          slideState = SLIDE_ACTIVE;
-        } else {
-          slideState = SLIDE_RIGHT;
-        }
-      }
+      console.log(prevIndex);
       return (
         <SliderItem
           data={item}
           key={i}
-          slideState={slideState}
+          index={i}
           timeStyle={this.timeStyle}
+          active={currIndex === i}
+          direction={'next'}
+          animateIn={currIndex === i && prevIndex != null}
+          animateOut={prevIndex === i}
+          slideSpeed={this.props.slideSpeed}
         />);
     });
     return (
@@ -107,7 +86,6 @@ class Slider extends Component {
       </ul>);
   }
 }
-
 
 Slider.propTypes = {
   data: PropTypes.array.isRequired,

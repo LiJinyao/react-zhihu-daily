@@ -33,6 +33,9 @@ const StoriesList = ({ stories, fetchNews, isFetching, fetchError, errorMessage 
     storyList.unshift(
       <div className={style.date} key={dailyStory.date}>{getDate(dailyStory.date)}</div>
     );
+    storyList.unshift(
+      <Slider key="topStories" data={dailyStory.top_stories} />
+    );
     return storyList;
   });
 
@@ -70,7 +73,6 @@ const StoriesList = ({ stories, fetchNews, isFetching, fetchError, errorMessage 
 
   return (
     <div className={style.storyList}>
-      <Slider data={[1, 2, 3, 4, 5]} />
       {list}
     </div>
   );

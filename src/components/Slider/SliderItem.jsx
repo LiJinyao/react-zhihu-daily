@@ -1,29 +1,78 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import style from './SldierItem.styl';
 import { SLIDE_ACTIVE, SLIDE_LEFT, SLIDE_RIGHT } from './Slider';
-const SliderItem = ({ data, slideState, timeStyle }) => {
-  let stateClassName;
-  switch (slideState) {
-    case SLIDE_ACTIVE:
-      stateClassName = style.active;
-      break;
-    case SLIDE_LEFT:
-      stateClassName = style.left;
-      break;
-    case SLIDE_RIGHT:
-      stateClassName = style.right;
-      break;
-    default:
-      stateClassName = '';
-  }
-  return (
-    <li className={`${style.itemwarp} ${stateClassName}`} style={timeStyle}>
-      {data}
-    </li>);
-};
+import { zhihuAPI } from '../../statics';
 
-// SliderItem.propTypes = {
-//   data: PropTypes.strin
-// }
+class SliderItem extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      animateIn: false,
+      // right or left
+      // which direction item will move to.
+      direction: null,
+    };
+  }
+  componentWillReceiveProps(nextProps) {
+    // clear state for animate.
+    if (nextProps.active !== this.props.active) {
+      this.setState({ direction: null });
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    // 先通过props 设置slide动画的预备类，然后在componentDidUpdate之后开始动画
+    if (this.props.active !== prevProps.active) {
+      setTimeout(() => {
+        this.setState({
+          direction: this.props.direction === 'prev' ? 'right' : 'left',
+        });
+      }, 20);
+    }
+  }
+
+
+  /*
+ animateClassSet
+ In: right -> active
+ out: active -> left
+   */
+  render() {
+    let className = style.itemwarp;
+    const { animateIn } = this.state;
+    // const { animateIn, animateOut } = this.props;
+
+    if (this.props.animateIn && !this.state.direction) {
+      className += ` ${style.right}`;
+    } else if (this.props.animateIn && this.state.direction) {
+      className += ` ${style.active}`;
+    }else if (!this.props.animateIn && this.props.active) {
+      className += ` ${style.active}`;
+    }
+
+    if (this.props.animateOut && !this.state.direction) {
+      className += ` ${style.active}`;
+    } else if(this.props.animateOut && this.state.direction) {
+      className += ` ${style.left}`;
+    }
+
+    // if (animateIn) {
+    //   className += ` ${style.right}`;
+    // }
+
+    const backgroundStyle = {
+      backgroundImage: `url(\"${zhihuAPI}${this.props.data.image}\")`,
+    };
+    return (
+      <li className={className} style={backgroundStyle}>
+      </li>);
+  }
+}
+
+SliderItem.propTypes = {
+  active: PropTypes.bool.isRequired,
+  direction: PropTypes.oneOf(['prev', 'next']),
+  data: PropTypes.object,
+};
 
 export default SliderItem;
