@@ -79,6 +79,7 @@ class Slider extends Component {
     return (
       <ul className={style.sliderBody}>
         {items}
+        <DirectionNav />
       </ul>);
   }
 }
