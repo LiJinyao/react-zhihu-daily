@@ -6,7 +6,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   //行到行的source map
   devtool: 'cheap-module-source-map',
-  entry: ['./src/index'],
+  entry: ['babel-polyfill', './src/index'],
   output: {
   path: path.join(__dirname, 'dist/zhihuDaily/public'),
   filename: 'bundle.js?v[hash:10]',
@@ -35,8 +35,7 @@ module.exports = {
   module: {
     loaders: [{
       test: /\.jsx?$/,
-      //'react-hot'放在最前面，然后处理jsx，最后babel预编译
-      loaders: ['react-hot', 'jsx?harmony', 'babel'],
+      loaders: ['jsx?harmony', 'babel'],
       include: path.join(__dirname, 'src')
     },
     {

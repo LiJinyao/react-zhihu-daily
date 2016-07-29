@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import style from './SldierItem.styl';
-import { SLIDE_ACTIVE, SLIDE_LEFT, SLIDE_RIGHT } from './Slider';
 import { zhihuAPI } from '../../statics';
 
 class SliderItem extends Component {
