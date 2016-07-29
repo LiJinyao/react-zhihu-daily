@@ -6,16 +6,13 @@ class SliderItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      animateIn: false,
-      // right or left
-      // which direction item will move to.
-      direction: null,
+      animate: false,
     };
   }
   componentWillReceiveProps(nextProps) {
     // clear state for animate.
     if (nextProps.active !== this.props.active) {
-      this.setState({ direction: null });
+      this.setState({ animate: false });
     }
   }
 
@@ -24,7 +21,7 @@ class SliderItem extends Component {
     if (this.props.active !== prevProps.active) {
       setTimeout(() => {
         this.setState({
-          direction: this.props.direction === 'prev' ? 'right' : 'left',
+          animate: true,
         });
       }, 20);
     }
@@ -38,29 +35,35 @@ class SliderItem extends Component {
    */
   render() {
     let className = style.itemwarp;
-    const { animateIn } = this.state;
     // const { animateIn, animateOut } = this.props;
+    const animate = this.state.animate;
+    const driection = this.props.direction;
 
-    if (this.props.animateIn && !this.state.direction) {
-      className += ` ${style.right}`;
-    } else if (this.props.animateIn && this.state.direction) {
+    if (this.props.animateIn && !animate) {
+      if (driection === 'next') {
+        className += ` ${style.next}`;
+      } else {
+        className += ` ${style.prev}`;
+      }
+    } else if (this.props.animateIn && animate) {
       className += ` ${style.active}`;
-    }else if (!this.props.animateIn && this.props.active) {
+    } else if (!this.props.animateIn && this.props.active) {
       className += ` ${style.active}`;
     }
 
-    if (this.props.animateOut && !this.state.direction) {
+    if (this.props.animateOut && !animate) {
       className += ` ${style.active}`;
-    } else if(this.props.animateOut && this.state.direction) {
-      className += ` ${style.left}`;
+    } else if (this.props.animateOut && animate) {
+      if (driection === 'next') {
+        className += ` ${style.left}`;
+      } else {
+        className += ` ${style.right}`;
+      }
     }
-
-    // if (animateIn) {
-    //   className += ` ${style.right}`;
-    // }
 
     const backgroundStyle = {
       backgroundImage: `url(\"${zhihuAPI}${this.props.data.image}\")`,
+      transition: this.props.transitionStyle,
     };
     return (
       <li className={className} style={backgroundStyle}>
@@ -72,6 +75,9 @@ SliderItem.propTypes = {
   active: PropTypes.bool.isRequired,
   direction: PropTypes.oneOf(['prev', 'next']),
   data: PropTypes.object,
+  animateIn: PropTypes.bool,
+  animateOut: PropTypes.bool,
+  transitionStyle: PropTypes.string,
 };
 
 export default SliderItem;

@@ -21,23 +21,26 @@ function getDate(dateString) {
 }
 
 const StoriesList = ({ stories, fetchNews, isFetching, fetchError, errorMessage }) => {
-  let list = stories.map(dailyStory => {
-    const storyList = dailyStory.stories.map(story => (
-      <StoryItem
-        key={story.id}
-        {...story}
-      />
-      )
+  let list = [];
+  if (stories.length !== 0) {
+    list.push(<Slider data={stories[0].top_stories} key="topStories" />);
+    list.push(
+      stories.map(dailyStory => {
+        const storyList = dailyStory.stories.map(story => (
+          <StoryItem
+            key={story.id}
+            {...story}
+          />
+          )
+        );
+        // push date tag in the front
+        storyList.unshift(
+          <div className={style.date} key={dailyStory.date}>{getDate(dailyStory.date)}</div>
+        );
+        return storyList;
+      })
     );
-    // push date tag in the front
-    storyList.unshift(
-      <div className={style.date} key={dailyStory.date}>{getDate(dailyStory.date)}</div>
-    );
-    // storyList.unshift(
-    //   <Slider key="topStories" data={dailyStory.top_stories} />
-    // );
-    return storyList;
-  });
+  }
 
   // featch today's stories
   // fetch error
@@ -73,6 +76,7 @@ const StoriesList = ({ stories, fetchNews, isFetching, fetchError, errorMessage 
 
   return (
     <div className={style.storyList}>
+
       {list}
     </div>
   );
