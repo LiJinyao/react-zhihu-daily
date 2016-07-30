@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import style from './SldierItem.styl';
 import { zhihuAPI } from '../../statics';
-
+import { Link } from 'react-router';
 const ANIMATE_PREPARE = 'ANIMATE_PREPARE';
 const ANIMATE_ANIMATING = 'ANIMATE_ANIMATING';
 const ANIMATE_END = 'ANIMATE_END';
@@ -27,14 +27,16 @@ class SliderItem extends Component {
           animate: ANIMATE_ANIMATING,
         });
       }, 20);
-      setTimeout(() => {
+      this.animateTag = setTimeout(() => {
         this.setState({
           animate: ANIMATE_END,
         });
       }, this.props.slideSpeed + 20);
     }
   }
-
+  componentWillUnmount() {
+    clearTimeout(this.animateTag);
+  }
 
   /*
  animateClassSet
@@ -95,7 +97,10 @@ class SliderItem extends Component {
     };
     return (
       <li className={className} style={backgroundStyle}>
-      </li>);
+        <Link className={style.linkwarp} to={`/news/${this.props.data.id}`} />
+      </li>
+
+    );
   }
 }
 

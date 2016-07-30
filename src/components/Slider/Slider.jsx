@@ -13,6 +13,8 @@ class Slider extends Component {
       currIndex: props.startIndex,
       prevIndex: null,
       direction: 'next',
+      // lock sldie when already perform sliding animation.
+      lockNav: false,
     };
     this.transitionStyle = `transform ${this.props.slideSpeed / 1000}s ease-in-out`;
   }
@@ -22,6 +24,7 @@ class Slider extends Component {
 
   componentWillUnmount() {
     this.stopAutoPlay();
+    clearTimeout(this.lockNavTag);
   }
   stopAutoPlay() {
     clearInterval(this.playFlag);
@@ -45,20 +48,27 @@ class Slider extends Component {
   }
 
   turn(n) {
-    // 先执行动画，在修改当前index。
-    const nextIndex = this.nextIndex(n);
-    const prevIndex = this.state.currIndex;
-    const direction = n > 0 ? 'next' : 'prev';
-    // 动画开始
-    this.setState({
-      currIndex: nextIndex,
-      prevIndex,
-      direction,
-    });
+    if (!this.state.lockNav) {
+      // 先执行动画，在修改当前index。
+      const nextIndex = this.nextIndex(n);
+      const prevIndex = this.state.currIndex;
+      const direction = n > 0 ? 'next' : 'prev';
+      // 动画开始
+      this.setState({
+        currIndex: nextIndex,
+        lockNav: true,
+        prevIndex,
+        direction,
+      });
+
+      // unlock slide nav.
+      this.lockNavTag = setTimeout(() => {
+        this.setState({ lockNav: false });
+      }, this.props.slideSpeed);
+    }
   }
   mouseOver() {
     // stop auto play
-    console.log(this);
     this.stopAutoPlay();
   }
   nextIndex(indexShift) {
@@ -108,9 +118,8 @@ Slider.propTypes = {
   startIndex: PropTypes.number.isRequired,
 };
 Slider.defaultProps = {
-  slideSpeed: 1000,
+  slideSpeed: 600,
   slideInterval: 2000,
-  autoPlay: true,
   startIndex: 0,
 };
 

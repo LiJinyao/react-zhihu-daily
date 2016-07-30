@@ -10,18 +10,30 @@
   -webkit-font-smoothing: antialiased;
   -webkit-text-stroke-width: 0.2px;
   -moz-osx-font-smoothing: grayscale;
-.directionNav
+.navbtn
   position: absolute;
   top: 50%;
   margin-top: -18px;
-  width: 100%;
-.navbtn
-  position: relative;
-  width: 36px;
-  height: 36px;
-  font-size: 30px;
+  display: block;
   cursor: pointer;
+
+contentMixin(char)
+  transition: margin .2s;
+  &:before
+    color: #3280ED;
+    content: char
+    display: block;
+    width: 30px;
+    height: 30px;
+    font-size: 30px;
+    padding: 4px;
 .prev
-  float: left;
+  left: 0
+  contentMixin('\e64b')
+  &:active
+    margin-left: -8px;
 .next
-  float: right;
+  right: 0
+  contentMixin('\e64c')
+  &:active
+    margin-right: -8px;
