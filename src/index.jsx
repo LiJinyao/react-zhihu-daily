@@ -22,3 +22,19 @@ render(
   </Provider>,
   document.getElementById('root')
 );
+
+var buglog = document.createElement("div");
+
+window.onerror = function(message, source, lineno, colno, error) {
+  // show error on page.
+  var bugMessage = document.createElement("div");
+  bugMessage.innerHTML = `<p>${message}</p>
+  <p>${source}</p>
+  <p>${lineno}</p>
+  <p>${colno}</p>
+  <p>${error}</p>
+  `;
+  document.body.appendChild(bugMessage);
+};
+
+document.hello(s);
