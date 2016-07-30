@@ -36,5 +36,3 @@ window.onerror = function(message, source, lineno, colno, error) {
   `;
   document.body.appendChild(bugMessage);
 };
-
-document.hello(s);
