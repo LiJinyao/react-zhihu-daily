@@ -93,10 +93,18 @@ class SliderItem extends Component {
 
     const backgroundStyle = {
       backgroundImage: `url(\"${zhihuAPI}${this.props.data.image}\")`,
+      backgroundRepeat: 'no-repeat',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
       transition: this.props.transitionStyle,
     };
     return (
       <li className={className} style={backgroundStyle}>
+        <div className={style.header}>
+          <span className={style.headerTitle}>
+           {this.props.data.title}
+          </span>
+        </div>
         <Link className={style.linkwarp} to={`/news/${this.props.data.id}`} />
       </li>
 

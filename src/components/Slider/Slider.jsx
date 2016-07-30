@@ -64,12 +64,17 @@ class Slider extends Component {
       // unlock slide nav.
       this.lockNavTag = setTimeout(() => {
         this.setState({ lockNav: false });
-      }, this.props.slideSpeed);
+        // give a little more time for other opreation.
+      }, this.props.slideSpeed + 50);
     }
   }
   mouseOver() {
     // stop auto play
     this.stopAutoPlay();
+  }
+  mouseOut() {
+    // resume animate
+    this.play();
   }
   nextIndex(indexShift) {
     let nextIndex = this.state.currIndex + indexShift;
@@ -98,7 +103,11 @@ class Slider extends Component {
       />)
     );
     return (
-      <div className={style.sliderWarp} onMouseOver={() => { this.mouseOver(); }}>
+      <div
+        className={style.sliderWarp}
+        onMouseOver={() => { this.mouseOver(); }}
+        onMouseOut={() => { this.mouseOut(); }}
+      >
         <ul className={style.sliderBody}>
           {items}
         </ul>
