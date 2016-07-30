@@ -91,15 +91,20 @@ class SliderItem extends Component {
       }
     }
 
-    const backgroundStyle = {
-      backgroundImage: `url(\"${zhihuAPI}${this.props.data.image}\")`,
-      backgroundRepeat: 'no-repeat',
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
+    const itemStyle = {
+      // backgroundImage: `url(\"${zhihuAPI}${this.props.data.image}\")`,
+      // backgroundRepeat: 'no-repeat',
+      // backgroundSize: 'cover',
+      // backgroundPosition: 'center',
       transition: this.props.transitionStyle,
     };
     return (
-      <li className={className} style={backgroundStyle}>
+      <li className={className} style={itemStyle}>
+        <img
+          className={style.contentImg}
+          src={`${zhihuAPI}${this.props.data.image}`}
+          alt={this.props.data.title}
+        />
         <div className={style.header}>
           <span className={style.headerTitle}>
            {this.props.data.title}
@@ -107,7 +112,6 @@ class SliderItem extends Component {
         </div>
         <Link className={style.linkwarp} to={`/news/${this.props.data.id}`} />
       </li>
-
     );
   }
 }
