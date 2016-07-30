@@ -12,6 +12,7 @@ class Slider extends Component {
     this.state = {
       currIndex: props.startIndex,
       prevIndex: null,
+      direction: 'next',
     };
     this.transitionStyle = `transform ${this.props.slideSpeed / 1000}s ease-in-out`;
   }
@@ -47,10 +48,12 @@ class Slider extends Component {
     // 先执行动画，在修改当前index。
     const nextIndex = this.nextIndex(n);
     const prevIndex = this.state.currIndex;
+    const direction = n > 0 ? 'next' : 'prev';
     // 动画开始
     this.setState({
       currIndex: nextIndex,
       prevIndex,
+      direction,
     });
   }
   mouseOver() {
@@ -70,7 +73,7 @@ class Slider extends Component {
   }
 
   render() {
-    const { currIndex, prevIndex } = this.state;
+    const { currIndex, prevIndex, direction } = this.state;
     const items = this.props.data.map((item, i) => (
       <SliderItem
         data={item}
@@ -78,7 +81,7 @@ class Slider extends Component {
         index={i}
         transitionStyle={this.transitionStyle}
         active={currIndex === i}
-        direction={'next'}
+        direction={direction}
         animateIn={currIndex === i && prevIndex != null}
         animateOut={prevIndex === i}
         slideSpeed={this.props.slideSpeed}
