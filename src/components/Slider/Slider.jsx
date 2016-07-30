@@ -31,12 +31,12 @@ class Slider extends Component {
   }
 
   play() {
-    // this.playFlag = setInterval(() => {
-    //   // console.log("trun next, currIndex: " + this.state.currIndex);
-    //   this.next();
-    //   // 切换间隔要考虑切换动画时间，
-    //   // 所以每次切换的间隔应该是切换动画时间 ＋ 用户设置的间隔。
-    // }, this.props.slideSpeed + this.props.slideInterval);
+    this.playFlag = setInterval(() => {
+      // console.log("trun next, currIndex: " + this.state.currIndex);
+      this.next();
+      // 切换间隔要考虑切换动画时间，
+      // 所以每次切换的间隔应该是切换动画时间 ＋ 用户设置的间隔。
+    }, this.props.slideSpeed + this.props.slideInterval);
   }
 
   next() {
