@@ -11,9 +11,13 @@
     height: 80px;
     margin: 5px 0;
     box-sizing: border-box;
-    box-shadow: 0 0px 1px rgba(0, 0, 0, 0.3);
+    border-top: 1px solid	#e6e6e6;
+    border-bottom: 1px solid #e6e6e6;
+    box-shadow: none;
   &:hover
     box-shadow: 0 2px 21px 0 rgba(0, 0, 0, 0.4);
+    @media screen and (max-width: 700px)
+      box-shadow: none;
 .img
   float: left;
   height: 150px;

@@ -56,5 +56,9 @@ module.exports = {
       loader: 'url-loader?limit=10000&name=font/[name].[ext]',
       include: path.join(__dirname, 'src', 'statics', 'iconfont')
     }]
+  },
+  stylus: {
+    use: [require('nib')()],
+    import: ['~nib/lib/nib/index.styl']
   }
 };
