@@ -9,13 +9,13 @@ class SliderItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      animate: false,
+      animate: ANIMATE_END,
     };
   }
   componentWillReceiveProps(nextProps) {
     // clear state for animate.
     if (nextProps.active !== this.props.active) {
-      this.setState({ animate: false });
+      this.setState({ animate: ANIMATE_PREPARE });
     }
   }
 
@@ -24,9 +24,14 @@ class SliderItem extends Component {
     if (this.props.active !== prevProps.active) {
       setTimeout(() => {
         this.setState({
-          animate: true,
+          animate: ANIMATE_ANIMATING,
         });
       }, 20);
+      setTimeout(() => {
+        this.setState({
+          animate: ANIMATE_END,
+        });
+      }, this.props.slideSpeed + 20);
     }
   }
 
@@ -41,26 +46,46 @@ class SliderItem extends Component {
     // const { animateIn, animateOut } = this.props;
     const animate = this.state.animate;
     const driection = this.props.direction;
-    // animate in slider
-    if (this.props.animateIn && !animate) {
-      if (driection === 'next') {
-        className += ` ${style.next}`;
+
+    // prepare animate
+    if (animate === ANIMATE_PREPARE) {
+      // animate in
+      if (this.props.animateIn) {
+        if (driection === 'next') {
+          className += ` ${style.next}`;
+        } else {
+          className += ` ${style.prev}`;
+        }
       } else {
-        className += ` ${style.prev}`;
+        // animate out
+        className += ` ${style.active}`;
+        // if (driection === 'next') {
+        //   className += ` ${style.prev}`;
+        // } else {
+        //   className += ` ${style.next}`;
+        // }
       }
-    } else if (this.props.animateIn && animate) {
-      className += ` ${style.active}`;
-    } else if (!this.props.animateIn && this.props.active) {
-      className += ` ${style.active}`;
     }
-    // animate out slider
-    if (this.props.animateOut && !animate) {
-      className += ` ${style.active}`;
-    } else if (this.props.animateOut && animate) {
-      if (driection === 'next') {
-        className += ` ${style.prev}`;
+
+    // perform animate.
+    if (animate === ANIMATE_ANIMATING) {
+      // animate in
+      if (this.props.animateIn) {
+        className += ` ${style.active}`;
       } else {
-        className += ` ${style.next}`;
+        // animate out
+        if (driection === 'next') {
+          className += ` ${style.prev}`;
+        } else {
+          className += ` ${style.next}`;
+        }
+      }
+    }
+
+    // animate end, set classname which it should be.
+    if (animate === ANIMATE_END) {
+      if (this.props.active) {
+        className += ` ${style.active}`;
       }
     }
 
@@ -81,6 +106,7 @@ SliderItem.propTypes = {
   animateIn: PropTypes.bool,
   animateOut: PropTypes.bool,
   transitionStyle: PropTypes.string,
+  slideSpeed: PropTypes.number,
 };
 
 export default SliderItem;
