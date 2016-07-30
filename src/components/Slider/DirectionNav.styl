@@ -1,6 +1,27 @@
-.next
-  &:before
-    content: "\f137";
+@font-face
+  font-family iconfont
+  font-style normal
+  src url('../../statics/iconfont/iconfont.woff')
+:global .iconfont
+  font-family: iconfont !important;
+  font-size: 14px;
+  color: black;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
+.directionNav
+  position: absolute;
+  top: 50%;
+  margin-top: -18px;
+  width: 100%;
+.navbtn
+  position: relative;
+  width: 36px;
+  height: 36px;
+  font-size: 30px;
+  cursor: pointer;
 .prev
-  &:before
-    content: "\f137";
+  float: left;
+.next
+  float: right;

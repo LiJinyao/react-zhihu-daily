@@ -2,6 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import style from './SldierItem.styl';
 import { zhihuAPI } from '../../statics';
 
+const ANIMATE_PREPARE = 'ANIMATE_PREPARE';
+const ANIMATE_ANIMATING = 'ANIMATE_ANIMATING';
+const ANIMATE_END = 'ANIMATE_END';
 class SliderItem extends Component {
   constructor(props) {
     super(props);
@@ -38,7 +41,7 @@ class SliderItem extends Component {
     // const { animateIn, animateOut } = this.props;
     const animate = this.state.animate;
     const driection = this.props.direction;
-
+    // animate in slider
     if (this.props.animateIn && !animate) {
       if (driection === 'next') {
         className += ` ${style.next}`;
@@ -50,14 +53,14 @@ class SliderItem extends Component {
     } else if (!this.props.animateIn && this.props.active) {
       className += ` ${style.active}`;
     }
-
+    // animate out slider
     if (this.props.animateOut && !animate) {
       className += ` ${style.active}`;
     } else if (this.props.animateOut && animate) {
       if (driection === 'next') {
-        className += ` ${style.left}`;
+        className += ` ${style.prev}`;
       } else {
-        className += ` ${style.right}`;
+        className += ` ${style.next}`;
       }
     }
 

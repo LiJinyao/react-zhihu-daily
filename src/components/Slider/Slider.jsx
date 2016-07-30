@@ -20,6 +20,9 @@ class Slider extends Component {
   }
 
   componentWillUnmount() {
+    this.stopAutoPlay();
+  }
+  stopAutoPlay() {
     clearInterval(this.playFlag);
   }
 
@@ -50,7 +53,11 @@ class Slider extends Component {
       prevIndex,
     });
   }
-
+  mouseOver() {
+    // stop auto play
+    console.log(this);
+    this.stopAutoPlay();
+  }
   nextIndex(indexShift) {
     let nextIndex = this.state.currIndex + indexShift;
     if (nextIndex >= this.props.data.length) {
@@ -74,13 +81,20 @@ class Slider extends Component {
         direction={'next'}
         animateIn={currIndex === i && prevIndex != null}
         animateOut={prevIndex === i}
+        slideSpeed={this.props.slideSpeed}
       />)
     );
     return (
-      <ul className={style.sliderBody}>
-        {items}
-        <DirectionNav />
-      </ul>);
+      <div className={style.sliderWarp} onMouseOver={() => { this.mouseOver(); }}>
+        <ul className={style.sliderBody}>
+          {items}
+        </ul>
+        <DirectionNav
+          onNextClick={() => { this.next(); }}
+          onPrevClick={() => { this.prev(); }}
+        />
+      </div>
+    );
   }
 }
 
