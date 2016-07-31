@@ -21,7 +21,7 @@
   cursor: pointer;
 
 contentMixin(char)
-  transition: margin .2s;
+  transition: transform .2s;
   &:before
     color: #3280ED;
     content: char
@@ -34,9 +34,9 @@ contentMixin(char)
   left: 0
   contentMixin('\e64b')
   &:active
-    margin-left: -8px;
+    transform: translateX(-8px);
 .next
   right: 0
   contentMixin('\e64c')
   &:active
-    margin-right: -8px;
+    transform: translateX(8px);

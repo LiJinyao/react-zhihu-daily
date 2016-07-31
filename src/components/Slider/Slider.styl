@@ -1,20 +1,19 @@
 // 640px
 .sliderWarp
   position: relative;
-  width: 640px;
-  height: 300px;
+  margin: 0 auto;
   margin-bottom: 40px;
+  width: 640px;
+  height: 320px;
+  overflow: hidden;
   @media screen and (max-width: 700px)
+    width: 100%;
     margin-bottom: 20px;
     height: 200px;
 .sliderBody
-  position: relative;
+  position: absolute;
   height: inherit;
   padding: 0;
+  margin: 0;
   list-style: none;
   box-sizing: border-box;
-.slideEnter
-  opacity: 0.01;
-.slideEnterActive
-  opacity: 1;
-  transition: opacity .5s ease-in;
