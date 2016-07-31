@@ -16,7 +16,7 @@ class Slider extends Component {
       // lock sldie when already perform sliding animation.
       lockNav: false,
     };
-    this.transitionStyle = `margin ${this.props.slideSpeed / 1000}s ease-in-out`;
+    this.transitionStyle = `transform ${this.props.slideSpeed / 1000}s ease-in-out`;
   }
   componentDidMount() {
     this.play();

@@ -1,21 +1,22 @@
 .itemwarp
   height: inherit;
-  width: 100%;
+  width: inherit;
   display: none;
+  box-sizing: border-box;
+  transform: translateX(0);
   position: absolute;
   top: 0;
-  box-sizing: border-box;
 .active
   display: block;
-  margin-left: 0;
+  transform: translateX(0);
 .right
 .next
   display: block;
-  margin-left: 100%;
+  transform: translateX(100%);
 .left
 .prev
   display: block;
-  margin-left: -100%;
+  transform: translateX(-100%);
 .linkwarp
   position: absolute;
   top: 0;

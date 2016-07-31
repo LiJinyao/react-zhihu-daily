@@ -54,18 +54,13 @@ class SliderItem extends Component {
       // animate in
       if (this.props.animateIn) {
         if (driection === 'next') {
-          className += ` ${style.active} ${style.next}`;
+          className += ` ${style.next}`;
         } else {
           className += ` ${style.prev}`;
         }
       } else {
         // animate out
         className += ` ${style.active}`;
-        // if (driection === 'next') {
-        //   className += ` ${style.prev}`;
-        // } else {
-        //   className += ` ${style.next}`;
-        // }
       }
     }
 
@@ -92,10 +87,6 @@ class SliderItem extends Component {
     }
 
     const itemStyle = {
-      // backgroundImage: `url(\"${zhihuAPI}${this.props.data.image}\")`,
-      // backgroundRepeat: 'no-repeat',
-      // backgroundSize: 'cover',
-      // backgroundPosition: 'center',
       transition: this.props.transitionStyle,
     };
     return (
