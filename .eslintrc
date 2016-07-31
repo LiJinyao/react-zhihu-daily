@@ -5,5 +5,8 @@
     },
   "plugins": [
     "react"
-    ]
+    ],
+   "rules": {
+        "key-spacing": ["error", { "align": "value", "mode": "minimum" }]
+    }
 }

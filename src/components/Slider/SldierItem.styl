@@ -1,34 +1,31 @@
 .itemwarp
   height: inherit;
-  width: inherit;
-  display: none;
+  float: left;
   box-sizing: border-box;
-  transform: translateX(0);
-  position: absolute;
-  top: 0;
-.active
-  display: block;
-  transform: translateX(0);
-.right
-.next
-  display: block;
-  transform: translateX(100%);
-.left
-.prev
-  display: block;
-  transform: translateX(-100%);
+  overflow: hidden;
+// .active
+//   display: block;
+//   transform: translateX(0);
+// .right
+// .next
+//   display: block;
+//   transform: translateX(100%);
+// .left
+// .prev
+//   display: block;
+//   transform: translateX(-100%);
 .linkwarp
   position: absolute;
   top: 0;
   display: block;
   height: 100%;
-  width: 100%;
+  width: inherit;
 .header
   display: table;
   position: absolute;
   bottom: 0;
   height: 50px;
-  width: 100%;
+  width: inherit;
   background-color: rgba(50,128,237,0.8);
   @media screen and (max-width: 700px)
     height: 40px;

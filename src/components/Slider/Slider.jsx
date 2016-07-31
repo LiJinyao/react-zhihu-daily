@@ -10,13 +10,14 @@ class Slider extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currIndex: props.startIndex,
-      prevIndex: null,
-      direction: 'next',
+      currIndex:    props.startIndex + 1,
+      prevIndex:    null,
+      direction:    'next',
+      widthPerItem: 0,
       // lock sldie when already perform sliding animation.
-      lockNav: false,
+      lockNav:      false,
     };
-    this.transitionStyle = `transform ${this.props.slideSpeed / 1000}s ease-in-out`;
+    this.widthPerItem = 0;
   }
   componentDidMount() {
     this.play();
@@ -55,7 +56,7 @@ class Slider extends Component {
       // 动画开始
       this.setState({
         currIndex: nextIndex,
-        lockNav: true,
+        lockNav:   true,
         prevIndex,
         direction,
       });
@@ -85,29 +86,48 @@ class Slider extends Component {
     }
     return nextIndex;
   }
-
+  dom(element) {
+    this.slideBodyDOM = element;
+    this.widthPerItem = this.slideBodyDOM.clientWidth;
+  }
   render() {
-    const { currIndex, prevIndex, direction } = this.state;
-    const items = this.props.data.map((item, i) => (
-      <SliderItem
-        data={item}
-        key={i}
-        index={i}
-        transitionStyle={this.transitionStyle}
-        active={currIndex === i}
-        direction={direction}
-        animateIn={currIndex === i && prevIndex != null}
-        animateOut={prevIndex === i}
-        slideSpeed={this.props.slideSpeed}
-      />)
+    const currIndex = this.state.currIndex;
+    const itemWidth = 640;
+    const offset = itemWidth * currIndex;
+    // position: absolute; overflow: hidden; width: 3640px; transition-duration: 0.3s;
+    // transform: translate3d(-1040px, 0px, 0px); backface-visibility: hidden;
+    // left: 0px; opacity: 1;
+    const itemCount = this.props.data.length;
+    const transitionStyle = {
+      width:              `${(itemCount + 2) * itemWidth}px`,
+      position:           'absolute',
+      overflow:           'hidden',
+      transitionDuration: '0.3s',
+      transform:          `translate3d(${-offset}px, 0px, 0px)`,
+      backfaceVisibility: 'hidden',
+    };
+    // const { currIndex, prevIndex, direction } = this.state;
+    const items = [];
+    items.push(
+      <SliderItem data={this.props.data[itemCount - 1]} key={'lastfix'} itemWidth={itemWidth} />
+    );
+    items.push(this.props.data.map((item, i) => (
+      <SliderItem data={item} key={i} itemWidth={itemWidth} />)
+    ));
+    items.push(
+      <SliderItem data={this.props.data[0]} key={'firstfix'} itemWidth={itemWidth} />
     );
     return (
       <div
+        ref={e => { if (e !== null) { this.dom(e); } }}
         className={style.sliderWarp}
         onMouseOver={() => { this.mouseOver(); }}
         onMouseOut={() => { this.mouseOut(); }}
       >
-        <ul className={style.sliderBody}>
+        <ul
+          className={style.sliderBody}
+          style={transitionStyle}
+        >
           {items}
         </ul>
         <DirectionNav
@@ -120,15 +140,15 @@ class Slider extends Component {
 }
 
 Slider.propTypes = {
-  data: PropTypes.array.isRequired,
-  slideSpeed: PropTypes.number.isRequired,
+  data:          PropTypes.array.isRequired,
+  slideSpeed:    PropTypes.number.isRequired,
   slideInterval: PropTypes.number.isRequired,
-  startIndex: PropTypes.number.isRequired,
+  startIndex:    PropTypes.number.isRequired,
 };
 Slider.defaultProps = {
-  slideSpeed: 600,
+  slideSpeed:    600,
   slideInterval: 2000,
-  startIndex: 0,
+  startIndex:    0,
 };
 
 export default Slider;

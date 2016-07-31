@@ -55,11 +55,9 @@ const StatusAlert = ({ status, errorMessage, expand }) => {
 };
 
 StatusAlert.propTypes = {
-  status: PropTypes.string.isRequired,
+  status:       PropTypes.string.isRequired,
   errorMessage: PropTypes.string,
-  expand: PropTypes.bool,
+  expand:       PropTypes.bool,
 };
-
-
 
 export default StatusAlert;
