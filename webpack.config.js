@@ -7,7 +7,7 @@ module.exports = {
   devtool: 'eval',
   entry: [
     //hot loader的entry设置
-    'webpack-dev-server/client?http://localhost:1234', // WebpackDevServer host and port
+    'webpack-dev-server/client?http://0.0.0.0:1234', // WebpackDevServer host and port
     'webpack/hot/only-dev-server', // "only" prevents reload on syntax errors
     './src/index' // Your appʼs entry point
   ],

@@ -54,7 +54,7 @@ class SliderItem extends Component {
       // animate in
       if (this.props.animateIn) {
         if (driection === 'next') {
-          className += ` ${style.next}`;
+          className += ` ${style.active} ${style.next}`;
         } else {
           className += ` ${style.prev}`;
         }

@@ -1,25 +1,21 @@
-header
 .itemwarp
   height: inherit;
   width: 100%;
   display: none;
-  position: relative;
+  position: absolute;
+  top: 0;
   box-sizing: border-box;
 .active
   display: block;
-  transform: translateX(0);
+  margin-left: 0;
 .right
 .next
   display: block;
-  position: absolute;
-  top: 0;
-  transform: translateX(100%);
+  margin-left: 100%;
 .left
 .prev
   display: block;
-  position: absolute;
-  top: 0;
-  transform: translateX(-100%);
+  margin-left: -100%;
 .linkwarp
   position: absolute;
   top: 0;
@@ -46,4 +42,3 @@ header
 .contentImg
   display: block;
   width: 100%;
-  position: relative;
