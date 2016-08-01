@@ -10,27 +10,45 @@ class Slider extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currIndex:    props.startIndex,
-      // will be set after Slider rendered to DOM.
-      widthPerItem: 0,
+      currIndex:       props.startIndex,
+      // will be set after Slider mount to DOM.
+      widthPerItem:    0,
       // lock sldie when already perform sliding animation.
-      lockNav:      false,
+      lockNav:         false,
       // disable transition for init Slider width.
-      transition:   false,
+      transition:      false,
+      transformOffset: 0,
     };
     this.itemDOM = null;
   }
   componentDidMount() {
     this.play();
-    window.addEventListener('resize', () => { this.resize(); }, false);
+    this.resizeHandler = this.resize.bind(this);
+    window.addEventListener('resize', this.resizeHandler);
   }
 
   componentWillUnmount() {
     this.stopAutoPlay();
     clearTimeout(this.lockNavTag);
-    window.removeEventListener('resize', this.resize, false);
+    window.removeEventListener('resize', this.resizeHandler);
   }
-
+  handleTouchStart(event) {
+    this.startPoint = event.touches[0];
+    this.touchOffset = this.state.transformOffset;
+  }
+  handleTouchMove(event) {
+    this.stopAutoPlay();
+    const widthPerItem = this.state.widthPerItem;
+    const touchOffset = this.startPoint.clientX - event.changedTouches[0].clientX;
+    console.log(`touchOffset: ${touchOffset}`);
+    this.setState({
+      transformOffset: this.touchOffset - touchOffset,
+      transition:      false,
+    });
+  }
+  handleTouchEnd(event) {
+    // TODO: slide to item.
+  }
   resize() {
     if (this.itemDOM.clientWidth !== this.state.widthPerItem) {
       this.setState({
@@ -58,24 +76,28 @@ class Slider extends Component {
   turn(n) {
     if (!this.state.lockNav) {
       const nextIndex = this.nextIndex(n);
+      const offset = - (this.state.widthPerItem * nextIndex) - this.state.widthPerItem;
       // current is the fake first item. jump to the real first item.
-      if ((this.state.currIndex === this.props.data.length) ||
-    (this.state.currIndex === -1)) {
+      if ((this.state.currIndex === this.props.data.length) && nextIndex === 0 ||
+      // current is the fake last item. jump to the real last item.
+    (this.state.currIndex === -1) && nextIndex === this.props.data.length - 1) {
         this.setState({
-          currIndex:  nextIndex,
+          currIndex:       nextIndex,
           // unlock nav to jump
-          lockNav:    false,
+          lockNav:         false,
           // disable transition so the user can't see the jump.
-          transition: false,
+          transition:      false,
+          transformOffset: offset,
         });
         setTimeout(() => {
           this.turn(n);
         }, 1);
       } else {
         this.setState({
-          currIndex:  nextIndex,
-          lockNav:    true,
-          transition: true,
+          currIndex:       nextIndex,
+          lockNav:         true,
+          transition:      true,
+          transformOffset: offset,
         });
       }
 
@@ -106,12 +128,14 @@ class Slider extends Component {
     // resume animate
     this.play();
   }
-
   dom(element) {
     // get init Slider width
     if (this.state.widthPerItem !== element.clientWidth) {
       this.itemDOM = element;
-      this.setState({ widthPerItem: element.clientWidth });
+      this.setState({
+        widthPerItem:    element.clientWidth,
+        transformOffset: - element.clientWidth,
+      });
     }
   }
   render() {
@@ -122,16 +146,15 @@ class Slider extends Component {
      * when user slide to 0` or 4`, we jump to(without transition) the real 0 or 4 at next slide.
      * so for item 0, the item before it is 4`and 1 is after it, which make a loop effect.
      */
-    const { currIndex, transition, widthPerItem } = this.state;
+    const { transition, widthPerItem, transformOffset } = this.state;
     const { data, slideSpeed } = this.props;
-    const offset = - (widthPerItem * currIndex) - widthPerItem;
     const itemCount = data.length;
     const transitionStyle = {
       width:              `${(itemCount + 2) * widthPerItem}px`,
       position:           'absolute',
       overflow:           'hidden',
       transitionDuration: `${transition ? (slideSpeed / 1000) : 0}s`,
-      transform:          `translate3d(${offset}px, 0px, 0px)`,
+      transform:          `translate3d(${transformOffset}px, 0px, 0px)`,
       backfaceVisibility: 'hidden',
     };
     const items = [];
@@ -149,6 +172,8 @@ class Slider extends Component {
     return (
       <div
         ref={e => { if (e !== null) { this.dom(e); } }}
+        onTouchStart={event => (this.handleTouchStart(event))}
+        onTouchMove={event => (this.handleTouchMove(event))}
         className={style.sliderWarp}
         onMouseOver={() => { this.mouseOver(); }}
         onMouseOut={() => { this.mouseOut(); }}
