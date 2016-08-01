@@ -31,11 +31,11 @@ class Slider extends Component {
     clearInterval(this.playFlag);
   }
   play() {
-    this.playFlag = setInterval(() => {
-      this.next();
-      // 切换间隔要考虑切换动画时间，
-      // 所以每次切换的间隔应该是切换动画时间 ＋ 用户设置的间隔。
-    }, this.props.slideSpeed + this.props.slideInterval);
+    // this.playFlag = setInterval(() => {
+    //   this.next();
+    //   // 切换间隔要考虑切换动画时间，
+    //   // 所以每次切换的间隔应该是切换动画时间 ＋ 用户设置的间隔。
+    // }, this.props.slideSpeed + this.props.slideInterval);
   }
   next() {
     this.turn(1);

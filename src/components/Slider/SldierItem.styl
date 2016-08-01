@@ -10,21 +10,20 @@
   height: 100%;
   width: inherit;
 .header
-  display: table;
   position: absolute;
   bottom: 0;
-  height: 50px;
   width: inherit;
-  background-color: rgba(50,128,237,0.8);
-  @media screen and (max-width: 700px)
-    height: 40px;
-.headerTitle
-  display: table-cell;
-  vertical-align: middle;
-  padding: 10px;
+  overflow: hidden;
+  background-color: rgba(0,0,0,0.6);
+  white-space: nowrap;
+  text-indent: 1rem;
+  text-overflow: ellipsis;
+  text-shadow: 0 2px 30px #000;
   color: #FFF;
   font-size: 1.25rem;
+  line-height: 2.4;
   @media screen and (max-width: 700px)
+    height: 40px;
     font-size: 1rem;
 .contentImg
   display: block;

@@ -13,9 +13,9 @@ const StoryItem = ({ title, images, id }) => (
 );
 
 StoryItem.propTypes = {
-  title: PropTypes.string,
+  title:  PropTypes.string,
   images: PropTypes.array,
-  id: PropTypes.number,
+  id:     PropTypes.number,
 };
 
 export default StoryItem;
