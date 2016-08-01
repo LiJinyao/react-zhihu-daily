@@ -18,14 +18,26 @@ class Slider extends Component {
       // disable transition for init Slider width.
       transition:   false,
     };
+    this.itemDOM = null;
   }
   componentDidMount() {
     this.play();
+    window.addEventListener('resize', () => { this.resize(); }, false);
   }
 
   componentWillUnmount() {
     this.stopAutoPlay();
     clearTimeout(this.lockNavTag);
+    window.removeEventListener('resize', this.resize, false);
+  }
+
+  resize() {
+    if (this.itemDOM.clientWidth !== this.state.widthPerItem) {
+      this.setState({
+        widthPerItem: this.itemDOM.clientWidth,
+        transition:   false,
+      });
+    }
   }
   stopAutoPlay() {
     clearInterval(this.playFlag);
@@ -98,6 +110,7 @@ class Slider extends Component {
   dom(element) {
     // get init Slider width
     if (this.state.widthPerItem !== element.clientWidth) {
+      this.itemDOM = element;
       this.setState({ widthPerItem: element.clientWidth });
     }
   }
