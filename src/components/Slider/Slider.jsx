@@ -32,28 +32,44 @@ class Slider extends Component {
     clearTimeout(this.lockNavTag);
     window.removeEventListener('resize', this.resizeHandler);
   }
+
   handleTouchStart(event) {
+    this.stopAutoPlay();
     this.startPoint = event.touches[0];
-    this.touchOffset = this.state.transformOffset;
+    this.touchBegainOffset = this.state.transformOffset;
   }
   handleTouchMove(event) {
     this.stopAutoPlay();
-    const widthPerItem = this.state.widthPerItem;
     const touchOffset = this.startPoint.clientX - event.changedTouches[0].clientX;
-    console.log(`touchOffset: ${touchOffset}`);
     this.setState({
-      transformOffset: this.touchOffset - touchOffset,
+      transformOffset: this.touchBegainOffset - touchOffset,
       transition:      false,
     });
   }
-  handleTouchEnd(event) {
+  handleTouchEnd() {
     // TODO: slide to item.
+    // resume auto play.
+    const { widthPerItem, transformOffset } = this.state;
+    const offset = this.touchBegainOffset - transformOffset;
+    if (Math.abs(offset) > widthPerItem / 2) {
+      if (offset > 0) {
+        this.next();
+      } else {
+        this.prev();
+      }
+    } else {
+      this.turn(0);
+    }
+    this.play();
   }
+
   resize() {
     if (this.itemDOM.clientWidth !== this.state.widthPerItem) {
       this.setState({
-        widthPerItem: this.itemDOM.clientWidth,
-        transition:   false,
+        widthPerItem:    this.itemDOM.clientWidth,
+        transition:      false,
+        transformOffset:
+        - (this.itemDOM.clientWidth * this.state.currIndex) - this.itemDOM.clientWidth,
       });
     }
   }
@@ -75,43 +91,68 @@ class Slider extends Component {
   }
   turn(n) {
     if (!this.state.lockNav) {
-      const nextIndex = this.nextIndex(n);
-      const offset = - (this.state.widthPerItem * nextIndex) - this.state.widthPerItem;
-      // current is the fake first item. jump to the real first item.
-      if ((this.state.currIndex === this.props.data.length) && nextIndex === 0 ||
-      // current is the fake last item. jump to the real last item.
-    (this.state.currIndex === -1) && nextIndex === this.props.data.length - 1) {
-        this.setState({
-          currIndex:       nextIndex,
-          // unlock nav to jump
-          lockNav:         false,
-          // disable transition so the user can't see the jump.
-          transition:      false,
-          transformOffset: offset,
-        });
+      const nextIndex = this.nextIndex(this.state.currIndex, n);
+      const offset = this.getOffset(nextIndex);
+    //   // current is the fake first item. jump to the real first item.
+    //   if ((this.state.currIndex === this.props.data.length) && nextIndex === 0 ||
+    //   // current is the fake last item. jump to the real last item.
+    // (this.state.currIndex === -1) && nextIndex === this.props.data.length - 1) {
+    //     this.setState({
+    //       currIndex:       nextIndex,
+    //       // unlock nav to jump
+    //       lockNav:         false,
+    //       // disable transition so the user can't see the jump.
+    //       transition:      false,
+    //       transformOffset: offset,
+    //     });
+    //     setTimeout(() => {
+    //       this.turn(n);
+    //     }, 1);
+    //   } else {
+    //     this.setState({
+    //       currIndex:       nextIndex,
+    //       lockNav:         true,
+    //       transition:      true,
+    //       transformOffset: offset,
+    //     });
+    //   }
+      this.setState({
+        currIndex:       nextIndex,
+        lockNav:         true,
+        transition:      true,
+        transformOffset: offset,
+      });
+      console.log("Sliding to " + nextIndex);
+
+      // nextIndex means currIndex now.
+        // current is the fake first item. jump to the real first item.
+        // or current is the fake last item. jump to the real last item.
+      if ((nextIndex === this.props.data.length) || (nextIndex === -1)) {
         setTimeout(() => {
-          this.turn(n);
-        }, 1);
+          this.setState({
+            currIndex:       this.nextIndex(nextIndex, n),
+            // unlock nav to jump
+            lockNav:         false,
+            // disable transition so the user can't see the jump.
+            transition:      false,
+            transformOffset: this.getOffset(this.nextIndex(nextIndex, n)),
+          });
+        }, this.props.slideSpeed + 15);
       } else {
-        this.setState({
-          currIndex:       nextIndex,
-          lockNav:         true,
-          transition:      true,
-          transformOffset: offset,
-        });
+        // unlock slide nav.
+        this.lockNavTag = setTimeout(() => {
+          this.setState({ lockNav: false });
+          // give a little more time for other opreation.
+        }, this.props.slideSpeed + 15);
       }
-
-
-      // unlock slide nav.
-      this.lockNavTag = setTimeout(() => {
-        this.setState({ lockNav: false });
-        // give a little more time for other opreation.
-      }, this.props.slideSpeed + 1);
     }
   }
-  nextIndex(indexShift) {
+  getOffset(index, offset = 0) {
+    return - (this.state.widthPerItem * index) - this.state.widthPerItem + offset;
+  }
+  nextIndex(currIndex, indexShift) {
     const length = this.props.data.length + 1;
-    let nextIndex = this.state.currIndex + indexShift;
+    let nextIndex = currIndex + indexShift;
     if (nextIndex >= length) {
       nextIndex -= length;
     }
@@ -174,6 +215,7 @@ class Slider extends Component {
         ref={e => { if (e !== null) { this.dom(e); } }}
         onTouchStart={event => (this.handleTouchStart(event))}
         onTouchMove={event => (this.handleTouchMove(event))}
+        onTouchEnd={event => (this.handleTouchEnd(event))}
         className={style.sliderWarp}
         onMouseOver={() => { this.mouseOver(); }}
         onMouseOut={() => { this.mouseOut(); }}

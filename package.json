@@ -5,7 +5,9 @@
   "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node devserver.js",
+    "start": "npm run server & npm run start-devserver",
+    "start-devserver": "node devserver.js",
+    "server": "node dist/zhihuDaily/app.js",
     "build": "gulp build"
   },
   "repository": {
