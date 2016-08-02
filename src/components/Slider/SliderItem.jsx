@@ -4,12 +4,16 @@ import { zhihuAPI } from '../../statics';
 import { Link } from 'react-router';
 
 const SliderItem = ({ data, itemWidth }) => (
-  <li className={style.itemwarp} style={{ width: `${itemWidth}px` }}>
-    <img
-      className={style.contentImg}
-      src={`${zhihuAPI}${data.image}`}
-      alt={data.title}
-    />
+  <li
+    className={style.itemwarp}
+    style={{
+      width:            `${itemWidth}px`,
+      backgroundImage:  `url('${zhihuAPI}${data.image}')`,
+      backgroundSize:   'cover',
+      backgroundRepeat: 'no-repeat',
+    }}
+  >
+
     <div className={style.header}>
      {data.title}
     </div>

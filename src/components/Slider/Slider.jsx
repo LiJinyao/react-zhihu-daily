@@ -244,7 +244,7 @@ Slider.propTypes = {
 };
 
 Slider.defaultProps = {
-  slideSpeed:    800,
+  slideSpeed:    600,
   slideInterval: 3000,
   startIndex:    0,
 };
