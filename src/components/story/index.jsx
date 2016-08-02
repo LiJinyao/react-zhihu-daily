@@ -10,9 +10,10 @@ function replaceImgSrcToProxy(htmlString, styleUrl, headerImgUrl, storyTitle) {
   zhihuStyle.setAttribute('rel', 'stylesheet');
   zhihuStyle.setAttribute('href', `${zhihuAPI}${styleUrl}`);
   element.innerHTML = zhihuStyle.outerHTML + htmlString;
-  for (const child of element.getElementsByTagName('img')) {
-    const imgUrl = child.getAttribute('src');
-    child.setAttribute('src', `${zhihuAPI}${imgUrl}`);
+  const images = element.getElementsByTagName('img');
+  for (let i = 0; i < images.length; i++) {
+    const imgUrl = images[i].getAttribute('src');
+    images[i].setAttribute('src', `${zhihuAPI}${imgUrl}`);
   }
   const headerImg = element.querySelector('.img-place-holder');
   headerImg.innerHTML = `<img src="${zhihuAPI}${headerImgUrl}" alt="header" />`;

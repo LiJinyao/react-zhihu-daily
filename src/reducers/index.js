@@ -15,7 +15,7 @@ import {
 function news(state = {
   fetchError: false,
   isFetching: false,
-  items: [],
+  items:      [],
   cachedDays: new Set(),
 }, action) {
   switch (action.type) {
@@ -23,19 +23,19 @@ function news(state = {
       return Object.assign({}, state, { isFetching: true, fetchError: false });
     case RECEIVE_NEWS:
       return Object.assign({}, state, {
-        fetchError: false,
-        isFetching: false,
-        items: [
+        fetchError:  false,
+        isFetching:  false,
+        items:       [
           ...state.items,
           action.news,
         ],
         lastUpdated: action.receivedAt,
-        cachedDays: new Set(state.cachedDays).add(action.date),
+        cachedDays:  new Set(state.cachedDays).add(action.date),
       });
     case RECEIVE_NEWS_ERROR:
       return Object.assign({}, state, {
-        isFetching: false,
-        fetchError: true,
+        isFetching:   false,
+        fetchError:   true,
         errorMessage: action.errorMessage,
       });
     default:
@@ -66,8 +66,8 @@ function stories(state = {
       });
     case RECEIVE_STORY_ERROR:
       return Object.assign({}, state, {
-        isFetching: false,
-        fetchError: true,
+        isFetching:   false,
+        fetchError:   true,
         errorMessage: action.errorMessage,
       });
     default:

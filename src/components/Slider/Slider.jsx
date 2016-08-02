@@ -13,13 +13,13 @@ class Slider extends Component {
       currIndex:       props.startIndex,
       // will be set after Slider mount to DOM.
       widthPerItem:    0,
-      // lock sldie when already perform sliding animation.
-      lockNav:         false,
       // disable transition for init Slider width.
       transition:      false,
       transformOffset: 0,
     };
     this.itemDOM = null;
+    // lock sldie when already perform sliding animation.
+    this.lockSlide = false;
   }
   componentDidMount() {
     this.play();
@@ -45,7 +45,7 @@ class Slider extends Component {
 
   handleTouchMove(event) {
     event.preventDefault();
-    if (!this.state.lockNav) {
+    if (!this.lockSlide) {
       const touchOffset = this.startPointClientX - event.changedTouches[0].clientX;
       this.setState({
         transformOffset: this.touchBegainOffset - touchOffset,
@@ -57,8 +57,7 @@ class Slider extends Component {
   handleTouchEnd() {
     // TODO: slide to item.
     // resume auto play.
-    if (!this.state.lockNav) {
-      console.log("touch end");
+    if (!this.lockSlide) {
       const { widthPerItem, transformOffset } = this.state;
       const offset = this.touchBegainOffset - transformOffset;
       if (Math.abs(offset) > widthPerItem / 4) {
@@ -68,10 +67,11 @@ class Slider extends Component {
           this.prev();
         }
       } else {
+        this.lockSlide = true;
         this.setState({
           transformOffset: this.touchBegainOffset,
           transition:      true,
-        });
+        }, () => { this.lockSlide = false; });
       }
       this.play();
     }
@@ -90,14 +90,17 @@ class Slider extends Component {
 
   stopAutoPlay() {
     clearInterval(this.playFlag);
+    this.playFlag = null;
   }
 
   play() {
-    this.playFlag = setInterval(() => {
-      this.next();
-      // 切换间隔要考虑切换动画时间，
-      // 所以每次切换的间隔应该是切换动画时间 ＋ 用户设置的间隔。
-    }, this.props.slideSpeed + this.props.slideInterval);
+    if (this.playFlag === null) {
+      this.playFlag = setInterval(() => {
+        this.next();
+        // 切换间隔要考虑切换动画时间，
+        // 所以每次切换的间隔应该是切换动画时间 ＋ 用户设置的间隔。
+      }, this.props.slideSpeed + this.props.slideInterval);
+    }
   }
 
   next() {
@@ -109,38 +112,34 @@ class Slider extends Component {
   }
 
   turn(n) {
-    if (!this.state.lockNav) {
+    if (!this.lockSlide) {
       const nextIndex = this.nextIndex(this.state.currIndex, n);
       const offset = this.getOffset(nextIndex);
+      this.lockSlide = true;
       this.setState({
         currIndex:       nextIndex,
-        lockNav:         true,
         transition:      true,
         transformOffset: offset,
       });
-      console.log("Sliding to " + nextIndex);
 
       // nextIndex means currIndex now.
         // current is the fake first item. jump to the real first item.
         // or current is the fake last item. jump to the real last item.
       if ((nextIndex === this.props.data.length) || (nextIndex === -1)) {
-        console.log("will jump to real item.");
-        setTimeout(() => {
+        this.lockNavTag = setTimeout(() => {
           this.setState({
             currIndex:       this.nextIndex(nextIndex, n),
-            // unlock nav to jump
-            lockNav:         false,
             // disable transition so the user can't see the jump.
             transition:      false,
             transformOffset: this.getOffset(this.nextIndex(nextIndex, n)),
-          });
-        }, this.props.slideSpeed + 15);
+          }, () => { this.lockSlide = false; });
+        }, this.props.slideSpeed + 20);
       } else {
         // unlock slide nav.
         this.lockNavTag = setTimeout(() => {
-          this.setState({ lockNav: false });
+          this.lockSlide = false;
           // give a little more time for other opreation.
-        }, this.props.slideSpeed + 15);
+        }, this.props.slideSpeed + 20);
       }
     }
   }
@@ -156,14 +155,17 @@ class Slider extends Component {
     }
     return nextIndex;
   }
+
   mouseOver() {
     // stop auto play
     this.stopAutoPlay();
   }
+
   mouseOut() {
     // resume animate
     this.play();
   }
+
   dom(element) {
     // get init Slider width
     if (this.state.widthPerItem !== element.clientWidth) {
@@ -174,6 +176,7 @@ class Slider extends Component {
       });
     }
   }
+
   render() {
     /**
      * loop effect:
@@ -186,13 +189,14 @@ class Slider extends Component {
     const { data, slideSpeed } = this.props;
     const itemCount = data.length;
     const transitionStyle = {
-      width:              `${(itemCount + 2) * widthPerItem}px`,
-      position:           'absolute',
-      overflow:           'hidden',
-      transition:         'transform',
-      transitionDuration: `${transition ? (slideSpeed / 1000) : 0}s`,
-      transform:          `translate3d(${transformOffset}px, 0px, 0px)`,
-      backfaceVisibility: 'hidden',
+      width:                    `${(itemCount + 2) * widthPerItem}px`,
+      position:                 'absolute',
+      overflow:                 'hidden',
+      transition:               'transform',
+      transitionDuration:       `${transition ? (slideSpeed / 1000) : 0}s`,
+      transitionTimingFunction: 'ease-in-out',
+      transform:                `translate3d(${transformOffset}px, 0px, 0px)`,
+      backfaceVisibility:       'hidden',
     };
     const items = [];
     // add one more last item to the front.
@@ -237,8 +241,9 @@ Slider.propTypes = {
   slideInterval: PropTypes.number.isRequired,
   startIndex:    PropTypes.number.isRequired,
 };
+
 Slider.defaultProps = {
-  slideSpeed:    600,
+  slideSpeed:    800,
   slideInterval: 5000,
   startIndex:    0,
 };

@@ -6,6 +6,7 @@ module.exports = {
   //行到行的source map
   devtool: 'eval',
   entry: [
+    'babel-polyfill',
     //hot loader的entry设置
     'webpack-dev-server/client?http://0.0.0.0:1234', // WebpackDevServer host and port
     'webpack/hot/only-dev-server', // "only" prevents reload on syntax errors
@@ -46,7 +47,7 @@ module.exports = {
     },
     {
       test: /\.svg$/,
-      loader: 'svg-url-loader'
+      loader: 'url-loader?limit=0&name=images/[name].[ext]'
     },
     {
       test: /\.(woff2?|otf|eot|svg|ttf)$/,

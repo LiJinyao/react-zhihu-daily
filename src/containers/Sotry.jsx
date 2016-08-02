@@ -30,22 +30,20 @@ class StoryContainer extends Component {
 }
 
 StoryContainer.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  stories: PropTypes.instanceOf(Map).isRequired,
-  storyID: PropTypes.string,
-  isFetching: PropTypes.bool.isRequired,
-  fetchError: PropTypes.bool,
+  dispatch:     PropTypes.func.isRequired,
+  stories:      PropTypes.instanceOf(Map).isRequired,
+  storyID:      PropTypes.string,
+  isFetching:   PropTypes.bool.isRequired,
+  fetchError:   PropTypes.bool,
   errorMessage: PropTypes.string,
 };
 
-const mapStateToProps = (state, ownProps) => (
-  {
-    stories: state.stories.storyCache,
-    isFetching: state.stories.isFetching,
-    storyID: ownProps.params.id,
-    fetchError: state.stories.fetchError,
-    errorMessage: state.stories.errorMessage,
-  }
-);
+const mapStateToProps = (state, ownProps) => ({
+  stories:      state.stories.storyCache,
+  isFetching:   state.stories.isFetching,
+  storyID:      ownProps.params.id,
+  fetchError:   state.stories.fetchError,
+  errorMessage: state.stories.errorMessage,
+});
 
 export default connect(mapStateToProps)(StoryContainer);
