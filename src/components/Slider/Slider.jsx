@@ -20,6 +20,7 @@ class Slider extends Component {
     this.itemDOM = null;
     // lock sldie when already perform sliding animation.
     this.lockSlide = false;
+    this.playFlag = null;
   }
   componentDidMount() {
     this.play();
@@ -38,9 +39,9 @@ class Slider extends Component {
   }
 
   handleTouchStart(event) {
+    event.preventDefault();
     this.stopAutoPlay();
     this.startPointClientX = event.touches[0].clientX;
-    this.touchBegainOffset = this.state.transformOffset;
   }
 
   handleTouchMove(event) {
@@ -48,7 +49,7 @@ class Slider extends Component {
     if (!this.lockSlide) {
       const touchOffset = this.startPointClientX - event.changedTouches[0].clientX;
       this.setState({
-        transformOffset: this.touchBegainOffset - touchOffset,
+        transformOffset: this.getOffset(this.state.currIndex) - touchOffset,
         transition:      false,
       });
     }
@@ -57,9 +58,10 @@ class Slider extends Component {
   handleTouchEnd() {
     // TODO: slide to item.
     // resume auto play.
+    event.preventDefault();
     if (!this.lockSlide) {
       const { widthPerItem, transformOffset } = this.state;
-      const offset = this.touchBegainOffset - transformOffset;
+      const offset = this.getOffset(this.state.currIndex) - transformOffset;
       if (Math.abs(offset) > widthPerItem / 4) {
         if (offset > 0) {
           this.next();
@@ -69,7 +71,7 @@ class Slider extends Component {
       } else {
         this.lockSlide = true;
         this.setState({
-          transformOffset: this.touchBegainOffset,
+          transformOffset: this.getOffset(this.state.currIndex),
           transition:      true,
         }, () => { this.lockSlide = false; });
       }
@@ -244,7 +246,7 @@ Slider.propTypes = {
 
 Slider.defaultProps = {
   slideSpeed:    800,
-  slideInterval: 5000,
+  slideInterval: 3000,
   startIndex:    0,
 };
 
