@@ -83,10 +83,10 @@ const StoriesList = ({ stories, fetchNews, isFetching, fetchError, errorMessage 
 };
 
 StoriesList.propTypes = {
-  stories: PropTypes.array.isRequired,
-  fetchNews: PropTypes.func.isRequired,
-  isFetching: PropTypes.bool.isRequired,
-  fetchError: PropTypes.bool.isRequired,
+  stories:      PropTypes.array.isRequired,
+  fetchNews:    PropTypes.func.isRequired,
+  isFetching:   PropTypes.bool.isRequired,
+  fetchError:   PropTypes.bool.isRequired,
   errorMessage: PropTypes.string,
 };
 
