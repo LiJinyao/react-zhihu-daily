@@ -44,6 +44,7 @@ class Slider extends Component {
   }
 
   handleTouchMove(event) {
+    event.preventDefault();
     if (!this.lockSlide) {
       const touchOffset = this.startPointClientX - event.changedTouches[0].clientX;
       this.setState({
