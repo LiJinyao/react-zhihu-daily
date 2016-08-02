@@ -6,6 +6,9 @@ import {
   RECEIVE_STORY,
   RECEIVE_NEWS_ERROR,
   RECEIVE_STORY_ERROR,
+  REQUEST_STORY_EXTRA,
+  REVEIVE_STORY_EXTRA,
+  REVEIVE_STORY_EXTRA_ERROR,
  } from '../actions';
 
 /**
@@ -75,9 +78,36 @@ function stories(state = {
   }
 }
 
+function storyExtra(state = {
+  extraCache: new Map(),
+  isFetching: false,
+  fetchError: false,
+}, action) {
+  switch (action.type) {
+    case REQUEST_STORY_EXTRA:
+      return Object.assign({}, state, { isFetching: true });
+    case REVEIVE_STORY_EXTRA:
+      return Object.assign({}, state, {
+        extraCache: new Map(state.extraCache).set(action.id, action.extra),
+        isFetching: false,
+        fetchError: false,
+      });
+    case REVEIVE_STORY_EXTRA_ERROR:
+      return Object.assign({}, state, {
+        isFetching:   false,
+        fetchError:   true,
+        errorMessage: action.errorMessage,
+      });
+    default:
+      return state;
+
+  }
+}
+
 const rootReducer = combineReducers({
   news,
   stories,
+  storyExtra,
 });
 
 export default rootReducer;

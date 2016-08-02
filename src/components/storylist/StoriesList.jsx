@@ -20,7 +20,7 @@ function getDate(dateString) {
   return `${date.month}月${date.day}日`;
 }
 
-const StoriesList = ({ stories, fetchNews, isFetching, fetchError, errorMessage }) => {
+const StoriesList = ({ stories, fetchNews, isFetching, fetchError, errorMessage, storyExtra }) => {
   let list = [];
   if (stories.length !== 0) {
     list.push(<Slider data={stories[0].top_stories} key="topStories" />);
@@ -30,6 +30,7 @@ const StoriesList = ({ stories, fetchNews, isFetching, fetchError, errorMessage 
           <StoryItem
             key={story.id}
             {...story}
+            storyExtra={storyExtra}
           />
           )
         );
@@ -88,6 +89,7 @@ StoriesList.propTypes = {
   isFetching:   PropTypes.bool.isRequired,
   fetchError:   PropTypes.bool.isRequired,
   errorMessage: PropTypes.string,
+  storyExtra:   PropTypes.instanceOf(Map),
 };
 
 export default StoriesList;
