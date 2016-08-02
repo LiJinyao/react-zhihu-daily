@@ -35,12 +35,12 @@ class Slider extends Component {
 
   handleTouchStart(event) {
     this.stopAutoPlay();
-    this.startPoint = event.touches[0];
+    this.startPointClientX = event.touches[0].clientX;
     this.touchBegainOffset = this.state.transformOffset;
   }
   handleTouchMove(event) {
     this.stopAutoPlay();
-    const touchOffset = this.startPoint.clientX - event.changedTouches[0].clientX;
+    const touchOffset = this.startPointClientX - event.changedTouches[0].clientX;
     this.setState({
       transformOffset: this.touchBegainOffset - touchOffset,
       transition:      false,
@@ -77,11 +77,11 @@ class Slider extends Component {
     clearInterval(this.playFlag);
   }
   play() {
-    // this.playFlag = setInterval(() => {
-    //   this.next();
-    //   // 切换间隔要考虑切换动画时间，
-    //   // 所以每次切换的间隔应该是切换动画时间 ＋ 用户设置的间隔。
-    // }, this.props.slideSpeed + this.props.slideInterval);
+    this.playFlag = setInterval(() => {
+      this.next();
+      // 切换间隔要考虑切换动画时间，
+      // 所以每次切换的间隔应该是切换动画时间 ＋ 用户设置的间隔。
+    }, this.props.slideSpeed + this.props.slideInterval);
   }
   next() {
     this.turn(1);
