@@ -44,7 +44,6 @@ class Slider extends Component {
   }
 
   handleTouchMove(event) {
-    event.preventDefault();
     if (!this.lockSlide) {
       const touchOffset = this.startPointClientX - event.changedTouches[0].clientX;
       this.setState({
@@ -57,7 +56,6 @@ class Slider extends Component {
   handleTouchEnd() {
     // TODO: slide to item.
     // resume auto play.
-    event.preventDefault();
     if (!this.lockSlide) {
       const { widthPerItem, transformOffset } = this.state;
       const offset = this.getOffset(this.state.currIndex) - transformOffset;
