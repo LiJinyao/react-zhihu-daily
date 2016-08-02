@@ -39,7 +39,6 @@ class Slider extends Component {
   }
 
   handleTouchStart(event) {
-    event.preventDefault();
     this.stopAutoPlay();
     this.startPointClientX = event.touches[0].clientX;
   }
