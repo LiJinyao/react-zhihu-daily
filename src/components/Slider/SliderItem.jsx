@@ -7,10 +7,11 @@ const SliderItem = ({ data, itemWidth }) => (
   <li
     className={style.itemwarp}
     style={{
-      width:            `${itemWidth}px`,
-      backgroundImage:  `url('${zhihuAPI}${data.image}')`,
-      backgroundSize:   'cover',
-      backgroundRepeat: 'no-repeat',
+      width:              `${itemWidth}px`,
+      backgroundImage:    `url('${zhihuAPI}${data.image}')`,
+      backgroundSize:     'cover',
+      backgroundRepeat:   'no-repeat',
+      backgroundPosition: 'center',
     }}
   >
 
