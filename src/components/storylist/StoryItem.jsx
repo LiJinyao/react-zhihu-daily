@@ -11,7 +11,10 @@ const StoryItem = ({ title, images, id, storyExtra }) => (
       {
         storyExtra.has(id) &&
           <span className={style.extra}>
-          {`评论：${storyExtra.get(id).comments} 阅读：${storyExtra.get(id).popularity}`}
+            <span className="iconfont">{'\ue601 '}</span>
+            {storyExtra.get(id).comments}
+            <span className="iconfont">{' \ue600 '}</span>
+            {storyExtra.get(id).popularity}
           </span>
       }
     </div>
