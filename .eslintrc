@@ -3,10 +3,11 @@
   "ecmaFeatures": {
     "jsx": true
     },
-  "plugins": [
-    "react"
-    ],
+  "plugins": [ "import", "react"],
    "rules": {
         "key-spacing": ["error", { "align": "value", "mode": "minimum" }]
-    }
+    },
+    "settings": {
+      "import/resolver": "webpack"
+      }
 }
