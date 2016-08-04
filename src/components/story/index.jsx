@@ -16,25 +16,28 @@ function replaceImgSrcToProxy(story) {
     const imgUrl = images[i].getAttribute('src');
     images[i].setAttribute('src', `${zhihuAPI}${imgUrl}`);
   }
-  // 显示banner
-  const headerImg = element.querySelector('.img-place-holder');
-  // 加入标题显示
-  headerImg.innerHTML = `
-    <img src="${zhihuAPI}${story.image}" alt="header" />
-    <div class="img-banner-background"></div>
-    <span class="story-title">${story.title}</span>
-    <span class="image-copyright">图片：${story.image_source}</span>
-  `;
+  // 删除banner
+  element.querySelector('.headline').remove();
   return element;
 }
 
 const Story = ({ story }) => (
-  <div
-    className={style.storyBody}
-    dangerouslySetInnerHTML={{
-      __html: replaceImgSrcToProxy(story).innerHTML,
-    }}
-  >
+  <div className={style.storyWarp}>
+    <div
+      className={style.imgPlaceHolder}
+      style={{ backgroundImage: `url(${zhihuAPI}${story.image})` }}
+    >
+      <div className={style.imgBannerBackground}></div>
+      <span className={style.storyListitle}>{story.title}</span>
+      <span className={style.imageCopyright}>图片：${story.image_source}</span>
+    </div>
+    <div
+      className={style.storyBody}
+      dangerouslySetInnerHTML={{
+        __html: replaceImgSrcToProxy(story).innerHTML,
+      }}
+    >
+    </div>
   </div>
 );
 
