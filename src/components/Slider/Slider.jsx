@@ -16,6 +16,7 @@ class Slider extends Component {
       // disable transition for init Slider width.
       transition:      false,
       transformOffset: 0,
+      slideSpeed:      props.slideSpeed,
     };
     this.itemDOM = null;
     // lock sldie when already perform sliding animation.
@@ -62,9 +63,9 @@ class Slider extends Component {
       const offset = this.getOffset(this.state.currIndex) - transformOffset;
       if (Math.abs(offset) > widthPerItem / 4) {
         if (offset > 0) {
-          this.next();
+          this.next(300);
         } else {
-          this.prev();
+          this.prev(300);
         }
       } else {
         this.lockSlide = true;
@@ -103,15 +104,15 @@ class Slider extends Component {
     }
   }
 
-  next() {
-    this.turn(1);
+  next(slideSpeed) {
+    this.turn(1, slideSpeed);
   }
 
-  prev() {
-    this.turn(-1);
+  prev(slideSpeed) {
+    this.turn(-1, slideSpeed);
   }
 
-  turn(n) {
+  turn(n, slideSpeed) {
     if (!this.lockSlide) {
       const nextIndex = this.nextIndex(this.state.currIndex, n);
       const offset = this.getOffset(nextIndex);
@@ -120,6 +121,7 @@ class Slider extends Component {
         currIndex:       nextIndex,
         transition:      true,
         transformOffset: offset,
+        slideSpeed:      slideSpeed || this.props.slideSpeed,
       });
 
       // nextIndex means currIndex now.
@@ -185,9 +187,10 @@ class Slider extends Component {
      * when user slide to 0` or 4`, we jump to(without transition) the real 0 or 4 at next slide.
      * so for item 0, the item before it is 4`and 1 is after it, which make a loop effect.
      */
-    const { transition, widthPerItem, transformOffset } = this.state;
-    const { data, slideSpeed } = this.props;
+    const { transition, widthPerItem, transformOffset, slideSpeed } = this.state;
+    const data = this.props.data;
     const itemCount = data.length;
+
     const transitionStyle = {
       width:                    `${(itemCount + 2) * widthPerItem}px`,
       position:                 'absolute',
@@ -243,7 +246,7 @@ Slider.propTypes = {
 };
 
 Slider.defaultProps = {
-  slideSpeed:    600,
+  slideSpeed:    1000,
   slideInterval: 3000,
   startIndex:    0,
 };
