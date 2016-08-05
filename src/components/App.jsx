@@ -3,10 +3,13 @@ import style from './App.styl';
 import Header from './Header';
 import Footer from './Footer';
 
-export default ((props) => (
+// because Header have a Link linkto Index, but we need it actived **except** one path.
+// so we need let it know its location.
+
+export default (({ children, location }) => (
   <div className={style.root}>
-    <Header></Header>
-    {props.children}
-    <Footer></Footer>
+    <Header location={location} />
+    {children}
+    <Footer />
   </div>
 ));

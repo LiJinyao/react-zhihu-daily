@@ -1,4 +1,4 @@
-.header
+.headerWarp
   position: relative;
   z-index: 10;
   width: 100%;
@@ -9,17 +9,21 @@
   @media screen and (max-width: 700px)
     min-width: 0;
     height: 56px;
-.logo
-  position: absolute;
-  margin: auto;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 38px;
-  width: 180px;
+.header
+  display: table;
+  height: 100%;
+  margin: 0 auto;
+.headerLink
+  display: table-cell;
+  vertical-align: middle;
+.daily > svg
+  height: 32px;
+  width: 140px;
+  fill: #D9D9D9;
   // IE bug，data url在路径复杂的情况下无法正确套用svg的style标签里的内容。导出内联样式的svg即可解决。
   // background-image: url(./HeaderLogo.svg);
   @media screen and (max-width: 700px)
     height: 30px;
     width: 140px;
+.linkActive > div > svg
+  fill: #3280ed;

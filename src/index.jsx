@@ -7,8 +7,8 @@ import rootReducer from './reducers';
 import { Provider } from 'react-redux';
 import StoryList from './containers/StoryList';
 import Story from './containers/Sotry';
+import Explore from './components/explore';
 import { Router, Route, browserHistory, IndexRoute } from 'react-router';
-
 const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 
 render(
@@ -17,6 +17,7 @@ render(
       <Route path="/" component={App}>
         <IndexRoute component={StoryList} />
         <Route path="/news/:id" component={Story} />
+        <Route path="/explore" component={Explore} />
       </Route>
     </Router>
   </Provider>,
