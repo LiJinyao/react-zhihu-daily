@@ -11,21 +11,21 @@ export function requestStoryExtra(id) {
   };
 }
 
-export const REVEIVE_STORY_EXTRA = 'REVEIVE_STORY_EXTRA';
+export const RECEIVE_STORY_EXTRA = 'RECEIVE_STORY_EXTRA';
 
 export function receiveStoryExtra(id, extra) {
   return {
-    type: REVEIVE_STORY_EXTRA,
+    type: RECEIVE_STORY_EXTRA,
     id,
     extra,
   };
 }
 
-export const REVEIVE_STORY_EXTRA_ERROR = 'REVEIVE_STORY_EXTRA_ERROR';
+export const RECEIVE_STORY_EXTRA_ERROR = 'RECEIVE_STORY_EXTRA_ERROR';
 
 export function receiveStoryExtraError(id, errorMessage) {
   return {
-    type: REVEIVE_STORY_EXTRA,
+    type: RECEIVE_STORY_EXTRA,
     id,
     errorMessage,
   };
@@ -33,7 +33,7 @@ export function receiveStoryExtraError(id, errorMessage) {
 
 export function fetchStoryExtra(id) {
   return (dispatch, getState) => {
-    if(!getState().storyExtra.extraCache.has(id)){
+    if (!getState().storyExtra.extraCache.has(id)) {
       dispatch(requestStoryExtra(id));
       return fetch(`${zhihuAPI}http://news-at.zhihu.com/api/4/story-extra/${id}`)
       .then(response => {
@@ -46,5 +46,6 @@ export function fetchStoryExtra(id) {
       })
       .catch(error => (dispatch(receiveStoryExtraError(id, error.message))));
     }
+    return null;
   };
 }

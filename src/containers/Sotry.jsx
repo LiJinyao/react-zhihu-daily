@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { fetchStory } from '../actions/index';
-import Story from '../components/story';
+import Story from '../components/Story';
 import StatusAlert, { STATUS_ALERT_LOADING, STATUS_ALERT_ERROR } from '../components/StatusAlert';
 class StoryContainer extends Component {
   componentDidMount() {

@@ -39,7 +39,12 @@ export function reciveNewsError(errorMessage) {
   };
 }
 // Thunk action creator
-
+function shouldFetchNews(state, date) {
+  if (state.news.cachedDays.has(date)) {
+    return false;
+  }
+  return !state.news.isFetching;
+}
 export function fetchNews(date) {
 // Thunk middleware knows how to handle functions.
 // It passes the dispatch method as an argument to the function,
@@ -48,7 +53,7 @@ export function fetchNews(date) {
 // First dispatch: the app state is updated to inform
 // that the API call is starting.
     console.log(getState());
-    if (! getState().news.cachedDays.has(date)) {
+    if (shouldFetchNews(getState(), date)) {
       dispatch(requestNews(date));
       // The function called by the thunk middleware can return a value,
       // that is passed on as the return value of the dispatch method.

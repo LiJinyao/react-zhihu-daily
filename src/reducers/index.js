@@ -7,8 +7,12 @@ import {
   RECEIVE_NEWS_ERROR,
   RECEIVE_STORY_ERROR,
   REQUEST_STORY_EXTRA,
-  REVEIVE_STORY_EXTRA,
-  REVEIVE_STORY_EXTRA_ERROR,
+  RECEIVE_STORY_EXTRA,
+  RECEIVE_STORY_EXTRA_ERROR,
+  REQUEST_THEMES,
+  RECEIVE_THEMES,
+  RECEIVE_THEMES_ERROR,
+  INVALIDATE_THEMES,
  } from '../actions';
 
 /**
@@ -86,13 +90,13 @@ function storyExtra(state = {
   switch (action.type) {
     case REQUEST_STORY_EXTRA:
       return Object.assign({}, state, { isFetching: true });
-    case REVEIVE_STORY_EXTRA:
+    case RECEIVE_STORY_EXTRA:
       return Object.assign({}, state, {
         extraCache: new Map(state.extraCache).set(action.id, action.extra),
         isFetching: false,
         fetchError: false,
       });
-    case REVEIVE_STORY_EXTRA_ERROR:
+    case RECEIVE_STORY_EXTRA_ERROR:
       return Object.assign({}, state, {
         isFetching:   false,
         fetchError:   true,
@@ -104,10 +108,50 @@ function storyExtra(state = {
   }
 }
 
+// theme list
+function themes(state = {
+  cache:         null,
+  isFetching:    false,
+  didInvalidate: true,
+  lastUpdated:    0,
+  fetchError:     false,
+}, action) {
+  switch (action.type) {
+    case REQUEST_THEMES:
+      return Object.assign({}, state, {
+        isFetching: true,
+      });
+    case RECEIVE_THEMES:
+      return Object.assign({}, state, {
+        isFetching:    false,
+        cache:         action.themes,
+        didInvalidate: false,
+        lastUpdated:   Date.now(),
+      });
+    case RECEIVE_THEMES_ERROR:
+      return Object.assign({}, state, {
+        isFetching: false,
+        fetchError: true,
+      });
+    case INVALIDATE_THEMES:
+      return Object.assign({}, state, {
+        didInvalidate: false,
+      });
+    default:
+      return state;
+  }
+}
+
+// theme from the theme list.
+function theme() {
+  
+}
+
 const rootReducer = combineReducers({
   news,
   stories,
   storyExtra,
+  themes,
 });
 
 export default rootReducer;
