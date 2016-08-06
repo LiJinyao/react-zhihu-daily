@@ -20,6 +20,32 @@ function replaceImgSrcToProxy(story) {
   element.querySelector('.headline').remove();
   return element;
 }
+function scrollToTop() {
+  let interval = 0;
+  const duration = 1000;
+  const element = document.body;
+  const startTime = Date.now();
+  const endTime = startTime + duration;
+  const startTop = element.scrollTop;
+  const distance = - startTop;
+
+  function somthStep(start, end, point) {
+    if (point <= start) { return 0; }
+    if (point >= end) { return 1; }
+    const x = (point - start) / (end - start); // interpolation
+    return x * x * (3 - 2 * x);
+  }
+
+  function scrollFrame() {
+    const now = Date.now();
+    const point = somthStep(startTime, endTime, now);
+    window.scrollTo(0, Math.round(startTop + (distance * point)));
+    if (now >= endTime) {
+      clearInterval(interval);
+    }
+  }
+  interval = setInterval(scrollFrame, 1);
+}
 
 const Story = ({ story }) => (
   <div className={style.storyWarp}>
@@ -38,6 +64,7 @@ const Story = ({ story }) => (
       }}
     >
     </div>
+    <div className={style.scrollTop} onClick={scrollToTop}>scroll to top</div>
   </div>
 );
 
