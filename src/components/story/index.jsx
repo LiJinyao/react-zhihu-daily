@@ -48,7 +48,7 @@ function scrollToTop() {
 }
 
 const Story = ({ story }) => (
-  <div className={style.storyWarp}>
+  <div className="mainContainer">
     <div
       className={style.imgPlaceHolder}
       style={{ backgroundImage: `url(${zhihuAPI}${story.image})` }}

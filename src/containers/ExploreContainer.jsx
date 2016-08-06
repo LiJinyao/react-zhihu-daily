@@ -9,12 +9,13 @@ class ExploreContainer extends Component {
   }
   render() {
     const {
-      isFetching, themes, dispatch, fetchError,
+      isFetching, themes, dispatch, fetchError, theme,
       errorMessage, lastUpdated, didInvalidate } = this.props;
     return (
       <Explore
         isFetching={isFetching}
         themes={themes}
+        theme={theme}
         dispatch={dispatch}
         fetchError={fetchError}
         errorMessage={errorMessage}
@@ -28,6 +29,7 @@ class ExploreContainer extends Component {
 ExploreContainer.propTypes = {
   dispatch:      PropTypes.func.isRequired,
   themes:        PropTypes.object,
+  theme:         PropTypes.instanceOf(Map).isRequired,
   isFetching:    PropTypes.bool.isRequired,
   fetchError:    PropTypes.bool.isRequired,
   errorMessage:  PropTypes.string,
@@ -39,6 +41,7 @@ const mapStateToProps = state => (
   {
     // get a day's stories.
     themes:        state.themes.cache,
+    theme:         state.theme.themeCache,
     isFetching:    state.themes.isFetching,
     fetchError:    state.themes.fetchError,
     errorMessage:  state.themes.errorMessage,

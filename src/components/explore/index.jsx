@@ -1,10 +1,11 @@
 import React, { PropTypes, Component } from 'react';
 import StatusAlert, { STATUS_ALERT_LOADING, STATUS_ALERT_ERROR } from '../StatusAlert';
 import ThemeItem from './ThemeItem';
+import style from './Explore.styl';
 class Explore extends Component {
   render() {
     const list = [];
-    const { isFetching, fetchError, themes } = this.props;
+    const { isFetching, fetchError, themes, theme } = this.props;
     if (isFetching) {
       return (<StatusAlert status={STATUS_ALERT_LOADING} key="Loading" expand />);
     }
@@ -14,11 +15,11 @@ class Explore extends Component {
     }
     if (themes !== null) {
       list.push(themes.others.map((item, index) => (
-        <ThemeItem {...item} key={index} />
+        <ThemeItem {...item} theme={theme.get(item.id)} key={index} />
      )));
     }
     return (
-      <div>
+      <div className="mainContainer">
         {list}
       </div>
     );
@@ -27,6 +28,7 @@ class Explore extends Component {
 Explore.propTypes = {
   dispatch:      PropTypes.func.isRequired,
   themes:        PropTypes.object,
+  theme:         PropTypes.instanceOf(Map),
   isFetching:    PropTypes.bool.isRequired,
   fetchError:    PropTypes.bool.isRequired,
   errorMessage:  PropTypes.string,

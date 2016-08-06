@@ -1,62 +1,52 @@
 import { zhihuAPI } from '../statics';
 import fetch from 'isomorphic-fetch';
 
-export const REQUEST_THEMES = 'REQUEST_THEMES';
+export const REQUEST_THEME = 'REQUEST_THEME';
 
-export function requestThemes() {
-  return { type: REQUEST_THEMES };
-}
-
-export const RECEIVE_THEMES = 'RECEIVE_THEMES';
-
-export function receiveThemes(themes) {
+export function requestTheme(id) {
   return {
-    type: RECEIVE_THEMES,
-    themes,
+    type: REQUEST_THEME,
+    id,
   };
 }
 
-export const RECEIVE_THEMES_ERROR = 'RECEIVE_THEMES_ERROR';
+export const RECEIVE_THEME = 'RECEIVE_THEME';
 
-export function receiveThemesError(errorMessage) {
+export function receiveTheme(id, theme) {
   return {
-    type: RECEIVE_THEMES_ERROR,
+    type: RECEIVE_THEME,
+    theme,
+    id,
+  };
+}
+
+export const RECEIVE_THEME_ERROR = 'RECEIVE_THEME_ERROR';
+
+export function receiveThemeError(id, errorMessage) {
+  return {
+    type: RECEIVE_THEME_ERROR,
     errorMessage,
+    id,
   };
 }
 
-export const INVALIDATE_THEMES = 'INVALIDATE_THEMES';
-
-export function invalidateThemes() {
-  return {
-    type:          INVALIDATE_THEMES,
-    didInvalidate: true,
-  };
+function shouldFetchTheme(id, state) {
+  return !state.theme.themeCache.has(id);
 }
-
-function shouldFetchThemes(state) {
-  const themes = state.themes.cache;
-  if (!themes) {
-    return true;
-  } else if (state.isFetching) {
-    return false;
-  }
-  return state.didInvalidate;
-}
-export function fetchThemesIfNeeded() {
+export function fetchThemeIfNeeded(id) {
   return (dispatch, getState) => {
-    if (shouldFetchThemes(getState())) {
-      dispatch(requestThemes());
-      return fetch(`${zhihuAPI}http://news-at.zhihu.com/api/4/themes`)
+    if (shouldFetchTheme(id, getState())) {
+      dispatch(requestTheme(id));
+      return fetch(`${zhihuAPI}http://news-at.zhihu.com/api/4/theme/${id}`)
       .then((response) => {
         if (response.ok) {
           response.json()
-          .then(json => dispatch(receiveThemes(json)));
+          .then(json => dispatch(receiveTheme(id, json)));
         } else {
           throw new Error(response.status);
         }
       })
-      .catch(error => (dispatch(receiveThemesError(error.message))));
+      .catch(error => (dispatch(receiveThemeError(id, error.message))));
     }
     return null;
   };

@@ -77,7 +77,7 @@ const StoriesList = ({ stories, fetchNews, isFetching, fetchError, errorMessage,
   }
 
   return (
-    <div className={style.storyList}>
+    <div className="mainContainer">
 
       {list}
     </div>
