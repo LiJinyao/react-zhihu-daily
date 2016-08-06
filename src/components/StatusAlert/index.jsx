@@ -8,7 +8,7 @@ alert type
 export const STATUS_ALERT_LOADING = 'STATUS_ALERT_LOADING';
 export const STATUS_ALERT_ERROR = 'STATUS_ALERT_ERROR';
 
-export function expandHeight() {
+function expandHeight() {
   const headerHeight = document.querySelector('.appheader').clientHeight;
   const footerHeight = document.querySelector('.appfooter').clientHeight;
 
