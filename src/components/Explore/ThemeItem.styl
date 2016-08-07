@@ -13,13 +13,15 @@
   background-position center
   border-left 8px solid #000
   padding-left 8px
-  transition border .1s ease-in-out
+  transition border-color .1s ease-in-out
   @media screen and (max-width: 700px)
     width 100%
     box-sizing border-box
-    margin 30px 10px 0 10px
+    border-left none
+    padding-left 0
+    margin 0 0 10px 0
   &:hover
-    border-left 8px solid zhihuBlue
+    border-color zhihuBlue
 .coverPlaceholder
   height 224px
 .cover
