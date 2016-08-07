@@ -49,7 +49,8 @@ module.exports = {
     },
     {
       test: /\.svg$/,
-      loader: 'url-loader?limit=0&name=images/[name].[ext]'
+      loader: 'url-loader?limit=10000&name=images/[name].[ext]',
+      exclude: path.join(__dirname, 'src', 'statics', 'iconfont')
     },
     {
       test: /\.(woff2?|otf|eot|svg|ttf)$/,
