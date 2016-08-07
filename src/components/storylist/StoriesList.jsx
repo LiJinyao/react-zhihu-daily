@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import style from './StoriesList.styl';
 import StoryItem from './StoryItem';
+import Slider from '../Slider/Slider';
 import StatusAlert, { STATUS_ALERT_LOADING, STATUS_ALERT_ERROR } from '../StatusAlert';
 
 function parseDate(dateString) {
@@ -19,21 +20,36 @@ function getDate(dateString) {
   return `${date.month}月${date.day}日`;
 }
 
-const StoriesList = ({ stories, fetchNews, isFetching, fetchError, errorMessage }) => {
-  let list = stories.map(dailyStory => {
-    const storyList = dailyStory.stories.map(story => (
-      <StoryItem
-        key={story.id}
-        {...story}
-      />
-      )
+const StoriesList = ({ stories, fetchNews, isFetching, fetchError, errorMessage, storyExtra }) => {
+  let list = [];
+  if (stories.length !== 0) {
+    // slider
+    list.push(<Slider data={stories[0].top_stories} key="slider" />);
+    const topStoryIds = new Set();
+    stories[0].top_stories.forEach(item => {
+      topStoryIds.add(item.id);
+    });
+    list.push(
+      stories.map(dailyStory => {
+        const storyList = dailyStory.stories
+        .filter((item) => (!topStoryIds.has(item.id)))
+        .map(story => (
+          <StoryItem
+            key={story.id}
+            {...story}
+            linkPrefix="/news"
+            storyExtra={storyExtra}
+          />
+          )
+        );
+        // push date tag in the front
+        storyList.unshift(
+          <div className={style.date} key={dailyStory.date}>{getDate(dailyStory.date)}</div>
+        );
+        return storyList;
+      })
     );
-    // push date tag in the front
-    storyList.unshift(
-      <div className={style.date} key={dailyStory.date}>{getDate(dailyStory.date)}</div>
-    );
-    return storyList;
-  });
+  }
 
   // featch today's stories
   // fetch error
@@ -68,16 +84,20 @@ const StoriesList = ({ stories, fetchNews, isFetching, fetchError, errorMessage 
   }
 
   return (
-    <div className={style.storyList}>{list}</div>
+    <div className="mainContainer">
+
+      {list}
+    </div>
   );
 };
 
 StoriesList.propTypes = {
-  stories: PropTypes.array.isRequired,
-  fetchNews: PropTypes.func.isRequired,
-  isFetching: PropTypes.bool.isRequired,
-  fetchError: PropTypes.bool.isRequired,
+  stories:      PropTypes.array.isRequired,
+  fetchNews:    PropTypes.func.isRequired,
+  isFetching:   PropTypes.bool.isRequired,
+  fetchError:   PropTypes.bool.isRequired,
   errorMessage: PropTypes.string,
+  storyExtra:   PropTypes.instanceOf(Map),
 };
 
 export default StoriesList;

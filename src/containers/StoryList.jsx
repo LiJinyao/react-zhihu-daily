@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { fetchNews } from '../actions';
-import StoriesList from '../components/storylist/StoriesList';
+import StoriesList from '../components/Storylist/StoriesList';
 
 class StoryList extends Component {
   componentDidMount() {
@@ -9,7 +9,7 @@ class StoryList extends Component {
     this.props.dispatch(fetchNews('latest'));
   }
   render() {
-    const { isFetching, stories, dispatch, fetchError, errorMessage } = this.props;
+    const { isFetching, stories, dispatch, fetchError, errorMessage, storyExtra } = this.props;
     return (
       <div>
       {
@@ -19,6 +19,7 @@ class StoryList extends Component {
           isFetching={isFetching}
           stories={stories}
           fetchNews={(date) => { dispatch(fetchNews(date)); }}
+          storyExtra={storyExtra}
         />
       }
       </div>
@@ -27,20 +28,22 @@ class StoryList extends Component {
 }
 
 StoryList.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  stories: PropTypes.array.isRequired,
-  isFetching: PropTypes.bool.isRequired,
-  fetchError: PropTypes.bool.isRequired,
+  dispatch:     PropTypes.func.isRequired,
+  stories:      PropTypes.array.isRequired,
+  isFetching:   PropTypes.bool.isRequired,
+  fetchError:   PropTypes.bool.isRequired,
   errorMessage: PropTypes.string,
+  storyExtra:   PropTypes.instanceOf(Map),
 };
 
 const mapStateToProps = state => (
   {
     // get a day's stories.
-    stories: state.news.items,
-    isFetching: state.news.isFetching,
-    fetchError: state.news.fetchError,
+    stories:      state.news.items,
+    isFetching:   state.news.isFetching,
+    fetchError:   state.news.fetchError,
     errorMessage: state.news.errorMessage,
+    storyExtra:   state.storyExtra.extraCache,
   }
 );
 

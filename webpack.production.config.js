@@ -6,10 +6,10 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   //行到行的source map
   devtool: 'cheap-module-source-map',
-  entry: ['./src/index'],
+  entry: ['babel-polyfill', './src/index'],
   output: {
   path: path.join(__dirname, 'dist/zhihuDaily/public'),
-  filename: 'bundle.js',
+  filename: 'bundle.js?v[hash:10]',
   publicPath: '/',
   },
   resolve: {
@@ -35,8 +35,7 @@ module.exports = {
   module: {
     loaders: [{
       test: /\.jsx?$/,
-      //'react-hot'放在最前面，然后处理jsx，最后babel预编译
-      loaders: ['react-hot', 'jsx?harmony', 'babel'],
+      loaders: ['jsx?harmony', 'babel'],
       include: path.join(__dirname, 'src')
     },
     {
@@ -50,7 +49,17 @@ module.exports = {
     },
     {
       test: /\.svg$/,
-      loader: 'svg-url-loader'
+      loader: 'url-loader?limit=10000&name=images/[name].[ext]',
+      exclude: path.join(__dirname, 'src', 'statics', 'iconfont')
+    },
+    {
+      test: /\.(woff2?|otf|eot|svg|ttf)$/,
+      loader: 'url-loader?limit=10000&name=font/[name].[ext]',
+      include: path.join(__dirname, 'src', 'statics', 'iconfont')
     }]
+  },
+  stylus: {
+    use: [require('nib')()],
+    import: ['~nib/lib/nib/index.styl']
   }
 };

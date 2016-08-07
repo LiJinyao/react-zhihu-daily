@@ -1,25 +1,61 @@
-.header
+@import "../statics/consts"
+headerWidth = 230px
+headerWidthMobile = 170px
+
+navTransition(prop)
+  transition: prop .4s ease-in-out;
+
+navTransfrom(direc=1)
+  transform: translateX(direc * headerWidth / 4);
+  @media screen and (max-width: 700px)
+    transform: translateX(direc * headerWidthMobile / 4);
+.headerWarp
   position: relative;
+  z-index: 10;
   width: 100%;
   min-width: 736px;
   height: 64px;
-  margin-bottom: 45px;
-  background-color: #FFF;
+  background-color: bkgHeader;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.4);
   @media screen and (max-width: 700px)
     min-width: 0;
     height: 56px;
-    margin-bottom: 15px;
-.logo
-  position: absolute;
-  margin: auto;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 45px;
-  width: 180px;
-  background-image: url(./headerLogo.svg);
+.header
+  display: table;
+  height: 100%;
+  width: headerWidth;
+  margin: 0 auto;
+  navTransition: transform;
   @media screen and (max-width: 700px)
-    height: 35px;
-    width: 140px;
+    width: headerWidthMobile;
+.headerLink
+  display: table-cell;
+  vertical-align: middle;
+.shadow
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  navTransition: box-shadow;
+.daily
+  -webkit-filter: drop-shadow(1px 1px 1px #AAA)
+  filter: url(#drop-shadow);
+.daily > svg
+  height: 32px;
+  width: (headerWidth / 2);
+  fill: navNoneActive;
+  navTransition: fill;
+  @media screen and (max-width: 700px)
+    height: 30px;
+    width: (headerWidthMobile / 2);
+.active > div > svg
+  fill: zhihuBlue;
+// transform of header
+.left
+  navTransfrom 1;
+  .rigthShadow
+    box-shadow: inset -140px 0 140px -80px #FFF;
+.right
+  navTransfrom -1;
+  .leftShadow
+    box-shadow: inset 140px 0 140px -80px #FFF;

@@ -6,14 +6,15 @@ module.exports = {
   //行到行的source map
   devtool: 'eval',
   entry: [
+    'babel-polyfill',
     //hot loader的entry设置
-    'webpack-dev-server/client?http://localhost:1234', // WebpackDevServer host and port
+    'webpack-dev-server/client?http://0.0.0.0:1234', // WebpackDevServer host and port
     'webpack/hot/only-dev-server', // "only" prevents reload on syntax errors
     './src/index' // Your appʼs entry point
   ],
   output: {
   path: path.join(__dirname, 'dist'),
-  filename: 'bundle.js',
+  filename: 'bundle.js?v[hash:10]',
   //热加载时使用的编译输出的相对路径
   publicPath: '/'
   },
@@ -46,8 +47,15 @@ module.exports = {
     },
     {
       test: /\.svg$/,
-      loader: 'svg-url-loader'
-    }]
+      loader: 'url-loader?limit=10000&name=images/[name].[ext]',
+      exclude: path.join(__dirname, 'src', 'statics', 'iconfont')
+    },
+    {
+      test: /\.(woff2?|otf|eot|svg|ttf)$/,
+      loader: 'url-loader?limit=10000&name=font/[name].[ext]',
+      include: path.join(__dirname, 'src', 'statics', 'iconfont')
+    }
+  ]
   },
   stylus: {
     use: [require('nib')()],

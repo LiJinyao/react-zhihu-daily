@@ -7,7 +7,7 @@ var productionConfig = require("./webpack.production.config");
 /*
 * compile server code to ES5
 */
-function babelIt(cb) {
+function buildServer(cb) {
   return gulp.src('server/**/*.js')
     .pipe(sourcemaps.init())
     .pipe(babel())
@@ -37,7 +37,8 @@ function buildFrontend(cb) {
   });
 }
 
-gulp.task('babel', babelIt);
+gulp.task('buildServer', buildServer);
 gulp.task('lint', lintServerCode);
 gulp.task('lintapp', lintFrontendCode);
 gulp.task('buildFrontend', buildFrontend);
+gulp.task('build', ['buildServer', 'buildFrontend']);

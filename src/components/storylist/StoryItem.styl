@@ -1,8 +1,9 @@
+@import "../../statics/consts"
 .storyItem
   width: 150px;
-  height: 210px;
+  height: 225px;
   display: inline-block;
-  margin: 20px 15px;
+  margin: 20px 17px;
   text-decoration: none;
   box-shadow: 0 2px 11px 0 rgba(0, 0, 0, 0.1);
   transition: all 0.2s ease-in-out;
@@ -11,9 +12,13 @@
     height: 80px;
     margin: 5px 0;
     box-sizing: border-box;
-    box-shadow: 0 0px 1px rgba(0, 0, 0, 0.3);
+    border-top: 1px solid	#e6e6e6;
+    border-bottom: 1px solid #e6e6e6;
+    box-shadow: none;
   &:hover
     box-shadow: 0 2px 21px 0 rgba(0, 0, 0, 0.4);
+    @media screen and (max-width: 700px)
+      box-shadow: none;
 .img
   float: left;
   height: 150px;
@@ -26,13 +31,17 @@
     padding: 5px;
 .titleBox
   float: left;
-  height: 40px;
+  height: 55px;
   padding: 10px;
+  box-sizing: border-box;
   @media screen and (max-width: 700px)
+    padding: 5px;
+    height: 70px;
     position: absolute;
     float: none;
     display: inline-block;
 .title
+  text-overflow: ellipsis;
   height: 40px;
   line-height: 20px;
   font-size: 14px;
@@ -41,3 +50,9 @@
   margin: 0;
   @media screen and (max-width: 700px)
     font-size: 1rem;
+.extra
+  font-size: 0.8rem;
+  color: subColor;
+  @media screen and (max-width: 700px)
+    position: absolute;
+    bottom: 0;

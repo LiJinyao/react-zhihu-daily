@@ -1,7 +1,6 @@
 // 所有知乎api url请求前缀
-let host = 'localhost:1234';
+let zhihuAPI = 'http://localhost:1234/zhihu?url=';
 if (process.env.NODE_ENV === 'production') {
-  host = 'localhost:8080';
+  zhihuAPI = 'https://zhihudaily.lijinyao.com/zhihu?url=';
 }
-const zhihuAPI = `http://${host}/zhihu?url=`;
 export { zhihuAPI };

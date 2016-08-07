@@ -6,6 +6,16 @@ import {
   RECEIVE_STORY,
   RECEIVE_NEWS_ERROR,
   RECEIVE_STORY_ERROR,
+  REQUEST_STORY_EXTRA,
+  RECEIVE_STORY_EXTRA,
+  RECEIVE_STORY_EXTRA_ERROR,
+  REQUEST_THEMES,
+  RECEIVE_THEMES,
+  RECEIVE_THEMES_ERROR,
+  INVALIDATE_THEMES,
+  REQUEST_THEME,
+  RECEIVE_THEME,
+  RECEIVE_THEME_ERROR,
  } from '../actions';
 
 /**
@@ -15,7 +25,7 @@ import {
 function news(state = {
   fetchError: false,
   isFetching: false,
-  items: [],
+  items:      [],
   cachedDays: new Set(),
 }, action) {
   switch (action.type) {
@@ -23,19 +33,19 @@ function news(state = {
       return Object.assign({}, state, { isFetching: true, fetchError: false });
     case RECEIVE_NEWS:
       return Object.assign({}, state, {
-        fetchError: false,
-        isFetching: false,
-        items: [
+        fetchError:  false,
+        isFetching:  false,
+        items:       [
           ...state.items,
           action.news,
         ],
         lastUpdated: action.receivedAt,
-        cachedDays: new Set(state.cachedDays).add(action.date),
+        cachedDays:  new Set(state.cachedDays).add(action.date),
       });
     case RECEIVE_NEWS_ERROR:
       return Object.assign({}, state, {
-        isFetching: false,
-        fetchError: true,
+        isFetching:   false,
+        fetchError:   true,
         errorMessage: action.errorMessage,
       });
     default:
@@ -66,8 +76,97 @@ function stories(state = {
       });
     case RECEIVE_STORY_ERROR:
       return Object.assign({}, state, {
+        isFetching:   false,
+        fetchError:   true,
+        errorMessage: action.errorMessage,
+      });
+    default:
+      return state;
+  }
+}
+
+function storyExtra(state = {
+  extraCache: new Map(),
+  isFetching: false,
+  fetchError: false,
+}, action) {
+  switch (action.type) {
+    case REQUEST_STORY_EXTRA:
+      return Object.assign({}, state, { isFetching: true });
+    case RECEIVE_STORY_EXTRA:
+      return Object.assign({}, state, {
+        extraCache: new Map(state.extraCache).set(action.id, action.extra),
         isFetching: false,
-        fetchError: true,
+        fetchError: false,
+      });
+    case RECEIVE_STORY_EXTRA_ERROR:
+      return Object.assign({}, state, {
+        isFetching:   false,
+        fetchError:   true,
+        errorMessage: action.errorMessage,
+      });
+    default:
+      return state;
+
+  }
+}
+
+// theme list
+function themes(state = {
+  cache:         null,
+  isFetching:    false,
+  didInvalidate: true,
+  lastUpdated:    0,
+  fetchError:     false,
+}, action) {
+  switch (action.type) {
+    case REQUEST_THEMES:
+      return Object.assign({}, state, {
+        isFetching: true,
+      });
+    case RECEIVE_THEMES:
+      return Object.assign({}, state, {
+        isFetching:    false,
+        cache:         action.themes,
+        didInvalidate: false,
+        lastUpdated:   Date.now(),
+        fetchError:    false,
+      });
+    case RECEIVE_THEMES_ERROR:
+      return Object.assign({}, state, {
+        isFetching:   false,
+        fetchError:   true,
+        errorMessage: action.errorMessage,
+      });
+    case INVALIDATE_THEMES:
+      return Object.assign({}, state, {
+        didInvalidate: false,
+      });
+    default:
+      return state;
+  }
+}
+
+// theme from the theme list.
+function theme(state = {
+  themeCache: new Map(),
+  isFetching: false,
+  fetchError: false,
+}, action) {
+  switch (action.type) {
+    case REQUEST_THEME:
+      return Object.assign({}, state, {
+        isFetching: true,
+      });
+    case RECEIVE_THEME:
+      return Object.assign({}, state, {
+        themeCache: new Map(state.themeCache).set(action.id, action.theme),
+        isFetching: false,
+        fetchError: false,
+      });
+    case RECEIVE_THEME_ERROR:
+      return Object.assign({}, state, {
+        fetchError:   true,
         errorMessage: action.errorMessage,
       });
     default:
@@ -78,6 +177,9 @@ function stories(state = {
 const rootReducer = combineReducers({
   news,
   stories,
+  storyExtra,
+  themes,
+  theme,
 });
 
 export default rootReducer;

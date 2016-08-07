@@ -8,7 +8,7 @@ alert type
 export const STATUS_ALERT_LOADING = 'STATUS_ALERT_LOADING';
 export const STATUS_ALERT_ERROR = 'STATUS_ALERT_ERROR';
 
-export function expandHeight() {
+function expandHeight() {
   const headerHeight = document.querySelector('.appheader').clientHeight;
   const footerHeight = document.querySelector('.appfooter').clientHeight;
 
@@ -55,11 +55,9 @@ const StatusAlert = ({ status, errorMessage, expand }) => {
 };
 
 StatusAlert.propTypes = {
-  status: PropTypes.string.isRequired,
+  status:       PropTypes.string.isRequired,
   errorMessage: PropTypes.string,
-  expand: PropTypes.bool,
+  expand:       PropTypes.bool,
 };
-
-
 
 export default StatusAlert;

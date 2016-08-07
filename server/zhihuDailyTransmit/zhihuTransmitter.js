@@ -29,6 +29,7 @@ function zhihuApiTransmitter(zhihuUrl = '/', serverRes) {
       getRequestMethod(zhihuUrl)(zhihuUrl, res => {
         if (res.statusCode === 200) {
           serverRes.status(200);
+          serverRes.set(res.headers);
           res.on('data', chunk => { serverRes.write(chunk); });
           res.on('end', () => {
             serverRes.end();
