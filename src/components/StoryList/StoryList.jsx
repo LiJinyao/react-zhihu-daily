@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import style from './StoriesList.styl';
+import style from './StoryList.styl';
 import StoryItem from './StoryItem';
 import Slider from '../Slider/Slider';
 import StatusAlert, { STATUS_ALERT_LOADING, STATUS_ALERT_ERROR } from '../StatusAlert';
