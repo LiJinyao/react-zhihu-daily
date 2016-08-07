@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import StoryItem from '../../Storylist/StoryItem';
+import StoryItem from '../../StoryList/StoryItem';
 import { connect } from 'react-redux';
 import { fetchThemeIfNeeded } from '../../../actions';
 import style from './ThemeStories.styl';
