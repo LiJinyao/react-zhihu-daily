@@ -29,5 +29,5 @@ app.use('/zhihu', _zhihu2.default);
 app.get('*', function (req, res) {
   res.sendFile(_path2.default.join(__dirname, 'public', 'index.html'));
 });
-app.listen(8080);
+app.listen(8001);
 //# sourceMappingURL=app.js.map

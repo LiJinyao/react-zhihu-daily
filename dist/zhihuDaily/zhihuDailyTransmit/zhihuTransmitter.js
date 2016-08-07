@@ -4,14 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _promise = require('babel-runtime/core-js/promise');
-
-var _promise2 = _interopRequireDefault(_promise);
-
-var _set = require('babel-runtime/core-js/set');
-
-var _set2 = _interopRequireDefault(_set);
-
 var _http = require('http');
 
 var _http2 = _interopRequireDefault(_http);
@@ -26,7 +18,7 @@ var _url2 = _interopRequireDefault(_url);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var zhihuHostName = new _set2.default(['zhihu.com', 'zhimg.com']);
+var zhihuHostName = new Set(['zhihu.com', 'zhimg.com']);
 
 // 检查是否是知乎的域名
 function checkHostName(urlString) {
@@ -50,12 +42,13 @@ function zhihuApiTransmitter() {
   var zhihuUrl = arguments.length <= 0 || arguments[0] === undefined ? '/' : arguments[0];
   var serverRes = arguments[1];
 
-  return new _promise2.default(function (resolve, reject) {
+  return new Promise(function (resolve, reject) {
     if (checkHostName(zhihuUrl)) {
       // 有的链接是http协议，有的是https协议，不同的协议用不同的get方法。
       getRequestMethod(zhihuUrl)(zhihuUrl, function (res) {
         if (res.statusCode === 200) {
           serverRes.status(200);
+          serverRes.set(res.headers);
           res.on('data', function (chunk) {
             serverRes.write(chunk);
           });
