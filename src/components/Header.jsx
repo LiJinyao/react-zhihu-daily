@@ -4,7 +4,7 @@ import { IndexLink, Link } from 'react-router';
 import daily from '!raw-loader!./daily.svg';
 import explore from '!raw-loader!./explore.svg';
 
-const Header = ({location}) => {
+const Header = ({ location }) => {
   // is enter explore page.
   const explorePage = /(^\/explore)/.test(location.pathname);
   return (

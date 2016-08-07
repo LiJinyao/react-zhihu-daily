@@ -32,7 +32,7 @@ function lintFrontendCode(cb) {
 function buildFrontend(cb) {
   return webpack(productionConfig).run((err, stats) => {
     err && console.log('Error', err);
-    stats && console.log(stats.toString({ colors: true, chunks: false}));
+    stats && console.log(stats.toString({ colors: true, chunks: true}));
     cb && cb();
   });
 }
