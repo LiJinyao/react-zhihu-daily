@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { zhihuAPI } from '../../statics/';
 import { Link } from 'react-router';
 import style from './ThemeItem.styl';
-import StackBlur from './stackBlur';
+// import StackBlur from './stackBlur';
 class ThemeItem extends Component {
   componentDidMount() {
 
   }
 
-  imgLoad(event) {
+  imgLoad() {
     // console.log(this.blurBkg);
     // let ctx = this.blurBkg.getContext('2d');
     // console.log(event.target);
@@ -17,7 +17,7 @@ class ThemeItem extends Component {
     // console.log("image loaded");
   }
   render() {
-    const { description, thumbnail, id, name, theme } = this.props;
+    const { description, id, name, theme } = this.props;
     return (
       <Link
         className={style.item}
@@ -30,7 +30,7 @@ class ThemeItem extends Component {
               className={style.cover}
               src={`${zhihuAPI + theme.image}`}
               alt={description}
-              onLoad={(event) => { this.imgLoad(event) }}
+              onLoad={(event) => { this.imgLoad(event); }}
             />
         }
         </div>
@@ -42,5 +42,13 @@ class ThemeItem extends Component {
     );
   }
 }
+
+ThemeItem.propTypes = {
+  theme:       PropTypes.object,
+  name:        PropTypes.string.isRequired,
+  id:          PropTypes.number.isRequired,
+  description: PropTypes.string.isRequired,
+  thumbnail:   PropTypes.string.isRequired,
+};
 
 export default ThemeItem;

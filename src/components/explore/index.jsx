@@ -1,32 +1,28 @@
-import React, { PropTypes, Component } from 'react';
+import React, { PropTypes } from 'react';
 import StatusAlert, { STATUS_ALERT_LOADING, STATUS_ALERT_ERROR } from '../StatusAlert';
 import ThemeItem from './ThemeItem';
-import style from './Explore.styl';
-class Explore extends Component {
-  render() {
-    const list = [];
-    const { isFetching, fetchError, themes, theme, errorMessage } = this.props;
-    if (isFetching) {
-      return (<StatusAlert status={STATUS_ALERT_LOADING} key="Loading" expand />);
-    }
+const Explore = ({ isFetching, fetchError, themes, theme, errorMessage }) => {
+  const list = [];
+  if (isFetching) {
+    return (<StatusAlert status={STATUS_ALERT_LOADING} key="Loading" expand />);
+  }
 
-    if (fetchError) {
-      return (
-        <StatusAlert status={STATUS_ALERT_ERROR} key="error" errorMessage={errorMessage} />
-      );
-    }
-    if (themes !== null) {
-      list.push(themes.others.map((item, index) => (
-        <ThemeItem {...item} theme={theme.get(item.id)} key={index} />
-     )));
-    }
+  if (fetchError) {
     return (
-      <div className="exploreContainer">
-        {list}
-      </div>
+      <StatusAlert status={STATUS_ALERT_ERROR} key="error" errorMessage={errorMessage} />
     );
   }
-}
+  if (themes !== null) {
+    list.push(themes.others.map((item, index) => (
+      <ThemeItem {...item} theme={theme.get(item.id)} key={index} />
+   )));
+  }
+  return (
+    <div className="exploreContainer">
+      {list}
+    </div>
+  );
+};
 Explore.propTypes = {
   dispatch:      PropTypes.func.isRequired,
   themes:        PropTypes.object,
