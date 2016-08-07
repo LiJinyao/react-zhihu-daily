@@ -3,8 +3,8 @@ import { zhihuAPI } from '../../statics';
 import style from './StoryItem.styl';
 import { Link } from 'react-router';
 
-const StoryItem = ({ title, images, id, storyExtra }) => (
-  <Link className={style.storyItem} to={`/news/${id}`} >
+const StoryItem = ({ title, images, id, storyExtra, linkPrefix }) => (
+  <Link className={style.storyItem} to={`${linkPrefix}/${id}`} >
   {images &&
     <img className={style.img} src={zhihuAPI + images[0]} alt="Story" />
   }
@@ -28,6 +28,7 @@ StoryItem.propTypes = {
   images:     PropTypes.array,
   id:         PropTypes.number,
   storyExtra: PropTypes.instanceOf(Map),
+  linkPrefix: PropTypes.string,
 };
 
 export default StoryItem;

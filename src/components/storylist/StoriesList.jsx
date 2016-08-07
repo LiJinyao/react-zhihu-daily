@@ -37,6 +37,7 @@ const StoriesList = ({ stories, fetchNews, isFetching, fetchError, errorMessage,
           <StoryItem
             key={story.id}
             {...story}
+            linkPrefix="/news"
             storyExtra={storyExtra}
           />
           )

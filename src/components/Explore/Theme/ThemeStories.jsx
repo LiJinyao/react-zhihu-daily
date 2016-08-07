@@ -29,7 +29,8 @@ class ThemeStories extends Component {
           </div>
           <div className="s">
             {
-              theme.stories.map(story => (<StoryItem {...story} key={story.id} />))
+              theme.stories
+              .map(story => (<StoryItem {...story} key={story.id} linkPrefix="/explore/story" />))
             }
           </div>
         </div>

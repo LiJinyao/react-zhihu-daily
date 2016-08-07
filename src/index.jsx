@@ -20,6 +20,7 @@ render(
         <Route path="/news/:id" component={Story} />
         <Route path="/explore" component={Explore} />
         <Route path="/explore/:id" component={ThemeStories} />
+        <Route path="/explore/story/:id" component={Story} />
       </Route>
     </Router>
   </Provider>,
