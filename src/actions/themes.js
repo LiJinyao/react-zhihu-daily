@@ -45,6 +45,7 @@ function shouldFetchThemes(state) {
 }
 export function fetchThemesIfNeeded() {
   return (dispatch, getState) => {
+    console.log(getState());
     if (shouldFetchThemes(getState())) {
       dispatch(requestThemes());
       return fetch(`${zhihuAPI}http://news-at.zhihu.com/api/4/themes`)

@@ -5,13 +5,15 @@ import style from './Explore.styl';
 class Explore extends Component {
   render() {
     const list = [];
-    const { isFetching, fetchError, themes, theme } = this.props;
+    const { isFetching, fetchError, themes, theme, errorMessage } = this.props;
     if (isFetching) {
       return (<StatusAlert status={STATUS_ALERT_LOADING} key="Loading" expand />);
     }
 
     if (fetchError) {
-      return (<StatusAlert status={STATUS_ALERT_ERROR} key="Loading" />);
+      return (
+        <StatusAlert status={STATUS_ALERT_ERROR} key="error" errorMessage={errorMessage} />
+      );
     }
     if (themes !== null) {
       list.push(themes.others.map((item, index) => (
@@ -19,7 +21,7 @@ class Explore extends Component {
      )));
     }
     return (
-      <div className="mainContainer">
+      <div className="exploreContainer">
         {list}
       </div>
     );

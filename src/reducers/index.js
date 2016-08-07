@@ -134,8 +134,9 @@ function themes(state = {
       });
     case RECEIVE_THEMES_ERROR:
       return Object.assign({}, state, {
-        isFetching: false,
-        fetchError: true,
+        isFetching:   false,
+        fetchError:   true,
+        errorMessage: action.errorMessage,
       });
     case INVALIDATE_THEMES:
       return Object.assign({}, state, {
