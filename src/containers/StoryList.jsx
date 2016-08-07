@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { fetchNews } from '../actions';
-import StoriesList from '../components/Storylist/StoriesList';
+import StoriesList from '../components/StoryList/StoryList';
 
 class StoryList extends Component {
   componentDidMount() {
