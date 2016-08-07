@@ -36,6 +36,7 @@ function shouldFetchTheme(id, state) {
 export function fetchThemeIfNeeded(id) {
   return (dispatch, getState) => {
     if (shouldFetchTheme(id, getState())) {
+      console.log("fetch" + id);
       dispatch(requestTheme(id));
       return fetch(`${zhihuAPI}http://news-at.zhihu.com/api/4/theme/${id}`)
       .then((response) => {

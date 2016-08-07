@@ -21,7 +21,7 @@ class ThemeItem extends Component {
     return (
       <Link
         className={style.item}
-        to={`/${String(id)}`}
+        to={`/explore/${String(id)}`}
       >
         <div className={style.coverPlaceholder}>
         {

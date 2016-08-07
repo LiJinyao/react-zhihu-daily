@@ -25,9 +25,15 @@ const StoriesList = ({ stories, fetchNews, isFetching, fetchError, errorMessage,
   if (stories.length !== 0) {
     // slider
     list.push(<Slider data={stories[0].top_stories} key="slider" />);
+    const topStoryIds = new Set();
+    stories[0].top_stories.forEach(item => {
+      topStoryIds.add(item.id);
+    });
     list.push(
       stories.map(dailyStory => {
-        const storyList = dailyStory.stories.map(story => (
+        const storyList = dailyStory.stories
+        .filter((item) => (!topStoryIds.has(item.id)))
+        .map(story => (
           <StoryItem
             key={story.id}
             {...story}

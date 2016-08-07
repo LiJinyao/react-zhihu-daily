@@ -8,6 +8,7 @@ import { Provider } from 'react-redux';
 import StoryList from './containers/StoryList';
 import Story from './containers/Sotry';
 import Explore from './containers/ExploreContainer';
+import ThemeStories from './components/Explore/Theme/ThemeStories';
 import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 
@@ -18,6 +19,7 @@ render(
         <IndexRoute component={StoryList} />
         <Route path="/news/:id" component={Story} />
         <Route path="/explore" component={Explore} />
+        <Route path="/explore/:id" component={ThemeStories} />
       </Route>
     </Router>
   </Provider>,

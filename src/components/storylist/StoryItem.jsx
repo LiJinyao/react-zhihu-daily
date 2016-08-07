@@ -5,11 +5,13 @@ import { Link } from 'react-router';
 
 const StoryItem = ({ title, images, id, storyExtra }) => (
   <Link className={style.storyItem} to={`/news/${id}`} >
+  {images &&
     <img className={style.img} src={zhihuAPI + images[0]} alt="Story" />
+  }
     <div className={style.titleBox}>
       <p className={style.title}> {title} </p>
       {
-        storyExtra.has(id) &&
+        storyExtra && storyExtra.has(id) &&
           <span className={style.extra}>
             <span className="iconfont">{'\ue601 '}</span>
             {storyExtra.get(id).comments}
