@@ -12,20 +12,20 @@ const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 // 按需加载
 const Story = (location, callback) => {
   require.ensure([], require => {
-    callback(null, require('./containers/Sotry'));
+    callback(null, require('./containers/Sotry').default);
   }, '/news/:id');
 };
 
 const Explore = (location, callback) => {
   require.ensure([], require => {
-    callback(null, require('./containers/ExploreContainer'));
+    callback(null, require('./containers/ExploreContainer').default);
   }, '/explore');
 };
 
 const ThemeStories = (location, callback) => {
   require.ensure([], require => {
-    callback(null, require('./components/Explore/Theme/ThemeStories'));
-  }, '/explore');
+    callback(null, require('./components/Explore/Theme/ThemeStories').default);
+  }, '/ThemeStories');
 };
 
 render(
@@ -34,8 +34,8 @@ render(
       <Route path="/" component={App}>
         <IndexRoute component={StoryList} />
         <Route path="/news/:id" getComponent={Story} />
-        <Route path="/explore" component={Explore} />
-        <Route path="/explore/:id" component={ThemeStories} />
+        <Route path="/explore" getComponent={Explore} />
+        <Route path="/explore/:id" getComponent={ThemeStories} />
         <Route path="/explore/story/:id" getComponent={Story} />
       </Route>
     </Router>

@@ -7,7 +7,7 @@ module.exports = {
   //行到行的source map
   devtool: 'cheap-module-source-map',
   entry: {
-    js: ['babel-polyfill', './src/index'],
+    js: ['./src/index'],
     vendor: ['babel-polyfill', 'react', 'react-dom']
   },
   output: {
