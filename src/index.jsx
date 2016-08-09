@@ -6,21 +6,37 @@ import App from './components/App';
 import rootReducer from './reducers';
 import { Provider } from 'react-redux';
 import StoryList from './containers/StoryList';
-import Story from './containers/Sotry';
-import Explore from './containers/ExploreContainer';
-import ThemeStories from './components/Explore/Theme/ThemeStories';
 import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
+
+// 按需加载
+const Story = (location, callback) => {
+  require.ensure([], require => {
+    callback(null, require('./containers/Sotry'));
+  }, '/news/:id');
+};
+
+const Explore = (location, callback) => {
+  require.ensure([], require => {
+    callback(null, require('./containers/ExploreContainer'));
+  }, '/explore');
+};
+
+const ThemeStories = (location, callback) => {
+  require.ensure([], require => {
+    callback(null, require('./components/Explore/Theme/ThemeStories'));
+  }, '/explore');
+};
 
 render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={App}>
         <IndexRoute component={StoryList} />
-        <Route path="/news/:id" component={Story} />
+        <Route path="/news/:id" getComponent={Story} />
         <Route path="/explore" component={Explore} />
         <Route path="/explore/:id" component={ThemeStories} />
-        <Route path="/explore/story/:id" component={Story} />
+        <Route path="/explore/story/:id" getComponent={Story} />
       </Route>
     </Router>
   </Provider>,

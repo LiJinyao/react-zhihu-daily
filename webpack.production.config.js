@@ -6,10 +6,14 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   //行到行的source map
   devtool: 'cheap-module-source-map',
-  entry: ['babel-polyfill', './src/index'],
+  entry: {
+    js: ['babel-polyfill', './src/index'],
+    vendor: ['babel-polyfill', 'react', 'react-dom']
+  },
   output: {
   path: path.join(__dirname, 'dist/zhihuDaily/public'),
-  filename: 'bundle.js?v[hash:10]',
+  filename: 'app.js?v[hash:10]',
+  chunkFilename: '[id].chunk.js?v[hash:10]',
   publicPath: '/',
   },
   resolve: {
@@ -30,7 +34,8 @@ module.exports = {
     compress: {
     warnings: false
     }
-  })
+  }),
+  new webpack.optimize.CommonsChunkPlugin(/* chunkName= */"vendor", /* filename= */"vendor.bundle.js?v[hash:10]")
   ],
   module: {
     loaders: [{
