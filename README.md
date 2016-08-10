@@ -6,6 +6,10 @@
 ## live demo
 [zhihudaily.lijinyao.com](https://zhihudaily.lijinyao.com/)
 
+## Screen shot
+![mobile](ScreenShot/mobile.jpg)
+![desktop](ScreenShot/desktop.png)
+
 ## 运行
 ```
 npm install
