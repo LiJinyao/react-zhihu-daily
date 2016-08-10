@@ -20,6 +20,8 @@ function replaceImgSrcToProxy(story) {
   element.querySelector('.headline').remove();
   return element;
 }
+
+let isScrolling = false;
 function scrollToTop() {
   let interval = 0;
   const duration = 1000;
@@ -42,9 +44,13 @@ function scrollToTop() {
     window.scrollTo(0, Math.round(startTop + (distance * point)));
     if (now >= endTime) {
       clearInterval(interval);
+      isScrolling = false;
     }
   }
-  interval = setInterval(scrollFrame, 1);
+  if (!isScrolling) {
+    interval = setInterval(scrollFrame, 1);
+    isScrolling = true;
+  }
 }
 
 const Story = ({ story }) => (
@@ -64,7 +70,7 @@ const Story = ({ story }) => (
       }}
     >
     </div>
-    <div className={style.scrollTop} onClick={scrollToTop}>scroll to top</div>
+    <div className={`${style.scrollTop} iconfont`} onClick={scrollToTop}>&#xe603;</div>
   </div>
 );
 
