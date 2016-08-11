@@ -2,7 +2,7 @@ import Express from 'express';
 import logger from 'morgan';
 import zhihu from './routes/zhihu';
 import path from 'path';
-
+import database from './database/createTable';
 const app = new Express();
 
 app.use(Express.static(path.join(__dirname, '/public')));

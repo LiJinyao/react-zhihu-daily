@@ -73,6 +73,7 @@
   },
   "dependencies": {
     "babel-runtime": "^6.9.2",
+    "mysql": "^2.11.1",
     "normalize.css": "^4.2.0"
   }
 }
