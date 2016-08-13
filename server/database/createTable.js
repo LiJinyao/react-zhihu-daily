@@ -10,7 +10,7 @@ const connection = mysql.createConnection({
 connection.connect();
 
 function createTable() {
-  connection.query('CREATE TABLE IF NOT EXISTS stories (id INT UNSIGNED ZEROFILL)');
+  // connection.query('CREATE TABLE IF NOT EXISTS stories (id INT UNSIGNED ZEROFILL)');
 }
 
 connection.query('SHOW TABLES LIKE \'daily\'', (err, rows) => {
