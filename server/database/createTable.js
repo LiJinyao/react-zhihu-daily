@@ -1,23 +1,42 @@
-import mysql from 'mysql';
-import conf from '../config';
+import pool from './init';
 
-const connection = mysql.createConnection({
-  host:     conf.host,
-  user:     conf.user,
-  password: conf.password,
-  database: conf.database,
-});
-connection.connect();
+const SQL_CREATE_TABLE = `CREATE TABLE IF NOT EXISTS explore (
+  id INT UNSIGNED ZEROFILL,
+  type VARCHAR(6),
+  title VARCHAR(50),
+  meta VARCHAR(30),
+  top INT UNSIGNED ZEROFILL)`;
 
-function createTable() {
-  // connection.query('CREATE TABLE IF NOT EXISTS stories (id INT UNSIGNED ZEROFILL)');
+function createTableIfNotExists() {
+  return new Promise((resolve, reject) => {
+    pool.getConnection((getConnectionErr, connection) => {
+      if (getConnectionErr) {
+        reject(getConnectionErr);
+        return;
+      }
+
+      connection.query('SHOW TABLES LIKE \'explore\'', (err, rows) => {
+        if (err) {
+          reject(err);
+        }
+        if (rows.length === 0) {
+          connection.query(SQL_CREATE_TABLE, (err2, rows2) => {
+            if (err2) {
+              reject(err2);
+            }
+            resolve(rows2);
+          });
+        } else {
+          resolve('table explore exists.');
+        }
+      });
+      connection.release();
+    });
+  });
 }
 
-connection.query('SHOW TABLES LIKE \'daily\'', (err, rows) => {
-  if (err) throw err;
-  if (rows.length === 0) {
-    createTable();
-  }
-});
+// createTableIfNotExists()
+// .then((value) => { console.log(value); })
+// .catch((err) => {console.log(err);});
 
-connection.end();
+export default createTableIfNotExists;

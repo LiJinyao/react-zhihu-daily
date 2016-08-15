@@ -1,4 +1,4 @@
-import HtmlParser from 'htmlparser2';
+import cheerio from 'cheerio';
 import https from 'https';
 
 function getExplore() {
@@ -18,53 +18,61 @@ function getExplore() {
   });
 }
 
+                // type: /\/+(\w+)\//.exec(attribs.href)[1],
+                // id:   /\/+(\d+)/.exec(attribs.href)[1],
 function parseExplore(html) {
   const top = [];
   const hotCirclely = [];
   const hotStory = [];
+  const $ = cheerio.load(html);
+
   return new Promise((resolve, reject) => {
-    const parser = new HtmlParser.Parser({
-      onopentag: (name, attribs) => {
-        if (name === 'a') {
-          switch (attribs.class) {
-            case 'slide-page':
-              top.push({
-                type: /\/+(\w+)\//.exec(attribs.href)[1],
-                id:   /\/+(\d+)/.exec(attribs.href)[1],
-              });
-              break;
-            case 'topic-cell':
-              hotCirclely.push({
-                id: /\/+(\d+)/.exec(attribs.href)[1],
-              });
-              break;
-            case 'article-cell':
-              hotStory.push({
-                id: /\/+(\d+)/.exec(attribs.href)[1],
-              });
-              break;
-            default:
-              break;
-          }
-        }
-      },
-      ontext: text => {
-        console.log(text);
-      },
-    });
     try {
-      parser.write(html);
+      $('.slide-page').each((i, elem) => {
+        const href = $(elem).attr('href');
+        top.push({
+          type:  /\/+(\w+)\//.exec(href)[1],
+          id:    /\/+(\d+)/.exec(href)[1],
+          title: $(elem).children('h3').text(),
+        });
+      });
+
+      $('.topic-cell').each((i, elem) => {
+        const href = $(elem).attr('href');
+        hotCirclely.push({
+          type:  /\/+(\w+)\//.exec(href)[1],
+          id:    /\/+(\d+)/.exec(href)[1],
+          title: $(elem).find('.title').text()
+          .replace(/[\r\n]/g, ''),
+          meta:  $(elem).find('.meta').text()
+          .replace(/[\r\n]/g, ''),
+        });
+      });
+
+      $('.article-cell').each((i, elem) => {
+        const href = $(elem).attr('href');
+        hotStory.push({
+          type:  /\/+(\w+)\//.exec(href)[1],
+          id:    /\/+(\d+)/.exec(href)[1],
+          title: $(elem).find('.title').text()
+          .replace(/[\r\n]/g, ''),
+          view:  $(elem).find('.meta').text()
+          .replace(/[\r\n]/g, ''),
+        });
+      });
     } catch (e) {
       reject(e);
+    } finally {
+      resolve({
+        top,
+        hotCirclely,
+        hotStory,
+      });
     }
-    parser.end();
-    resolve({
-      top,
-      hotCirclely,
-      hotStory,
-    });
   });
 }
-getExplore()
-  .then(data => parseExplore(data))
-  .then(data => { console.log(data); });
+
+function saveToDataBase(explore) {
+
+}
+getExplore().then(data => parseExplore(data)).then((value) => { console.log(value); })
