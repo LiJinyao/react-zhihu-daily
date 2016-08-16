@@ -4,8 +4,8 @@
 import cheerio from 'cheerio';
 import https from 'https';
 import query from '../database/sqlHelper';
-function getExplore() {
-  const url = 'https://news-at.zhihu.com/api/7/explore?nightmode=0';
+
+function httpsGet(url) {
   return new Promise((resolve, reject) => {
     https.get(url, res => {
       if (res.statusCode === 200) {
@@ -21,8 +21,13 @@ function getExplore() {
   });
 }
 
-                // type: /\/+(\w+)\//.exec(attribs.href)[1],
-                // id:   /\/+(\d+)/.exec(attribs.href)[1],
+// 抓取首页html
+function getExplore() {
+  const url = 'https://news-at.zhihu.com/api/7/explore?nightmode=0';
+  return httpsGet(url);
+}
+
+// 解析首页html
 function parseExplore(html) {
   const top = [];
   const hotCirclely = [];
@@ -37,6 +42,7 @@ function parseExplore(html) {
           type:  /\/+(\w+)\//.exec(href)[1],
           id:    /\/+(\d+)/.exec(href)[1],
           title: $(elem).children('h3').text(),
+          image: $(elem).children('img').attr('src'),
         });
       });
 
@@ -49,6 +55,7 @@ function parseExplore(html) {
           .replace(/[\r\n]/g, ''),
           meta:  $(elem).find('.meta').text()
           .replace(/[\r\n]/g, ''),
+          image: $(elem).children('img').attr('src'),
         });
       });
 
@@ -61,6 +68,7 @@ function parseExplore(html) {
           .replace(/[\r\n]/g, ''),
           meta:  $(elem).find('.meta').text()
           .replace(/[\r\n]/g, ''),
+          image: $(elem).children('img').attr('src'),
         });
       });
     } catch (e) {
@@ -75,12 +83,14 @@ function parseExplore(html) {
   });
 }
 
-function saveToDataBase(items) {
-  let querySet = 'REPLACE INTO explore (id, type, title, meta, top, time) VALUES ';
+// 存到数据库
+function saveExploreToDataBase(items) {
+  let querySet = 'REPLACE INTO explore (id, type, title, meta, image, top, time) VALUES ';
   const today = new Date();
   function addToQuery(item, key) {
-    const { type, id, title, meta } = item;
-    const sqlQuery = `\n(${id}, '${type}', '${title}', '${meta}', ${key === 'top' ? 1 : 0}, '${today.getFullYear()}-${today.getMonth()}-${today.getDay()}'),`;
+    const { type, id, title, meta, image } = item;
+    const sqlQuery = `\n(${id}, '${type}', '${title}', '${meta}', '${image || null}',
+    ${key === 'top' ? 1 : 0}, '${today.getFullYear()}-${today.getMonth()}-${today.getDay()}'),`;
     querySet += sqlQuery;
   }
 
@@ -95,8 +105,53 @@ function saveToDataBase(items) {
     .catch((err) => { reject(err); });
   });
 }
+
+// 返回每个日报的信息。
+function getCirclesIndex(circles) {
+  const requestes = [];
+  return new Promise((resolve, reject) => {
+    circles.forEach(item => {
+      const api = `https://news-at.zhihu.com/api/7/circle/${item.id}`;
+      requestes.push(httpsGet(api));
+    });
+    Promise.all(requestes)
+    .then((value) => { resolve(value); })
+    .catch(err => reject(err));
+  });
+}
+
+// 过滤首页的内容类型，目前分为 circle 和 story
+function filterExplore(items, type = 'circle') {
+  const result = [];
+  for (const key of Object.keys(items)) {
+    result.push(...items[key].filter(item => item.type === type));
+  }
+  return result;
+}
+
+function saveCirclesIndex(circles) {
+  let querySet = 'REPLACE INTO circle_index (id, circle) VALUES ';
+  function addToQuery(id, circle) {
+    const sqlQuery = `\n(${id}, '${circle}'),`;
+    querySet += sqlQuery;
+  }
+  circles.forEach(circle => {
+    const json = JSON.parse(circle);
+    addToQuery(json.id, circle);
+  });
+  return new Promise((resolve, reject) => {
+    query(querySet.substring(0, querySet.length - 1))
+    .then((value) => { resolve(value); })
+    .catch((err) => { reject(err); });
+  });
+}
+
 getExplore()
 .then(data => parseExplore(data))
-.then((value) => saveToDataBase(value))
+.then((value) => {
+  getCirclesIndex(filterExplore(value))
+  .then((counts) => saveCirclesIndex(counts));
+  return saveExploreToDataBase(value);
+})
 .then((value) => { console.log(value); })
 .catch((err) => {console.log(err);});
