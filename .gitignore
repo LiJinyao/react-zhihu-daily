@@ -4,3 +4,5 @@ dist/
 .idea/
 .npm-debug.log
 server/config.js
+.tags
+.tags1

@@ -14,6 +14,7 @@ function query(sql) {
           resolve(rows);
         }
       });
+      connection.release();
     });
   });
 }

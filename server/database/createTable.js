@@ -5,7 +5,11 @@ const SQL_CREATE_TABLE = `CREATE TABLE IF NOT EXISTS explore (
   type VARCHAR(6),
   title VARCHAR(50),
   meta VARCHAR(30),
-  top INT UNSIGNED ZEROFILL)`;
+  top INT UNSIGNED ZEROFILL,
+  time DATE,
+  PRIMARY KEY (id))`;
+
+// ALTER DATABASE nodejs DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 function createTableIfNotExists() {
   return new Promise((resolve, reject) => {
@@ -35,8 +39,8 @@ function createTableIfNotExists() {
   });
 }
 
-// createTableIfNotExists()
-// .then((value) => { console.log(value); })
-// .catch((err) => {console.log(err);});
+createTableIfNotExists()
+.then((value) => { console.log(value); })
+.catch((err) => {console.log(err);});
 
 export default createTableIfNotExists;

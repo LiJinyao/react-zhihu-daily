@@ -1,6 +1,9 @@
+/**
+ * grab explore index.
+ */
 import cheerio from 'cheerio';
 import https from 'https';
-
+import query from '../database/sqlHelper';
 function getExplore() {
   const url = 'https://news-at.zhihu.com/api/7/explore?nightmode=0';
   return new Promise((resolve, reject) => {
@@ -56,7 +59,7 @@ function parseExplore(html) {
           id:    /\/+(\d+)/.exec(href)[1],
           title: $(elem).find('.title').text()
           .replace(/[\r\n]/g, ''),
-          view:  $(elem).find('.meta').text()
+          meta:  $(elem).find('.meta').text()
           .replace(/[\r\n]/g, ''),
         });
       });
@@ -72,7 +75,28 @@ function parseExplore(html) {
   });
 }
 
-function saveToDataBase(explore) {
+function saveToDataBase(items) {
+  let querySet = 'REPLACE INTO explore (id, type, title, meta, top, time) VALUES ';
+  const today = new Date();
+  function addToQuery(item, key) {
+    const { type, id, title, meta } = item;
+    const sqlQuery = `\n(${id}, '${type}', '${title}', '${meta}', ${key === 'top' ? 1 : 0}, '${today.getFullYear()}-${today.getMonth()}-${today.getDay()}'),`;
+    querySet += sqlQuery;
+  }
 
+  return new Promise((resolve, reject) => {
+    for (const key of Object.keys(items)) {
+      items[key].forEach(item => {
+        addToQuery(item, key);
+      });
+    }
+    query(querySet.substring(0, querySet.length - 1))
+    .then((value) => { resolve(value); })
+    .catch((err) => { reject(err); });
+  });
 }
-getExplore().then(data => parseExplore(data)).then((value) => { console.log(value); })
+getExplore()
+.then(data => parseExplore(data))
+.then((value) => saveToDataBase(value))
+.then((value) => { console.log(value); })
+.catch((err) => {console.log(err);});
