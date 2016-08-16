@@ -1,6 +1,3 @@
-/**
- * grab explore index.
- */
 import cheerio from 'cheerio';
 import https from 'https';
 import query from '../database/sqlHelper';
@@ -129,6 +126,7 @@ function filterExplore(items, type = 'circle') {
   return result;
 }
 
+// 储存circle的详细信息
 function saveCirclesIndex(circles) {
   let querySet = 'REPLACE INTO circle_index (id, circle) VALUES ';
   function addToQuery(id, circle) {
@@ -146,12 +144,14 @@ function saveCirclesIndex(circles) {
   });
 }
 
-getExplore()
-.then(data => parseExplore(data))
-.then((value) => {
-  getCirclesIndex(filterExplore(value))
-  .then((counts) => saveCirclesIndex(counts));
-  return saveExploreToDataBase(value);
-})
-.then((value) => { console.log(value); })
-.catch((err) => {console.log(err);});
+
+export function grabExplore() {
+  getExplore()
+  .then(data => parseExplore(data))
+  .then((value) => {
+    getCirclesIndex(filterExplore(value))
+    .then((counts) => saveCirclesIndex(counts));
+    return saveExploreToDataBase(value);
+  })
+  .catch(); // TODO
+}
