@@ -87,7 +87,8 @@ function saveExploreToDataBase(items) {
   function addToQuery(item, key) {
     const { type, id, title, meta, image } = item;
     const sqlQuery = `\n(${id}, '${type}', '${title}', '${meta}', '${image || null}',
-    ${key === 'top' ? 1 : 0}, '${today.getFullYear()}-${today.getMonth()}-${today.getDay()}'),`;
+    ${key === 'top' ? 1 : 0},
+    '${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}'),`;
     querySet += sqlQuery;
   }
 
@@ -144,8 +145,7 @@ function saveCirclesIndex(circles) {
   });
 }
 
-
-export function grabExplore() {
+function grabExplore() {
   getExplore()
   .then(data => parseExplore(data))
   .then((value) => {
@@ -153,5 +153,6 @@ export function grabExplore() {
     .then((counts) => saveCirclesIndex(counts));
     return saveExploreToDataBase(value);
   })
-  .catch(); // TODO
+  .catch(err => console.log(err)); // TODO
 }
+grabExplore();
