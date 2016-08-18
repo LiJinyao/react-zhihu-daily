@@ -9,22 +9,19 @@ class exploreDB {
     if (!instance) {
       instance = this;
       this.DB = {
-        explore:    {},
-        circleInfo: {},
-        lastUpdate: 0,
+        explore:    { lastUpdate: 0 },
+        circleInfo: { lastUpdate: 0 },
       };
     }
     return instance;
   }
   update(key, value) {
     this.DB[key] = value;
-    this.DB.lastUpdate = Date.now();
+    this.DB[key].lastUpdate = Date.now();
   }
   get(key) {
     return this.DB[key];
   }
 }
-// let c1 = new exploreDB();
-// let c2 = new exploreDB();
-// console.log(c1 === c2);
+
 export default exploreDB;

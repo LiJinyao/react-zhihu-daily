@@ -1,7 +1,8 @@
 import cheerio from 'cheerio';
 import https from 'https';
 import query from '../database/sqlHelper';
-
+import RAMMDB from '../database/RAMDB';
+const DB = new RAMMDB();
 function httpsGet(url) {
   return new Promise((resolve, reject) => {
     https.get(url, res => {
@@ -145,6 +146,9 @@ function saveCirclesIndex(circles) {
   });
 }
 
+function saveToRAMDB(key, value) {
+  DB.update(key, value);
+}
 function grabExplore() {
   getExplore()
   .then(data => parseExplore(data))
