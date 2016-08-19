@@ -9,18 +9,26 @@ class exploreDB {
     if (!instance) {
       instance = this;
       this.DB = {
-        explore:    { lastUpdate: 0 },
-        circleInfo: { lastUpdate: 0 },
+        lastUpdates: new Map(),
       };
     }
     return instance;
   }
   update(key, value) {
-    this.DB[key] = value;
-    this.DB[key].lastUpdate = Date.now();
+    if (typeof value === 'object') {
+      // deep copy object
+      this.DB[key] = Object.assign({}, value);
+    } else {
+      this.DB[key] = value;
+    }
+
+    this.DB.lastUpdates.set(key, Date.now());
   }
   get(key) {
-    return this.DB[key];
+    return {
+      value:      this.DB[key] || {},
+      lastUpdate: this.DB.lastUpdates.get(key) || 0,
+    };
   }
 }
 

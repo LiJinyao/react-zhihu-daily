@@ -146,17 +146,27 @@ function saveCirclesIndex(circles) {
   });
 }
 
-function saveToRAMDB(key, value) {
-  DB.update(key, value);
-}
-function grabExplore() {
+function grabExploreToRAMDB() {
+  // getExplore()
+  // .then(data => parseExplore(data))
+  // .then((value) => {
+  //   getCirclesIndex(filterExplore(value))
+  //   .then((counts) => {
+  //     DB.update('CirclesIndex', counts);
+  //     saveCirclesIndex(counts);
+  //   });
+  //   DB.update('explore', value);
+  //   console.log(DB.get('explore').value.top);
+  //   return saveExploreToDataBase(value);
+  // })
+  // .catch(err => console.log(err)); // TODO
   getExplore()
   .then(data => parseExplore(data))
   .then((value) => {
-    getCirclesIndex(filterExplore(value))
-    .then((counts) => saveCirclesIndex(counts));
-    return saveExploreToDataBase(value);
-  })
-  .catch(err => console.log(err)); // TODO
+    getCirclesIndex(filterExplore(value)).then((counts) => DB.update('CirclesIndex', counts));
+    DB.update('explore', value);
+    console.log("spider done.");
+  });
 }
-grabExplore();
+
+grabExploreToRAMDB();

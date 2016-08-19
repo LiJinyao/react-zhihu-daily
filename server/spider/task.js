@@ -1,11 +1,12 @@
-import { grabExplore } from './spider';
+import { grabExploreToRAMDB } from './spider';
 export default class SpiderTask {
-  constructor(interval = 1000000000) {
+  // 30min
+  constructor(interval = 30 * 60 * 1 * 1000) {
     this.interval = interval;
     this.tag = null;
   }
   start() {
-    this.tag = setInterval(grabExplore, this.interval);
+    this.tag = setInterval(grabExploreToRAMDB, this.interval);
   }
   stop() {
     clearInterval(this.tag);
