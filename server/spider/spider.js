@@ -163,7 +163,7 @@ function grabExploreToRAMDB() {
   getExplore()
   .then(data => parseExplore(data))
   .then((value) => {
-    getCirclesIndex(filterExplore(value)).then((counts) => DB.update('CirclesIndex', counts));
+    getCirclesIndex(filterExplore(value)).then((counts) => DB.update('circlesIndex', counts));
     DB.update('explore', value);
     console.log("spider done.");
   });
