@@ -17,7 +17,7 @@ describe('RAMDB test', function() {
       key2: 'key2',
     }
     DB.update(key, value);
-    // literal queal.
+    // literal equal.
     expect(DB.get(key).value.toString()).to.be.equal(value.toString());
   });
 
