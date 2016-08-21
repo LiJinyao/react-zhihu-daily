@@ -3,6 +3,10 @@ import RAMDB from '../database/RAMDB';
 const router = new express.Router();
 const DB = new RAMDB();
 router.get('*', (req, res) => {
-  res.json(JSON.stringify(DB.get('explore')) + JSON.stringify(DB.get('circlesIndex')));
+  const explore = Object.assign(
+    { lastUpdate: DB.get('explore').lastUpdate },
+    DB.get('explore').value);
+
+  res.json(explore);
 });
 export default router;

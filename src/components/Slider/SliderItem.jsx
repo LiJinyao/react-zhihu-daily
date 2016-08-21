@@ -7,7 +7,7 @@ const SliderItem = ({ data }) => (
   <div
     className={style.itemwarp}
     style={{
-      backgroundImage:    `url('${zhihuAPI}${data.image}')`,
+      backgroundImage:    `url('${zhihuAPI}?url=${data.image}')`,
       backgroundSize:     'cover',
       backgroundRepeat:   'no-repeat',
       backgroundPosition: 'center',

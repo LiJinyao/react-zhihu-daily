@@ -8,13 +8,13 @@ function replaceImgSrcToProxy(story) {
   // 使用zhihu的样式
   const zhihuStyle = document.createElement('link');
   zhihuStyle.setAttribute('rel', 'stylesheet');
-  zhihuStyle.setAttribute('href', `${zhihuAPI}${story.css[0]}`);
+  zhihuStyle.setAttribute('href', `${zhihuAPI}?url=${story.css[0]}`);
   element.innerHTML = zhihuStyle.outerHTML + story.body;
   // 把中img的src替换成自己服务器的链接。
   const images = element.getElementsByTagName('img');
   for (let i = 0; i < images.length; i++) {
     const imgUrl = images[i].getAttribute('src');
-    images[i].setAttribute('src', `${zhihuAPI}${imgUrl}`);
+    images[i].setAttribute('src', `${zhihuAPI}?url=${imgUrl}`);
   }
   // 删除banner
   element.querySelector('.headline').remove();
@@ -57,7 +57,7 @@ const Story = ({ story }) => (
   <div className="mainContainer">
     <div
       className={style.imgPlaceHolder}
-      style={{ backgroundImage: `url(${zhihuAPI}${story.image})` }}
+      style={{ backgroundImage: `url(${zhihuAPI}?url=${story.image})` }}
     >
       <div className={style.imgBannerBackground}></div>
       <span className={style.storyListitle}>{story.title}</span>

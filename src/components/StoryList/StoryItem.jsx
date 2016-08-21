@@ -6,7 +6,7 @@ import { Link } from 'react-router';
 const StoryItem = ({ title, images, id, storyExtra, linkPrefix }) => (
   <Link className={style.storyItem} to={`${linkPrefix}/${id}`} >
   {images &&
-    <img className={style.img} src={zhihuAPI + images[0]} alt="Story" />
+    <img className={style.img} src={`${zhihuAPI}?url=${images[0]}`} alt="Story" />
   }
     <div className={style.titleBox}>
       <p className={style.title}> {title} </p>

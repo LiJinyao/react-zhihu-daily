@@ -48,14 +48,15 @@ export function fetchThemesIfNeeded() {
     console.log(getState());
     if (shouldFetchThemes(getState())) {
       dispatch(requestThemes());
-      return fetch(`${zhihuAPI}http://news-at.zhihu.com/api/4/themes`)
+      return fetch(`${zhihuAPI}/explore`)
       .then((response) => {
         if (response.ok) {
           response.json()
           .then(json => {
+            console.log(json);
             dispatch(receiveThemes(json));
             // 因为知乎日报API设计的原因不得不全部请求才能的得到大图地址
-            json.others.forEach((item) => { dispatch(fetchThemeIfNeeded(item.id)); });
+            // json.others.forEach((item) => { dispatch(fetchThemeIfNeeded(item.id)); });
           });
         } else {
           throw new Error(response.status);

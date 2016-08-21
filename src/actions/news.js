@@ -60,7 +60,7 @@ export function fetchNews(date) {
 
       // In this case, we return a promise to wait for.
       // This is not required by thunk middleware, but it is convenient for us.
-      return fetch(`${zhihuAPI}http://news-at.zhihu.com/api/4/news/${date}`)
+      return fetch(`${zhihuAPI}?url=http://news-at.zhihu.com/api/4/news/${date}`)
       .then(response => {
         // if (response.status >= 400) {
         //   throw new Error('Bad response from server');

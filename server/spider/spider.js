@@ -169,4 +169,4 @@ function grabExploreToRAMDB() {
   });
 }
 
-grabExploreToRAMDB();
+export { grabExploreToRAMDB };

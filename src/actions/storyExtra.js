@@ -35,7 +35,7 @@ export function fetchStoryExtra(id) {
   return (dispatch, getState) => {
     if (!getState().storyExtra.extraCache.has(id)) {
       dispatch(requestStoryExtra(id));
-      return fetch(`${zhihuAPI}http://news-at.zhihu.com/api/4/story-extra/${id}`)
+      return fetch(`${zhihuAPI}?url=http://news-at.zhihu.com/api/4/story-extra/${id}`)
       .then(response => {
         if (response.ok) {
           response.json()

@@ -34,7 +34,7 @@ export function receiveStoryError(errorMessage) {
 export function fetchStory(id) {
   return dispatch => {
     dispatch(requestStory(id));
-    return fetch(`${zhihuAPI}http://news-at.zhihu.com/api/4/news/${id}`)
+    return fetch(`${zhihuAPI}?url=http://news-at.zhihu.com/api/4/news/${id}`)
       .then(response => {
         if (response.ok) {
           response.json()

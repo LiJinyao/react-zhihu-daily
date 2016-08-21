@@ -21,7 +21,7 @@ class exploreDB {
     } else {
       this.DB[key] = value;
     }
-
+    console.log(value);
     this.DB.lastUpdates.set(key, Date.now());
   }
   get(key) {

@@ -37,7 +37,7 @@ export function fetchThemeIfNeeded(id) {
   return (dispatch, getState) => {
     if (shouldFetchTheme(id, getState())) {
       dispatch(requestTheme(id));
-      return fetch(`${zhihuAPI}http://news-at.zhihu.com/api/4/theme/${id}`)
+      return fetch(`${zhihuAPI}?url=http://news-at.zhihu.com/api/4/theme/${id}`)
       .then((response) => {
         if (response.ok) {
           response.json()

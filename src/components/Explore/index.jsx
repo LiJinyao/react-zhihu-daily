@@ -13,7 +13,7 @@ const Explore = ({ isFetching, fetchError, themes, theme, errorMessage }) => {
     );
   }
   if (themes !== null) {
-    list.push(themes.others.map((item, index) => (
+    list.push(themes.top.map((item, index) => (
       <ThemeItem {...item} theme={theme.get(item.id)} key={index} />
    )));
   }

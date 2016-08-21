@@ -16,7 +16,6 @@ app.use(logger('dev'));
 
 // 统一使用zhihu做代理
 app.use('/zhihu', zhihu);
-app.use('/explore', explore);
 // send all requests to index.html so browserHistory in React Router works
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
