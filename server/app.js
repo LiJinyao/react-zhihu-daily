@@ -1,7 +1,6 @@
 import Express from 'express';
 import logger from 'morgan';
 import zhihu from './routes/zhihu';
-import explore from './routes/explore';
 import path from 'path';
 // import database from './database/createTable';
 import SpiderTask from './spider/task';

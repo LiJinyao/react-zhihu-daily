@@ -2,6 +2,9 @@ import cheerio from 'cheerio';
 import https from 'https';
 import query from '../database/sqlHelper';
 import RAMMDB from '../database/RAMDB';
+import log4js from 'log4js';
+const logger = log4js.getLogger();
+
 const DB = new RAMMDB();
 function httpsGet(url) {
   return new Promise((resolve, reject) => {
@@ -160,14 +163,14 @@ function grabExploreToRAMDB() {
   //   return saveExploreToDataBase(value);
   // })
   // .catch(err => console.log(err)); // TODO
-  console.log('spider start');
+  logger.debug('Spider start');
   getExplore()
   .then(data => parseExplore(data))
   .then((value) => {
     getCirclesIndex(filterExplore(value)).then((counts) => DB.update('circlesIndex', counts));
     DB.update('explore', value);
-    console.log("spider done.");
-  }).catch(err => {console.log(err)});
+  });
+  logger.debug('Spider end');
 }
 
 export { grabExploreToRAMDB };
