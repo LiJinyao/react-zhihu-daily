@@ -5,10 +5,10 @@ const DB = new RAMDB();
 const router = new express.Router();
 
 router.get('/explore', (req, res) => {
-  const explore = Object.assign(
-    { lastUpdate: DB.get('explore').lastUpdate },
-    DB.get('explore').value);
-
+  const explore = DB.get('explore').value;
+  explore.lastUpdate = DB.get('explore').lastUpdate;
+  explore.extra = DB.get('circlesIndex').value;
+  console.log(explore);
   res.json(explore);
 });
 // send all request to zhihuDaily server.

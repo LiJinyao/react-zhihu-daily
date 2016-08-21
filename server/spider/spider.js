@@ -160,13 +160,14 @@ function grabExploreToRAMDB() {
   //   return saveExploreToDataBase(value);
   // })
   // .catch(err => console.log(err)); // TODO
+  console.log('spider start');
   getExplore()
   .then(data => parseExplore(data))
   .then((value) => {
     getCirclesIndex(filterExplore(value)).then((counts) => DB.update('circlesIndex', counts));
     DB.update('explore', value);
     console.log("spider done.");
-  });
+  }).catch(err => {console.log(err)});
 }
 
 export { grabExploreToRAMDB };
