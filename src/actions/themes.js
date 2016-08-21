@@ -1,6 +1,5 @@
 import { zhihuAPI } from '../statics';
 import fetch from 'isomorphic-fetch';
-import { fetchThemeIfNeeded } from './theme';
 export const REQUEST_THEMES = 'REQUEST_THEMES';
 
 export function requestThemes() {
@@ -45,7 +44,6 @@ function shouldFetchThemes(state) {
 }
 export function fetchThemesIfNeeded() {
   return (dispatch, getState) => {
-    console.log(getState());
     if (shouldFetchThemes(getState())) {
       dispatch(requestThemes());
       return fetch(`${zhihuAPI}/explore`)
@@ -53,7 +51,6 @@ export function fetchThemesIfNeeded() {
         if (response.ok) {
           response.json()
           .then(json => {
-            console.log(json);
             dispatch(receiveThemes(json));
             // 因为知乎日报API设计的原因不得不全部请求才能的得到大图地址
             // json.others.forEach((item) => { dispatch(fetchThemeIfNeeded(item.id)); });

@@ -13,9 +13,9 @@ import {
   RECEIVE_THEMES,
   RECEIVE_THEMES_ERROR,
   INVALIDATE_THEMES,
-  REQUEST_THEME,
-  RECEIVE_THEME,
-  RECEIVE_THEME_ERROR,
+  // REQUEST_THEME,
+  // RECEIVE_THEME,
+  // RECEIVE_THEME_ERROR,
  } from '../actions';
 
 /**
@@ -147,39 +147,38 @@ function themes(state = {
   }
 }
 
-// theme from the theme list.
-function theme(state = {
-  themeCache: new Map(),
-  isFetching: false,
-  fetchError: false,
-}, action) {
-  switch (action.type) {
-    case REQUEST_THEME:
-      return Object.assign({}, state, {
-        isFetching: true,
-      });
-    case RECEIVE_THEME:
-      return Object.assign({}, state, {
-        themeCache: new Map(state.themeCache).set(action.id, action.theme),
-        isFetching: false,
-        fetchError: false,
-      });
-    case RECEIVE_THEME_ERROR:
-      return Object.assign({}, state, {
-        fetchError:   true,
-        errorMessage: action.errorMessage,
-      });
-    default:
-      return state;
-  }
-}
+// // theme from the theme list.
+// function theme(state = {
+//   themeCache: new Map(),
+//   isFetching: false,
+//   fetchError: false,
+// }, action) {
+//   switch (action.type) {
+//     case REQUEST_THEME:
+//       return Object.assign({}, state, {
+//         isFetching: true,
+//       });
+//     case RECEIVE_THEME:
+//       return Object.assign({}, state, {
+//         themeCache: new Map(state.themeCache).set(action.id, action.theme),
+//         isFetching: false,
+//         fetchError: false,
+//       });
+//     case RECEIVE_THEME_ERROR:
+//       return Object.assign({}, state, {
+//         fetchError:   true,
+//         errorMessage: action.errorMessage,
+//       });
+//     default:
+//       return state;
+//   }
+// }
 
 const rootReducer = combineReducers({
   news,
   stories,
   storyExtra,
   themes,
-  theme,
 });
 
 export default rootReducer;
