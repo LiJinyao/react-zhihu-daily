@@ -9,10 +9,10 @@ import {
   REQUEST_STORY_EXTRA,
   RECEIVE_STORY_EXTRA,
   RECEIVE_STORY_EXTRA_ERROR,
-  REQUEST_THEMES,
-  RECEIVE_THEMES,
-  RECEIVE_THEMES_ERROR,
-  INVALIDATE_THEMES,
+  REQUEST_EXPLORE,
+  RECEIVE_EXPLORE,
+  RECEIVE_EXPLORE_ERROR,
+  INVALIDATE_EXPLORE,
   // REQUEST_THEME,
   // RECEIVE_THEME,
   // RECEIVE_THEME_ERROR,
@@ -112,7 +112,7 @@ function storyExtra(state = {
 }
 
 // theme list
-function themes(state = {
+function explore(state = {
   cache:         null,
   isFetching:    false,
   didInvalidate: true,
@@ -120,25 +120,25 @@ function themes(state = {
   fetchError:     false,
 }, action) {
   switch (action.type) {
-    case REQUEST_THEMES:
+    case REQUEST_EXPLORE:
       return Object.assign({}, state, {
         isFetching: true,
       });
-    case RECEIVE_THEMES:
+    case RECEIVE_EXPLORE:
       return Object.assign({}, state, {
         isFetching:    false,
-        cache:         action.themes,
+        cache:         action.explore,
         didInvalidate: false,
         lastUpdated:   Date.now(),
         fetchError:    false,
       });
-    case RECEIVE_THEMES_ERROR:
+    case RECEIVE_EXPLORE_ERROR:
       return Object.assign({}, state, {
         isFetching:   false,
         fetchError:   true,
         errorMessage: action.errorMessage,
       });
-    case INVALIDATE_THEMES:
+    case INVALIDATE_EXPLORE:
       return Object.assign({}, state, {
         didInvalidate: false,
       });
@@ -178,7 +178,7 @@ const rootReducer = combineReducers({
   news,
   stories,
   storyExtra,
-  themes,
+  explore,
 });
 
 export default rootReducer;

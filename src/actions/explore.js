@@ -1,41 +1,41 @@
 import { zhihuAPI } from '../statics';
 import fetch from 'isomorphic-fetch';
-export const REQUEST_THEMES = 'REQUEST_THEMES';
+export const REQUEST_EXPLORE = 'REQUEST_EXPLORE';
 
 export function requestThemes() {
-  return { type: REQUEST_THEMES };
+  return { type: REQUEST_EXPLORE };
 }
 
-export const RECEIVE_THEMES = 'RECEIVE_THEMES';
+export const RECEIVE_EXPLORE = 'RECEIVE_EXPLORE';
 
-export function receiveThemes(themes) {
+export function receiveThemes(explore) {
   return {
-    type: RECEIVE_THEMES,
-    themes,
+    type: RECEIVE_EXPLORE,
+    explore,
   };
 }
 
-export const RECEIVE_THEMES_ERROR = 'RECEIVE_THEMES_ERROR';
+export const RECEIVE_EXPLORE_ERROR = 'RECEIVE_EXPLORE_ERROR';
 
 export function receiveThemesError(errorMessage) {
   return {
-    type: RECEIVE_THEMES_ERROR,
+    type: RECEIVE_EXPLORE_ERROR,
     errorMessage,
   };
 }
 
-export const INVALIDATE_THEMES = 'INVALIDATE_THEMES';
+export const INVALIDATE_EXPLORE = 'INVALIDATE_EXPLORE';
 
 export function invalidateThemes() {
   return {
-    type:          INVALIDATE_THEMES,
+    type:          INVALIDATE_EXPLORE,
     didInvalidate: true,
   };
 }
 
 function shouldFetchThemes(state) {
-  const themes = state.themes.cache;
-  if (!themes) {
+  const explore = state.explore.cache;
+  if (!explore) {
     return true;
   } else if (state.isFetching) {
     return false;

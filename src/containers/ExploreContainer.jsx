@@ -9,18 +9,14 @@ class ExploreContainer extends Component {
   }
   render() {
     const {
-      isFetching, themes, dispatch, fetchError, theme,
-      errorMessage, lastUpdated, didInvalidate } = this.props;
+      isFetching, explore, dispatch, fetchError, errorMessage } = this.props;
     return (
       <Explore
         isFetching={isFetching}
-        themes={themes}
-        theme={theme}
+        explore={explore}
         dispatch={dispatch}
         fetchError={fetchError}
         errorMessage={errorMessage}
-        lastUpdated={lastUpdated}
-        didInvalidate={didInvalidate}
       />
     );
   }
@@ -28,25 +24,19 @@ class ExploreContainer extends Component {
 
 ExploreContainer.propTypes = {
   dispatch:      PropTypes.func.isRequired,
-  themes:        PropTypes.object,
-  theme:         PropTypes.instanceOf(Map).isRequired,
+  explore:        PropTypes.object,
   isFetching:    PropTypes.bool.isRequired,
   fetchError:    PropTypes.bool.isRequired,
   errorMessage:  PropTypes.string,
-  lastUpdated:   PropTypes.number,
-  didInvalidate: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => (
   {
     // get a day's stories.
-    themes:        state.themes.cache,
-    theme:         state.theme.themeCache,
-    isFetching:    state.themes.isFetching,
-    fetchError:    state.themes.fetchError,
-    errorMessage:  state.themes.errorMessage,
-    lastUpdated:   state.themes.lastUpdated,
-    didInvalidate: state.themes.didInvalidate,
+    explore:        state.explore.cache,
+    isFetching:    state.explore.isFetching,
+    fetchError:    state.explore.fetchError,
+    errorMessage:  state.explore.errorMessage,
   }
 );
 

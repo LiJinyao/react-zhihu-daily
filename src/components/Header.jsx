@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import style from './Header.styl';
 import { IndexLink, Link } from 'react-router';
 import daily from '!raw-loader!./daily.svg';
@@ -21,5 +21,8 @@ const Header = ({ location }) => {
       </div>
     </nav>
   );
+};
+Header.propTypes = {
+  location: PropTypes.object,
 };
 export default Header;

@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import StatusAlert, { STATUS_ALERT_LOADING, STATUS_ALERT_ERROR } from '../StatusAlert';
-import ThemeItem from './ThemeItem';
-const Explore = ({ isFetching, fetchError, themes, theme, errorMessage }) => {
+const Explore = ({ isFetching, fetchError, explore, errorMessage }) => {
   const list = [];
   if (isFetching) {
     return (<StatusAlert status={STATUS_ALERT_LOADING} key="Loading" expand />);
@@ -12,10 +11,10 @@ const Explore = ({ isFetching, fetchError, themes, theme, errorMessage }) => {
       <StatusAlert status={STATUS_ALERT_ERROR} key="error" errorMessage={errorMessage} />
     );
   }
-  if (themes !== null) {
-    list.push(themes.top.map((item, index) => (
-      <ThemeItem {...item} theme={theme.get(item.id)} key={index} />
-   )));
+  if (explore !== null) {
+  //   list.push(explore.top.map((item, index) => (
+  //     <ThemeItem {...item} theme={theme.get(item.id)} key={index} />
+  //  )));
   }
   return (
     <div className="exploreContainer">
@@ -25,12 +24,9 @@ const Explore = ({ isFetching, fetchError, themes, theme, errorMessage }) => {
 };
 Explore.propTypes = {
   dispatch:      PropTypes.func.isRequired,
-  themes:        PropTypes.object,
-  theme:         PropTypes.instanceOf(Map),
+  explore:        PropTypes.object,
   isFetching:    PropTypes.bool.isRequired,
   fetchError:    PropTypes.bool.isRequired,
   errorMessage:  PropTypes.string,
-  lastUpdated:   PropTypes.number,
-  didInvalidate: PropTypes.bool.isRequired,
 };
 export default Explore;
