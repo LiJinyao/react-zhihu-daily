@@ -16,12 +16,11 @@ class exploreDB {
   }
   update(key, value) {
     if (typeof value === 'object') {
-      // deep copy object
-      this.DB[key] = Object.assign({}, value);
+      // deep clone data
+      this.DB[key] = JSON.parse(JSON.stringify(value));
     } else {
       this.DB[key] = value;
     }
-    console.log(value);
     this.DB.lastUpdates.set(key, Date.now());
   }
   get(key) {
