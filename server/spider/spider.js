@@ -169,8 +169,8 @@ function grabExploreToRAMDB() {
   .then((value) => {
     getCirclesIndex(filterExplore(value)).then((counts) => DB.update('circlesIndex', counts));
     DB.update('explore', value);
+    logger.debug('Spider end');
   });
-  logger.debug('Spider end');
 }
 
 export { grabExploreToRAMDB };

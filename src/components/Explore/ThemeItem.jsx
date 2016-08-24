@@ -3,6 +3,12 @@ import { zhihuAPI } from '../../statics/';
 import { Link } from 'react-router';
 import style from './ThemeItem.styl';
 // import StackBlur from './stackBlur';
+          // <img
+          //   className={style.cover}
+          //   src={`${zhihuAPI + theme.image}`}
+          //   alt={description}
+          //   onLoad={(event) => { this.imgLoad(event); }}
+          // />
 class ThemeItem extends Component {
   componentDidMount() {
 
@@ -17,26 +23,14 @@ class ThemeItem extends Component {
     // console.log("image loaded");
   }
   render() {
-    const { description, id, name, theme } = this.props;
+    const { id, title, meta, image } = this.props;
     return (
       <Link
         className={style.item}
         to={`/explore/${String(id)}`}
       >
         <div className={style.coverPlaceholder}>
-        {
-          theme &&
-            <img
-              className={style.cover}
-              src={`${zhihuAPI + theme.image}`}
-              alt={description}
-              onLoad={(event) => { this.imgLoad(event); }}
-            />
-        }
-        </div>
-        <div className={style.introHolder}>
-          <span className={style.name}>{name}</span>
-          <span className={style.desc}>{description}</span>
+
         </div>
       </Link>
     );

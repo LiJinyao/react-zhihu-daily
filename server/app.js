@@ -5,7 +5,7 @@ import path from 'path';
 // import database from './database/createTable';
 import SpiderTask from './spider/task';
 // spider Task
-const spiderTask = new SpiderTask();
+const spiderTask = new SpiderTask(10000);
 spiderTask.start();
 
 const app = new Express();

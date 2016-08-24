@@ -12,9 +12,9 @@ const Explore = ({ isFetching, fetchError, explore, errorMessage }) => {
     );
   }
   if (explore !== null) {
-  //   list.push(explore.top.map((item, index) => (
-  //     <ThemeItem {...item} theme={theme.get(item.id)} key={index} />
-  //  )));
+    list.push(explore.hotStory.map((item, index) => (
+      <ThemeItem {...item} key={index} />
+   )));
   }
   return (
     <div className="exploreContainer">
