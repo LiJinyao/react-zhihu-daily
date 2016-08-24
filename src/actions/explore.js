@@ -52,8 +52,6 @@ export function fetchThemesIfNeeded() {
           response.json()
           .then(json => {
             dispatch(receiveThemes(json));
-            // 因为知乎日报API设计的原因不得不全部请求才能的得到大图地址
-            // json.others.forEach((item) => { dispatch(fetchThemeIfNeeded(item.id)); });
           });
         } else {
           throw new Error(response.status);

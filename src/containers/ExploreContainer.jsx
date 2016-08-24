@@ -1,11 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Explore from '../components/Explore';
-import { fetchThemesIfNeeded } from '../actions';
+import { fetchExploreIfNeeded } from '../actions';
 
 class ExploreContainer extends Component {
   componentDidMount() {
-    this.props.dispatch(fetchThemesIfNeeded());
+    this.props.dispatch(fetchExploreIfNeeded());
   }
   render() {
     const {
