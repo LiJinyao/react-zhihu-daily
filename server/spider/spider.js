@@ -117,7 +117,7 @@ function getCirclesIndex(circles) {
       requestes.push(httpsGet(api));
     });
     Promise.all(requestes)
-    .then((value) => { resolve(value); })
+    .then((values) => { resolve(values.map(value => JSON.parse(value))); })
     .catch(err => reject(err));
   });
 }

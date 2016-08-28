@@ -23,14 +23,15 @@ class ThemeItem extends Component {
     // console.log("image loaded");
   }
   render() {
+    // iamge maybe undefined.
     const { id, title, meta, image } = this.props;
     return (
       <Link
         className={style.item}
-        to={`/explore/${String(id)}`}
+        to={`/explore/${id}`}
       >
         <div className={style.coverPlaceholder}>
-
+          <h1>{title}</h1>
         </div>
       </Link>
     );
@@ -38,11 +39,10 @@ class ThemeItem extends Component {
 }
 
 ThemeItem.propTypes = {
-  theme:       PropTypes.object,
-  name:        PropTypes.string.isRequired,
-  id:          PropTypes.number.isRequired,
-  description: PropTypes.string.isRequired,
-  thumbnail:   PropTypes.string.isRequired,
+  title:  PropTypes.string.isRequired,
+  id:    PropTypes.string.isRequired,
+  meta:  PropTypes.string.isRequired,
+  image: PropTypes.string,
 };
 
 export default ThemeItem;

@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import StatusAlert, { STATUS_ALERT_LOADING, STATUS_ALERT_ERROR } from '../StatusAlert';
+import ThemeItem from './ThemeItem';
 const Explore = ({ isFetching, fetchError, explore, errorMessage }) => {
   const list = [];
   if (isFetching) {
@@ -12,7 +13,7 @@ const Explore = ({ isFetching, fetchError, explore, errorMessage }) => {
     );
   }
   if (explore !== null) {
-    list.push(explore.hotStory.map((item, index) => (
+    list.push(explore.hotCirclely.map((item, index) => (
       <ThemeItem {...item} key={index} />
    )));
   }
