@@ -107,17 +107,25 @@ function saveExploreToDataBase(items) {
     .catch((err) => { reject(err); });
   });
 }
-
+//  (value, i) => JSON.parse(value).id = circles[i].id
 // 返回每个日报的信息。
 function getCirclesIndex(circles) {
   const requestes = [];
   return new Promise((resolve, reject) => {
     circles.forEach(item => {
-      const api = `https://news-at.zhihu.com/api/7/circle/${item.id}`;
-      requestes.push(httpsGet(api));
+      const url = `https://news-at.zhihu.com/api/7/circle/${item.id}`;
+      requestes.push(httpsGet(url));
     });
     Promise.all(requestes)
-    .then((values) => { resolve(values.map(value => JSON.parse(value))); })
+    .then((values) => {
+      resolve(values.map(
+        (cir, i) => {
+          const ex = JSON.parse(cir);
+          ex.id = circles[i].id;
+          return ex;
+        }
+      ));
+    })
     .catch(err => reject(err));
   });
 }
@@ -167,8 +175,17 @@ function grabExploreToRAMDB() {
   getExplore()
   .then(data => parseExplore(data))
   .then((value) => {
-    getCirclesIndex(filterExplore(value)).then((counts) => DB.update('circlesIndex', counts));
-    DB.update('explore', value);
+    const extraMap = new Map();
+    const hotCirclely = filterExplore(value);
+    getCirclesIndex(hotCirclely)
+    .then((counts) => {
+      counts.forEach(extra => extraMap.set(extra.id, extra));
+      for (const i of value.hotCirclely) {
+        i.extra = extraMap.get(i.id);
+      }
+      DB.update('circlesIndex', counts);
+      DB.update('explore', value);
+    });
     logger.debug('Spider end');
   });
 }

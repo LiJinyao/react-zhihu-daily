@@ -32,8 +32,8 @@ ExploreContainer.propTypes = {
 
 const mapStateToProps = state => (
   {
-    // get a day's stories.
-    explore:        state.explore.cache,
+    // get a day's explore.
+    explore:       state.explore.cache,
     isFetching:    state.explore.isFetching,
     fetchError:    state.explore.fetchError,
     errorMessage:  state.explore.errorMessage,

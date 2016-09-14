@@ -111,7 +111,7 @@ function storyExtra(state = {
   }
 }
 
-// theme list
+// explore list
 function explore(state = {
   cache:         null,
   isFetching:    false,
