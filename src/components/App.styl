@@ -30,3 +30,15 @@ body
   font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
 a
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+
+:global
+  .fade-enter
+    opacity 0
+  .fade-enter.fade-enter-active
+    transition opacity 500ms ease-in
+    opacity 1
+  .fade-leave
+    opacity 1
+  .fade-leave.fade-leave-active
+    transition opacity 500ms ease-in
+    opacity 0
