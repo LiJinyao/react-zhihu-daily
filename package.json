@@ -79,6 +79,7 @@
     "cheerio": "^0.20.0",
     "log4js": "^0.6.38",
     "mysql": "^2.11.1",
-    "normalize.css": "^4.2.0"
+    "normalize.css": "^4.2.0",
+    "react-addons-css-transition-group": "^15.3.1"
   }
 }

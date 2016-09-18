@@ -13,11 +13,9 @@ const Explore = ({ isFetching, fetchError, explore, errorMessage }) => {
     );
   }
   if (explore !== null) {
-    list.push(explore.hotCirclely
-    .filter(item => item.extra.image)
-    .map((item, index) => (
-      <HotCirclely {...item} key={index} />
-   )));
+    for (const item of explore.values()) {
+      list.push(<HotCirclely {...item} key={item.id} />);
+    }
   }
   return (
     <div className="exploreContainer">
@@ -27,7 +25,7 @@ const Explore = ({ isFetching, fetchError, explore, errorMessage }) => {
 };
 Explore.propTypes = {
   dispatch:      PropTypes.func.isRequired,
-  explore:        PropTypes.object,
+  explore:       PropTypes.instanceOf(Map).isRequired,
   isFetching:    PropTypes.bool.isRequired,
   fetchError:    PropTypes.bool.isRequired,
   errorMessage:  PropTypes.string,

@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { fetchNews } from '../actions';
 import StoriesList from '../components/StoryList/StoryList';
-import style from './storyList.styl';
 class StoryList extends Component {
   componentDidMount() {
     // fetch news when mounted

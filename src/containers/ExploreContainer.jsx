@@ -24,7 +24,7 @@ class ExploreContainer extends Component {
 
 ExploreContainer.propTypes = {
   dispatch:      PropTypes.func.isRequired,
-  explore:        PropTypes.object,
+  explore:       PropTypes.instanceOf(Map).isRequired,
   isFetching:    PropTypes.bool.isRequired,
   fetchError:    PropTypes.bool.isRequired,
   errorMessage:  PropTypes.string,

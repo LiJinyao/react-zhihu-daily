@@ -13,6 +13,9 @@ import {
   RECEIVE_EXPLORE,
   RECEIVE_EXPLORE_ERROR,
   INVALIDATE_EXPLORE,
+  REQUEST_CIRCLE_STORIES,
+  REVEIVE_CIRCLE_STORIES,
+  REVEIVE_CIRCLE_STORIES_ERROR,
   // REQUEST_THEME,
   // RECEIVE_THEME,
   // RECEIVE_THEME_ERROR,
@@ -110,10 +113,16 @@ function storyExtra(state = {
 
   }
 }
-
+function exploreToMap(exp) {
+  const hotCircle = new Map();
+  exp.hotCirclely
+  .filter(item => item.extra.image)
+  .map(item => hotCircle.set(item.id, item));
+  return hotCircle;
+}
 // explore list
 function explore(state = {
-  cache:         null,
+  cache:         new Map(),
   isFetching:    false,
   didInvalidate: true,
   lastUpdated:    0,
@@ -127,8 +136,9 @@ function explore(state = {
     case RECEIVE_EXPLORE:
       return Object.assign({}, state, {
         isFetching:    false,
-        cache:         action.explore,
+        cache:         exploreToMap(action.explore),
         didInvalidate: false,
+        // 这里不应该访问非纯函数
         lastUpdated:   Date.now(),
         fetchError:    false,
       });
@@ -147,38 +157,37 @@ function explore(state = {
   }
 }
 
-// // theme from the theme list.
-// function theme(state = {
-//   themeCache: new Map(),
-//   isFetching: false,
-//   fetchError: false,
-// }, action) {
-//   switch (action.type) {
-//     case REQUEST_THEME:
-//       return Object.assign({}, state, {
-//         isFetching: true,
-//       });
-//     case RECEIVE_THEME:
-//       return Object.assign({}, state, {
-//         themeCache: new Map(state.themeCache).set(action.id, action.theme),
-//         isFetching: false,
-//         fetchError: false,
-//       });
-//     case RECEIVE_THEME_ERROR:
-//       return Object.assign({}, state, {
-//         fetchError:   true,
-//         errorMessage: action.errorMessage,
-//       });
-//     default:
-//       return state;
-//   }
-// }
+function circleStories(state = {
+  cache:      new Map(),
+  isFetching: false,
+  fetchError: false,
+}, action) {
+  switch (action.type) {
+    case REQUEST_CIRCLE_STORIES:
+      return Object.assign({}, state, { isFetching: true });
+    case REVEIVE_CIRCLE_STORIES:
+      return Object.assign({}, state, {
+        cache:      new Map(state.cache).set(action.id, action.stories),
+        isFetching: false,
+        fetchError: false,
+      });
+    case REVEIVE_CIRCLE_STORIES_ERROR:
+      return Object.assign({}, state, {
+        isFetching:   false,
+        fetchError:   true,
+        errorMessage: action.errorMessage,
+      });
+    default:
+      return state;
+  }
+}
 
 const rootReducer = combineReducers({
   news,
   stories,
   storyExtra,
   explore,
+  circleStories,
 });
 
 export default rootReducer;

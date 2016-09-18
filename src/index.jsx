@@ -22,10 +22,10 @@ const Explore = (location, callback) => {
   }, '/explore');
 };
 
-const ThemeStories = (location, callback) => {
+const CircleStories = (location, callback) => {
   require.ensure([], require => {
-    callback(null, require('./components/Explore/Theme/ThemeStories').default);
-  }, '/ThemeStories');
+    callback(null, require('./containers/CircleStories').default);
+  }, '//explore/:id');
 };
 
 render(
@@ -35,7 +35,7 @@ render(
         <IndexRoute component={StoryList} />
         <Route path="/news/:id" getComponent={Story} />
         <Route path="/explore" getComponent={Explore} />
-        <Route path="/explore/:id" getComponent={ThemeStories} />
+        <Route path="/explore/:id" getComponent={CircleStories} />
         <Route path="/explore/story/:id" getComponent={Story} />
       </Route>
     </Router>

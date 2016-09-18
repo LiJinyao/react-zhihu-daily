@@ -35,7 +35,7 @@ export function invalidateExplore() {
 
 function shouldFetchExplore(state) {
   const explore = state.explore.cache;
-  if (!explore) {
+  if (explore.size === 0) {
     return true;
   } else if (state.isFetching) {
     return false;
