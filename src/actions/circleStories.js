@@ -1,6 +1,5 @@
 import { zhihuAPI } from '../statics';
 import fetch from 'isomorphic-fetch';
-
 export const REQUEST_CIRCLE_STORIES = 'REQUEST_CIRCLE_STORIES';
 
 export function requestCircleStories() {

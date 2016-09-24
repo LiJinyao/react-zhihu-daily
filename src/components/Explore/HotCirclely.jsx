@@ -2,12 +2,16 @@ import React, { PropTypes } from 'react';
 import style from './HotCirclely.styl';
 import { zhihuAPI } from '../../statics';
 import { Link } from 'react-router';
-const HotCirclely =({title, id, extra, meta, image}) => {
+const HotCirclely = ({ title, id, meta, image, circleExtra }) => {
+  const banner = circleExtra ? circleExtra.image : '';
+  const avatar = circleExtra ? circleExtra.thumbnail : image;
+  const description = circleExtra ? circleExtra.description : '';
+  const name = circleExtra ? circleExtra.creator.name : '';
   return (
     <div className={style.hotCirclelyBody}>
       <div className={style.banner}>
         <Link to={`/explore/${id}`}>
-          <img src={`${zhihuAPI}?url=${extra.image}`} alt={title} />
+          <img src={`${zhihuAPI}?url=${banner}`} alt={title} />
         </Link>
 
       </div>
@@ -17,12 +21,12 @@ const HotCirclely =({title, id, extra, meta, image}) => {
             {title}
           </Link>
         </h2>
-        <span className={style.desc}>{extra.description}</span>
+        <span className={style.desc}>{description}</span>
         <div className={style.meta}>
           <img
             className={style.avatar}
-            src={`${zhihuAPI}?url=${image}`}
-            alt={extra.creator.name}
+            src={`${zhihuAPI}?url=${avatar}`}
+            alt={name}
           />
           {meta}
         </div>
@@ -30,4 +34,13 @@ const HotCirclely =({title, id, extra, meta, image}) => {
     </div>
   );
 };
+
+HotCirclely.propTypes = {
+  title:       PropTypes.string.isRequired,
+  id:          PropTypes.string.isRequired,
+  meta:        PropTypes.string.isRequired,
+  image:       PropTypes.string.isRequired,
+  circleExtra: PropTypes.object,
+};
+
 export default HotCirclely;

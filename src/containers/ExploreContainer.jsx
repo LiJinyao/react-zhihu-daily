@@ -9,7 +9,7 @@ class ExploreContainer extends Component {
   }
   render() {
     const {
-      isFetching, explore, dispatch, fetchError, errorMessage } = this.props;
+      isFetching, explore, dispatch, fetchError, errorMessage, exploreExtra } = this.props;
     return (
       <Explore
         isFetching={isFetching}
@@ -17,6 +17,7 @@ class ExploreContainer extends Component {
         dispatch={dispatch}
         fetchError={fetchError}
         errorMessage={errorMessage}
+        exploreExtra={exploreExtra}
       />
     );
   }
@@ -25,6 +26,7 @@ class ExploreContainer extends Component {
 ExploreContainer.propTypes = {
   dispatch:      PropTypes.func.isRequired,
   explore:       PropTypes.instanceOf(Map).isRequired,
+  exploreExtra:  PropTypes.instanceOf(Map).isRequired,
   isFetching:    PropTypes.bool.isRequired,
   fetchError:    PropTypes.bool.isRequired,
   errorMessage:  PropTypes.string,
@@ -34,6 +36,7 @@ const mapStateToProps = state => (
   {
     // get a day's explore.
     explore:       state.explore.cache,
+    exploreExtra:  state.circleStoryExtra.cache,
     isFetching:    state.explore.isFetching,
     fetchError:    state.explore.fetchError,
     errorMessage:  state.explore.errorMessage,

@@ -7,7 +7,8 @@ class CircleStories extends Component {
     this.props.dispatch(fetchCircleStoriesIfNeeded(this.props.circleID));
   }
   render() {
-    const { isFetching, circleStories, dispatch, fetchError, errorMessage, circleID, explore } = this.props;
+    const { isFetching, circleStories, dispatch, fetchError, errorMessage, circleID, explore }
+      = this.props;
     return (
       <StoriesList
         isFetching={isFetching}

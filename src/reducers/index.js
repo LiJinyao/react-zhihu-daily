@@ -16,6 +16,9 @@ import {
   REQUEST_CIRCLE_STORIES,
   REVEIVE_CIRCLE_STORIES,
   REVEIVE_CIRCLE_STORIES_ERROR,
+  REQUEST_CIRCLE_STORY_EXTRA,
+  REVEIVE_CIRCLE_STORY_EXTRA,
+  REVEIVE_CIRCLE_STORY_EXTRA_ERROR,
   // REQUEST_THEME,
   // RECEIVE_THEME,
   // RECEIVE_THEME_ERROR,
@@ -181,6 +184,30 @@ function circleStories(state = {
       return state;
   }
 }
+function circleStoryExtra(state = {
+  cache:      new Map(),
+  isFetching: false,
+  fetchError: false,
+}, action) {
+  switch (action.type) {
+    case REQUEST_CIRCLE_STORY_EXTRA:
+      return Object.assign({}, state, { isFetching: true });
+    case REVEIVE_CIRCLE_STORY_EXTRA:
+      return Object.assign({}, state, {
+        cache:      new Map(state.cache).set(action.id, action.storyExtra),
+        isFetching: false,
+        fetchError: false,
+      });
+    case REVEIVE_CIRCLE_STORY_EXTRA_ERROR:
+      return Object.assign({}, state, {
+        isFetching:   false,
+        fetchError:   true,
+        errorMessage: action.errorMessage,
+      });
+    default:
+      return state;
+  }
+}
 
 const rootReducer = combineReducers({
   news,
@@ -188,6 +215,7 @@ const rootReducer = combineReducers({
   storyExtra,
   explore,
   circleStories,
+  circleStoryExtra,
 });
 
 export default rootReducer;

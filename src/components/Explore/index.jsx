@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import StatusAlert, { STATUS_ALERT_LOADING, STATUS_ALERT_ERROR } from '../StatusAlert';
 import HotCirclely from './HotCirclely';
-const Explore = ({ isFetching, fetchError, explore, errorMessage }) => {
+const Explore = ({ isFetching, fetchError, explore, errorMessage, exploreExtra }) => {
   const list = [];
   if (isFetching) {
     return (<StatusAlert status={STATUS_ALERT_LOADING} key="Loading" expand />);
@@ -14,7 +14,7 @@ const Explore = ({ isFetching, fetchError, explore, errorMessage }) => {
   }
   if (explore !== null) {
     for (const item of explore.values()) {
-      list.push(<HotCirclely {...item} key={item.id} />);
+      list.push(<HotCirclely {...item} key={item.id} circleExtra={exploreExtra.get(item.id)} />);
     }
   }
   return (
@@ -26,6 +26,7 @@ const Explore = ({ isFetching, fetchError, explore, errorMessage }) => {
 Explore.propTypes = {
   dispatch:      PropTypes.func.isRequired,
   explore:       PropTypes.instanceOf(Map).isRequired,
+  exploreExtra:  PropTypes.instanceOf(Map).isRequired,
   isFetching:    PropTypes.bool.isRequired,
   fetchError:    PropTypes.bool.isRequired,
   errorMessage:  PropTypes.string,

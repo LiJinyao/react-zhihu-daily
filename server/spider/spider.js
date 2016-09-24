@@ -1,6 +1,6 @@
 import cheerio from 'cheerio';
 import https from 'https';
-import query from '../database/sqlHelper';
+// import query from '../database/sqlHelper';
 import RAMMDB from '../database/RAMDB';
 import log4js from 'log4js';
 const logger = log4js.getLogger();
@@ -85,28 +85,28 @@ function parseExplore(html) {
 }
 
 // 存到数据库
-function saveExploreToDataBase(items) {
-  let querySet = 'REPLACE INTO explore (id, type, title, meta, image, top, time) VALUES ';
-  const today = new Date();
-  function addToQuery(item, key) {
-    const { type, id, title, meta, image } = item;
-    const sqlQuery = `\n(${id}, '${type}', '${title}', '${meta}', '${image || null}',
-    ${key === 'top' ? 1 : 0},
-    '${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}'),`;
-    querySet += sqlQuery;
-  }
-
-  return new Promise((resolve, reject) => {
-    for (const key of Object.keys(items)) {
-      items[key].forEach(item => {
-        addToQuery(item, key);
-      });
-    }
-    query(querySet.substring(0, querySet.length - 1))
-    .then((value) => { resolve(value); })
-    .catch((err) => { reject(err); });
-  });
-}
+// function saveExploreToDataBase(items) {
+//   let querySet = 'REPLACE INTO explore (id, type, title, meta, image, top, time) VALUES ';
+//   const today = new Date();
+//   function addToQuery(item, key) {
+//     const { type, id, title, meta, image } = item;
+//     const sqlQuery = `\n(${id}, '${type}', '${title}', '${meta}', '${image || null}',
+//     ${key === 'top' ? 1 : 0},
+//     '${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}'),`;
+//     querySet += sqlQuery;
+//   }
+//
+//   return new Promise((resolve, reject) => {
+//     for (const key of Object.keys(items)) {
+//       items[key].forEach(item => {
+//         addToQuery(item, key);
+//       });
+//     }
+//     query(querySet.substring(0, querySet.length - 1))
+//     .then((value) => { resolve(value); })
+//     .catch((err) => { reject(err); });
+//   });
+// }
 //  (value, i) => JSON.parse(value).id = circles[i].id
 // 返回每个日报的信息。
 function getCirclesIndex(circles) {
@@ -139,23 +139,23 @@ function filterExplore(items, type = 'circle') {
   return result;
 }
 
-// 储存circle的详细信息
-function saveCirclesIndex(circles) {
-  let querySet = 'REPLACE INTO circle_index (id, circle) VALUES ';
-  function addToQuery(id, circle) {
-    const sqlQuery = `\n(${id}, '${circle}'),`;
-    querySet += sqlQuery;
-  }
-  circles.forEach(circle => {
-    const json = JSON.parse(circle);
-    addToQuery(json.id, circle);
-  });
-  return new Promise((resolve, reject) => {
-    query(querySet.substring(0, querySet.length - 1))
-    .then((value) => { resolve(value); })
-    .catch((err) => { reject(err); });
-  });
-}
+// // 储存circle的详细信息
+// function saveCirclesIndex(circles) {
+//   let querySet = 'REPLACE INTO circle_index (id, circle) VALUES ';
+//   function addToQuery(id, circle) {
+//     const sqlQuery = `\n(${id}, '${circle}'),`;
+//     querySet += sqlQuery;
+//   }
+//   circles.forEach(circle => {
+//     const json = JSON.parse(circle);
+//     addToQuery(json.id, circle);
+//   });
+//   return new Promise((resolve, reject) => {
+//     query(querySet.substring(0, querySet.length - 1))
+//     .then((value) => { resolve(value); })
+//     .catch((err) => { reject(err); });
+//   });
+// }
 
 function grabExploreToRAMDB() {
   // getExplore()

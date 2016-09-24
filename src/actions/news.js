@@ -52,7 +52,6 @@ export function fetchNews(date) {
   return (dispatch, getState) => {
 // First dispatch: the app state is updated to inform
 // that the API call is starting.
-    console.log(getState());
     if (shouldFetchNews(getState(), date)) {
       dispatch(requestNews(date));
       // The function called by the thunk middleware can return a value,

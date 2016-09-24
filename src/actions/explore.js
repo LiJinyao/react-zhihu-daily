@@ -1,4 +1,5 @@
 import { zhihuAPI } from '../statics';
+import { fetchCircleStoryExtraIfNeeded } from './circleExtra';
 import fetch from 'isomorphic-fetch';
 export const REQUEST_EXPLORE = 'REQUEST_EXPLORE';
 
@@ -51,6 +52,9 @@ export function fetchExploreIfNeeded() {
         if (response.ok) {
           response.json()
           .then(json => {
+            json.hotCirclely.forEach(item => {
+              dispatch(fetchCircleStoryExtraIfNeeded(item.id));
+            });
             dispatch(receiveExplore(json));
           });
         } else {
