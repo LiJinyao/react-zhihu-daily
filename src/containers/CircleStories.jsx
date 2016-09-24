@@ -7,8 +7,14 @@ class CircleStories extends Component {
     this.props.dispatch(fetchCircleStoriesIfNeeded(this.props.circleID));
   }
   render() {
-    const { isFetching, circleStories, dispatch, fetchError, errorMessage, circleID, explore }
-      = this.props;
+    const {
+      isFetching,
+      circleStories,
+      dispatch,
+      fetchError,
+      errorMessage,
+      circleID,
+      circleStoryExtra } = this.props;
     return (
       <StoriesList
         isFetching={isFetching}
@@ -16,31 +22,31 @@ class CircleStories extends Component {
         dispatch={dispatch}
         fetchError={fetchError}
         errorMessage={errorMessage}
-        explore={explore.get(circleID)}
+        circleStoryExtra={circleStoryExtra.get(circleID)}
       />
     );
   }
 }
 
 CircleStories.propTypes = {
-  explore:       PropTypes.object,
-  dispatch:      PropTypes.func.isRequired,
-  circleStories: PropTypes.object,
-  isFetching:    PropTypes.bool.isRequired,
-  fetchError:    PropTypes.bool.isRequired,
-  errorMessage:  PropTypes.string,
-  circleID:      PropTypes.string,
+  circleStoryExtra: PropTypes.object,
+  dispatch:         PropTypes.func.isRequired,
+  circleStories:    PropTypes.object,
+  isFetching:       PropTypes.bool.isRequired,
+  fetchError:       PropTypes.bool.isRequired,
+  errorMessage:     PropTypes.string,
+  circleID:         PropTypes.string,
 };
 
 const mapStateToProps = (state, ownProps) => (
   {
     // get a day's explore.
-    circleStories: state.circleStories.cache,
-    isFetching:    state.circleStories.isFetching,
-    fetchError:    state.circleStories.fetchError,
-    errorMessage:  state.circleStories.errorMessage,
-    circleID:      ownProps.params.id,
-    explore:       state.explore.cache,
+    circleStories:    state.circleStories.cache,
+    isFetching:       state.circleStories.isFetching,
+    fetchError:       state.circleStories.fetchError,
+    errorMessage:     state.circleStories.errorMessage,
+    circleID:         ownProps.params.id,
+    circleStoryExtra: state.circleStoryExtra.cache,
   }
 );
 
