@@ -8,7 +8,8 @@
     "start": "npm run server & npm run start-devserver",
     "start-devserver": "node devserver.js",
     "server": "node dist/zhihuDaily/app.js",
-    "build": "gulp build"
+    "build": "gulp build",
+    "lint": "gulp lintapp"
   },
   "repository": {
     "type": "git",

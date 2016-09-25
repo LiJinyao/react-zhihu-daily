@@ -1,10 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { fetchCircleStoriesIfNeeded } from '../actions';
+import { fetchCircleStoriesIfNeeded, fetchCircleStoryExtraIfNeeded } from '../actions';
 import StoriesList from '../components/Explore/CircleStories';
 class CircleStories extends Component {
   componentDidMount() {
     this.props.dispatch(fetchCircleStoriesIfNeeded(this.props.circleID));
+    this.props.dispatch(fetchCircleStoryExtraIfNeeded(this.props.circleID));
   }
   render() {
     const {
@@ -15,16 +16,19 @@ class CircleStories extends Component {
       errorMessage,
       circleID,
       circleStoryExtra } = this.props;
-    return (
-      <StoriesList
-        isFetching={isFetching}
-        circleStories={circleStories.get(circleID)}
-        dispatch={dispatch}
-        fetchError={fetchError}
-        errorMessage={errorMessage}
-        circleStoryExtra={circleStoryExtra.get(circleID)}
-      />
-    );
+    if (circleStoryExtra.size > 0 && !isFetching) {
+      return (
+        <StoriesList
+          isFetching={isFetching}
+          circleStories={circleStories.get(circleID)}
+          dispatch={dispatch}
+          fetchError={fetchError}
+          errorMessage={errorMessage}
+          circleStoryExtra={circleStoryExtra.get(circleID)}
+        />
+      );
+    }
+    return null;
   }
 }
 

@@ -11,7 +11,7 @@ const HotCirclely = ({ title, id, meta, image, circleExtra }) => {
     <div className={style.hotCirclelyBody}>
       <div className={style.banner}>
         <Link to={`/explore/${id}`}>
-          <img src={`${zhihuAPI}?url=${banner}`} alt={title} />
+          <img className={style.bannerImg} src={`${zhihuAPI}?url=${banner}`} alt={title} />
         </Link>
 
       </div>
@@ -39,7 +39,7 @@ HotCirclely.propTypes = {
   title:       PropTypes.string.isRequired,
   id:          PropTypes.string.isRequired,
   meta:        PropTypes.string.isRequired,
-  image:       PropTypes.string.isRequired,
+  image:       PropTypes.string,
   circleExtra: PropTypes.object,
 };
 

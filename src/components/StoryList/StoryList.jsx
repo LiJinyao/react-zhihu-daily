@@ -38,7 +38,7 @@ const StoriesList = ({ stories, fetchNews, isFetching, fetchError, errorMessage,
             key={story.id}
             {...story}
             linkPrefix="/news"
-            storyExtra={storyExtra}
+            storyExtra={storyExtra.get(story.id)}
           />
           )
         );
