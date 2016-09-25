@@ -26,6 +26,12 @@ const CircleStories = ({
               images={story.images}
               storyExtra={null}
               externalUrl={story.external_url}
+              id={story.id}
+              linkPrefix={"/explore/story"}
+              storyExtra={{
+                comments:   story.count.comments,
+                popularity: story.count.likes,
+              }}
             />
           ))
       }
