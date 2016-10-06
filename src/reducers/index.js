@@ -141,8 +141,6 @@ function explore(state = {
         isFetching:    false,
         cache:         exploreToMap(action.explore),
         didInvalidate: false,
-        // 这里不应该访问非纯函数
-        lastUpdated:   Date.now(),
         fetchError:    false,
       });
     case RECEIVE_EXPLORE_ERROR:
