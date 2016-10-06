@@ -9,15 +9,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 export default (({ children, location }) => (
   <div className={style.root}>
     <Header location={location} />
-    <ReactCSSTransitionGroup
-      component="div"
-      transitionName="fade"
-      transitionEnterTimeout={600}
-      transitionLeaveTimeout={600}
-    >
     {React.cloneElement(children, { key: location.pathname })}
-    </ReactCSSTransitionGroup>
-
     <Footer />
   </div>
 ));

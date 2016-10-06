@@ -6,3 +6,4 @@ dist/
 server/config.js
 .tags
 .tags1
+.log
